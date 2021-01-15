@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_HEDGE_STRATEGY_PNL" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_HEDGE_STRATEGY_PNL"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="TF_LAYER_TOTAL_PNL" type="TABLE_FUNCTION">
+    <resourceUri>TF_LAYER_TOTAL_PNL</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="FIRST_MONTH_END"/>
+      <viewAttribute id="SECOND_MONTH_START"/>
+      <viewAttribute id="SECOND_MONTH_END"/>
+      <viewAttribute id="TOTAL_FIRST_PROFIT_LOSS"/>
+      <viewAttribute id="TOTAL_SECOND_PROFIT_LOSS"/>
+      <viewAttribute id="FIRST_MONTH_START"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="PNL_AMOUNT" datatype="DECIMAL" length="25" scale="20" expressionLanguage="SQL">
+        <formula>&quot;TOTAL_FIRST_PROFIT_LOSS&quot; + &quot;TOTAL_SECOND_PROFIT_LOSS&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="TF_LAYER_TOTAL_PNL"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="FIRST_MONTH_END" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRST_MONTH_END"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FIRST_MONTH_END"/>
+    </attribute>
+    <attribute id="SECOND_MONTH_START" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SECOND_MONTH_START"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SECOND_MONTH_START"/>
+    </attribute>
+    <attribute id="SECOND_MONTH_END" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SECOND_MONTH_END"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SECOND_MONTH_END"/>
+    </attribute>
+    <attribute id="FIRST_MONTH_START" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRST_MONTH_START"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FIRST_MONTH_START"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="PNL_AMOUNT" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PNL_AMOUNT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PNL_AMOUNT"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="130" y="205"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

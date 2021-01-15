@@ -1,0 +1,36 @@
+{
+  "name": "HedgeStrategy",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^4",
+    "@sap/hana-client": "^2.4.177",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@sap/hdi-deploy": "^3.11.15"
+  },
+  "scripts": {
+    "start": "npx cds run"
+  },
+  "cds": {
+    "build": {
+      "target": "."
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "model": [
+          "db",
+          "srv"
+        ]
+      }
+    }
+  }
+}
