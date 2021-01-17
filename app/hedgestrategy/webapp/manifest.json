@@ -89,6 +89,11 @@
                     "name": "sap.fe.templates.ListReport",
                     "options": {
                         "settings": {
+                            "tableSettings": {
+                                "type": "GridTable",
+                                "multiSelect": true
+                            },
+                            "condensedTableLayout": true,
                             "entitySet": "Layer",
                             "variantManagement": "Page",
                             "navigation": {
@@ -114,8 +119,7 @@
             }
         },
         "contentDensities": {
-            "compact": true,
-            "cozy": true
+            "compact": true
         }
     },
     "sap.platform.abap": {
