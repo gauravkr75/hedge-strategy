@@ -7,11 +7,15 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^4",
-    "@sap/hana-client": "^2.4.177",
-    "express": "^4"
+    "@sap/cds-odata-v2-adapter-proxy": "^1.5.1",
+    "@sap/hana-client": "^2.7.16",
+    "@sap/hdbext": "^7.1.0",
+    "express": "^4",
+    "sap-hdbext-promisfied": "^2.202101.1"
   },
   "devDependencies": {
-    "@sap/hdi-deploy": "^3.11.15"
+    "@sap/hdi-deploy": "^3.11.15",
+    "@sap/ux-specification": "^1.84.0"
   },
   "scripts": {
     "start": "npx cds run"
@@ -32,5 +36,8 @@
         ]
       }
     }
-  }
+  },
+  "sapux": [
+    "app/hedgestrategy"
+  ]
 }
