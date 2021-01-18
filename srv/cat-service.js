@@ -1,7 +1,10 @@
 const cds = require('@sap/cds');
 module.exports = async function (){
+
     const db = await cds.connect.to('db')
-    
+    const { CatalogService } = cds.services
+    const { Layer } = CatalogService.entities
+
     this.on('determinePNL', async (req) => {
         try {
             let input = {}
@@ -13,8 +16,20 @@ module.exports = async function (){
             const sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_DET_YEAR_PNL')
             const output = await dbConn.callProcedurePromisified(sp, input)
             console.log("Duration: " + req.data.duration + ", Layers: " + req.data.layer)
+            return 'Success'
         } catch (error) {
             console.error(error)
+            return 'Error Occurred'
+        }
+    })
+
+    this.on('flushResults', async (req) => {
+        try {
+            await DELETE.from(Layer)
+            return 'Success'
+        } catch (error) {
+            console.error(error)
+            return 'Error Occurred'
         }
     })
 }
