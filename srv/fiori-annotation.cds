@@ -1,5 +1,5 @@
 annotate CatalogService.Layer with @(UI : {
-    SelectionFields : [YEAR],
+    SelectionFields : [YEAR, SMART_KEY],
     LineItem        : [
     {
         $Type  : 'UI.DataFieldForAction',
@@ -12,7 +12,7 @@ annotate CatalogService.Layer with @(UI : {
         Label  : 'Flush Data'
     },
 
-    //{Value : SMART_KEY, Label : 'Smart Key'},
+    {Value : SMART_KEY, Label : 'Smart Key'},
     //{Value : SIMULATION_ID, Label : 'Simulation ID'},
 
     {Value : YEAR},
