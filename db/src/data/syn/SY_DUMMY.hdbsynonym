@@ -4,5 +4,11 @@
       "object": "DUMMY",
       "schema": "SYS"
     }
+  },
+  "PAL_TRIPLE_EXPSMOOTH": {
+    "target": {
+      "object": "PAL_TRIPLE_EXPSMOOTH",
+      "schema": "_SYS_AFL"
+    }
   }
 }
