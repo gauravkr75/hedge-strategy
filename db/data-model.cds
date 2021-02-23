@@ -62,3 +62,21 @@ entity HISTORICAL_CURVES {
         FOUR_Y     : Decimal(25, 20)@title : 'Four Year';
         FIVE_Y     : Decimal(25, 20)@title : 'Five Year';
 }
+
+entity SPOT_FORECAST_OUT {
+    key TYPE      : String(20);
+    key TIMESTAMP : Integer;
+        VALUE     : Double;
+        PI1_LOWER : Double;
+        PI1_UPPER : Double;
+        PI2_LOWER : Double;
+        PI2_UPPER : Double;
+}
+
+entity TRI_EXP_SMOOTH_PARAMS {
+    key ID         : Integer;
+        NAME       : String(60);
+        INTARGS    : Integer;
+        DOUBLEARGS : Double;
+        STRINGARGS : String(100);
+}
