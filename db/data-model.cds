@@ -63,6 +63,30 @@ entity HISTORICAL_CURVES {
         FIVE_Y     : Decimal(25, 20)@title : 'Five Year';
 }
 
+entity HISTORICAL_CURVES_WEEK {
+    key DATE       : Date           @title : 'Date';
+        SPOT       : Decimal(25, 20)@title : 'Spot Price';
+        OVERNIGHT  : Decimal(25, 20)@title : 'Overnight';
+        WEEK       : Decimal(25, 20)@title : 'Week';
+        ONE_M      : Decimal(25, 20)@title : 'One Month';
+        TWO_M      : Decimal(25, 20)@title : 'Two Month';
+        THREE_M    : Decimal(25, 20)@title : 'Three Month';
+        FOUR_M     : Decimal(25, 20)@title : 'Four Month';
+        FIVE_M     : Decimal(25, 20)@title : 'Five Month';
+        SIX_M      : Decimal(25, 20)@title : 'Six Month';
+        SEVEN_M    : Decimal(25, 20)@title : 'Seven Month';
+        EIGHT_M    : Decimal(25, 20)@title : 'Eight Month';
+        NINE_M     : Decimal(25, 20)@title : 'Nine Month';
+        TEN_M      : Decimal(25, 20)@title : 'Ten Month';
+        ELEVEN_M   : Decimal(25, 20)@title : 'Eleven Month';
+        ONE_Y      : Decimal(25, 20)@title : 'One Year';
+        EIGHTEEN_M : Decimal(25, 20)@title : 'Eighteen Month';
+        TWO_Y      : Decimal(25, 20)@title : 'Two Year';
+        THREE_Y    : Decimal(25, 20)@title : 'Three Year';
+        FOUR_Y     : Decimal(25, 20)@title : 'Four Year';
+        FIVE_Y     : Decimal(25, 20)@title : 'Five Year';
+}
+
 entity SPOT_FORECAST_OUT {
     key TYPE      : String(20);
     key TIMESTAMP : Integer;

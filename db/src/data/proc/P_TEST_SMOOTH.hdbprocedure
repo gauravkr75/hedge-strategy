@@ -1,6 +1,8 @@
 PROCEDURE "P_TEST_SMOOTH"(
+    IN IV_SMOOTH_TYPE INTEGER,
     OUT OT_FORECAST "TT_FORECAST",
-    OUT OT_STATISTICS "TT_STATISTICS"
+    OUT OT_STATISTICS "TT_STATISTICS",
+    OUT OT_STATISTICS_AUTO_EXP "TT_STATISTICS_AUTO_EXP"
   ) 
   LANGUAGE SQLSCRIPT 
   SQL SECURITY INVOKER AS 
@@ -10,21 +12,48 @@ BEGIN
     DECLARE T_FORECAST "TT_FORECAST";
     DECLARE T_STATISTICS "TT_STATISTICS";
     DECLARE T_SMOOTH_PARAMS "TT_TRI_EXP_SMOOTH_PARAMS";
+    DECLARE T_AUTO_SMOTH_PARAMS "TT_AUTO_EXP_SMOOTH_PARAMS";
 
     T_SMOOTH_PARAMS = SELECT "NAME",
                             "INTARGS",
                             "DOUBLEARGS",
                             "STRINGARGS"
                         FROM "T_TRI_EXP_SMOOTH_PARAMS";
+    
+    T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
+                                    3 AS INT_VALUE, 
+                                    NULL AS DOUBLE_VALUE, 
+                                    NULL AS STRING_VALUE
+                            FROM "SY_DUMMY"
+                                UNION                  
+                            SELECT 'MODELSELECTION' AS PARAM_NAME,
+                                    1 AS INT_VALUE, 
+                                    NULL AS DOUBLE_VALUE, 
+                                    NULL AS STRING_VALUE
+                            FROM "SY_DUMMY"
+                                UNION
+                            SELECT 'CYCLE' AS PARAM_NAME,
+                                    52 AS INT_VALUE, 
+                                    NULL AS DOUBLE_VALUE, 
+                                    NULL AS STRING_VALUE
+                            FROM "SY_DUMMY";
 
-    SELECT MIN(DATE) INTO V_MIN_DATE
-        FROM "T_HISTORICAL_CURVES";
+    IF IV_SMOOTH_TYPE = 1 THEN
 
-    T_SPOT = SELECT /* (DAYS_BETWEEN(:V_MIN_DATE, DATE) + 1) */TO_INTEGER("$rowid$") AS ID, SPOT
-                FROM "T_HISTORICAL_CURVES" ORDER BY DATE;
+        T_SPOT = SELECT /* (DAYS_BETWEEN(:V_MIN_DATE, DATE) + 1) */TO_INTEGER("$rowid$") AS ID, SPOT
+                FROM "T_HISTORICAL_CURVES_WEEK" ORDER BY DATE;
 
-    CALL "PAL_TRIPLE_EXPSMOOTH"(P1 => :T_SPOT, P2 => :T_SMOOTH_PARAMS, P3 => :OT_FORECAST, P4 => :OT_STATISTICS);
+        CALL "PAL_TRIPLE_EXPSMOOTH"(P1 => :T_SPOT, P2 => :T_SMOOTH_PARAMS, P3 => :OT_FORECAST, P4 => :OT_STATISTICS);
 
+    ELSEIF IV_SMOOTH_TYPE = 2 THEN
+
+        T_SPOT = SELECT /* (DAYS_BETWEEN(:V_MIN_DATE, DATE) + 1) */TO_INTEGER("$rowid$") AS ID, SPOT
+                FROM "T_HISTORICAL_CURVES_WEEK" ORDER BY DATE;
+
+        CALL "PAL_AUTO_EXPSMOOTH"(P1 => :T_SPOT, P2 => :T_AUTO_SMOTH_PARAMS, P3 => :OT_FORECAST, P4 => :OT_STATISTICS_AUTO_EXP);
+
+    END IF;
+    
     DELETE FROM "T_SPOT_FORECAST_OUT";
 
     INSERT INTO "T_SPOT_FORECAST_OUT"
