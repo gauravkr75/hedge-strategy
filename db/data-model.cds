@@ -104,3 +104,21 @@ entity TRI_EXP_SMOOTH_PARAMS {
         DOUBLEARGS : Double;
         STRINGARGS : String(100);
 }
+
+entity MONTH_RANGES {
+    key MONTH_START     : String(3);
+    key MONTH_END       : String(3);
+        MONTH_START_NUM : Integer;
+        MONTH_END_NUM   : Integer;
+        DURATION        : Integer;
+}
+
+entity LAYER_MONTH_COMBO {
+    key LAYER       : Integer;
+    key LAYER_KEY   : String(40);
+    key BLOCK_KEY   : String(10);
+    key RECORD_KEY  : String(10);
+        START_MONTH : Integer;
+        END_MONTH   : Integer;
+        DURATION    : Integer;
+}

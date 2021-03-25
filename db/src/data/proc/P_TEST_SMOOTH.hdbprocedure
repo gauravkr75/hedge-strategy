@@ -36,6 +36,12 @@ BEGIN
                                     52 AS INT_VALUE, 
                                     NULL AS DOUBLE_VALUE, 
                                     NULL AS STRING_VALUE
+                            FROM "SY_DUMMY"
+                                UNION
+                            SELECT 'FORECAST_MODEL_NAME' AS PARAM_NAME,
+                                    NULL AS INT_VALUE, 
+                                    NULL AS DOUBLE_VALUE, 
+                                    'TESM' AS STRING_VALUE
                             FROM "SY_DUMMY";
 
     IF IV_SMOOTH_TYPE = 1 THEN
