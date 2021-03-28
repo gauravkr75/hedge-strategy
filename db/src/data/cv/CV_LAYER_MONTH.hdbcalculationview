@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_LAYER_MONTH" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Month layer"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="T_LAYER_MONTH_COMBO">
+    <resourceUri>T_LAYER_MONTH_COMBO</resourceUri>
+  </DataSource>
+  <DataSource id="TF_MONTH_INFO" type="TABLE_FUNCTION">
+    <resourceUri>TF_MONTH_INFO</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_3$$$$TF_MONTH_INFO$$" type="TABLE_FUNCTION">
+    <resourceUri>TF_MONTH_INFO</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY"/>
+      <viewAttribute id="BLOCK_KEY"/>
+      <viewAttribute id="RECORD_KEY"/>
+      <viewAttribute id="START_MONTH"/>
+      <viewAttribute id="END_MONTH"/>
+      <viewAttribute id="DURATION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="T_LAYER_MONTH_COMBO"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="MONTH_NUM"/>
+      <viewAttribute id="MONTH_END_DAY"/>
+      <viewAttribute id="MONTH_DESC"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TF_MONTH_INFO"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <viewAttributes>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="MONTH_NUM"/>
+      <viewAttribute id="MONTH_END_DAY"/>
+      <viewAttribute id="MONTH_DESC"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_3$$$$TF_MONTH_INFO$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY"/>
+      <viewAttribute id="BLOCK_KEY"/>
+      <viewAttribute id="END_MONTH"/>
+      <viewAttribute id="DURATION"/>
+      <viewAttribute id="RECORD_KEY"/>
+      <viewAttribute id="START_MONTH"/>
+      <viewAttribute hidden="true" id="JOIN$END_MONTH$MONTH_NUM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER_KEY" source="LAYER_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BLOCK_KEY" source="BLOCK_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DURATION" source="DURATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_KEY" source="RECORD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="START_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$END_MONTH$MONTH_NUM" source="END_MONTH"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="MONTH_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$END_MONTH$MONTH_NUM" source="MONTH_NUM"/>
+    </input>
+    <joinAttribute name="JOIN$END_MONTH$MONTH_NUM"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY"/>
+      <viewAttribute id="BLOCK_KEY"/>
+      <viewAttribute id="START_MONTH"/>
+      <viewAttribute id="END_MONTH"/>
+      <viewAttribute id="DURATION"/>
+      <viewAttribute id="RECORD_KEY"/>
+      <viewAttribute hidden="true" id="JOIN$START_MONTH$MONTH_NUM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER_KEY" source="LAYER_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BLOCK_KEY" source="BLOCK_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="END_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DURATION" source="DURATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_KEY" source="RECORD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$START_MONTH$MONTH_NUM" source="START_MONTH"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="MONTH_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$START_MONTH$MONTH_NUM" source="MONTH_NUM"/>
+    </input>
+    <joinAttribute name="JOIN$START_MONTH$MONTH_NUM"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1_2">
+  <attributes>
+    <attribute id="LAYER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="LAYER"/>
+    </attribute>
+    <attribute id="LAYER_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER_KEY"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="LAYER_KEY"/>
+    </attribute>
+    <attribute id="BLOCK_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BLOCK_KEY"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="BLOCK_KEY"/>
+    </attribute>
+    <attribute id="RECORD_KEY" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORD_KEY"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="RECORD_KEY"/>
+    </attribute>
+    <attribute id="START_MONTH" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MONTH_DESC"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="START_MONTH"/>
+    </attribute>
+    <attribute id="END_MONTH" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MONTH_DESC"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="END_MONTH"/>
+    </attribute>
+    <attribute id="DURATION" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DURATION"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="DURATION"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+
+
+  <sortAttributes>
+
+    <sortAttribute id="LAYER" direction="ASC"/>
+
+    <sortAttribute id="LAYER_KEY" direction="ASC"/>
+
+    <sortAttribute id="BLOCK_KEY" direction="ASC"/>
+
+    <sortAttribute id="RECORD_KEY" direction="ASC"/>
+
+  </sortAttributes>
+
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="361.75405278666415" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999997" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="236.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="167.48486328125"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="183.58740234375"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="183.58740234375"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

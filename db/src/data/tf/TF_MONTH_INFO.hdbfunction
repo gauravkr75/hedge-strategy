@@ -1,0 +1,99 @@
+FUNCTION "TF_MONTH_INFO"( )
+    RETURNS TABLE(
+                    MONTH_NUM INTEGER,
+                    MONTH NVARCHAR(03),
+                    MONTH_DESC NVARCHAR(20),
+                    MONTH_END_DAY INTEGER
+                ) 
+    LANGUAGE SQLSCRIPT 
+    SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+
+    T_OUT = SELECT 1 AS MONTH_NUM,
+						'Jan' AS MONTH,
+						'January' AS MONTH_DESC,
+						'31' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+					UNION
+				SELECT 2 AS MONTH_NUM,
+						'Feb' AS MONTH,
+						'February' AS MONTH_DESC,
+						'28' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+						UNION
+				SELECT 3 AS MONTH_NUM,
+						'Mar' AS MONTH,
+						'March' AS MONTH_DESC,
+						'31' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+						UNION
+				SELECT 4 AS MONTH_NUM,
+						'Apr' AS MONTH,
+						'April' AS MONTH_DESC,
+						'30' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+						UNION
+				SELECT 5 AS MONTH_NUM,
+						'May' AS MONTH,
+						'May' AS MONTH_DESC,
+						'31' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+						UNION
+				SELECT 6 AS MONTH_NUM,
+						'Jun' AS MONTH,
+						'June' AS MONTH_DESC,
+						'30' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+						UNION
+				SELECT 7 AS MONTH_NUM,
+						'Jul' AS MONTH,
+						'July' AS MONTH_DESC,
+						'31' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+						UNION
+				SELECT 8 AS MONTH_NUM,
+						'Aug' AS MONTH,
+						'August' AS MONTH_DESC,
+						'31' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+						UNION
+				SELECT 9 AS MONTH_NUM,
+						'Sep' AS MONTH,
+						'Spetember' AS MONTH_DESC,
+						'30' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+						UNION
+				SELECT 10 AS MONTH_NUM,
+						'Oct' AS MONTH,
+						'October' AS MONTH_DESC,
+						'31' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+						UNION
+				SELECT 11 AS MONTH_NUM,
+						'Nov' AS MONTH,
+						'November' AS MONTH_DESC,
+						'30' AS MONTH_END_DAY
+					FROM
+					"SY_DUMMY"
+						UNION
+				SELECT 12 AS MONTH_NUM,
+						'Dec' AS MONTH,
+						'December' AS MONTH_DESC,
+						'31' AS MONTH_END_DAY
+					FROM
+                    "SY_DUMMY";
+    RETURN :T_OUT;
+END;
