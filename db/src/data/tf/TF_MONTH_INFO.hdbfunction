@@ -1,6 +1,7 @@
 FUNCTION "TF_MONTH_INFO"( )
     RETURNS TABLE(
                     MONTH_NUM INTEGER,
+                    MONTH_NUM_CHAR NVARCHAR(02),
                     MONTH NVARCHAR(03),
                     MONTH_DESC NVARCHAR(20),
                     MONTH_END_DAY INTEGER
@@ -13,83 +14,95 @@ BEGIN
     ****************************/
 
     T_OUT = SELECT 1 AS MONTH_NUM,
+                        '01' AS MONTH_NUM_CHAR,
 						'Jan' AS MONTH,
 						'January' AS MONTH_DESC,
 						'31' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 					UNION
-				SELECT 2 AS MONTH_NUM,
+                SELECT 2 AS MONTH_NUM,
+                        '02' AS MONTH_NUM_CHAR,
 						'Feb' AS MONTH,
 						'February' AS MONTH_DESC,
 						'28' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 						UNION
-				SELECT 3 AS MONTH_NUM,
+                SELECT 3 AS MONTH_NUM,
+                        '03' AS MONTH_NUM_CHAR,
 						'Mar' AS MONTH,
 						'March' AS MONTH_DESC,
 						'31' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 						UNION
-				SELECT 4 AS MONTH_NUM,
+                SELECT 4 AS MONTH_NUM,
+                        '04' AS MONTH_NUM_CHAR,
 						'Apr' AS MONTH,
 						'April' AS MONTH_DESC,
 						'30' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 						UNION
-				SELECT 5 AS MONTH_NUM,
+                SELECT 5 AS MONTH_NUM,
+                        '05' AS MONTH_NUM_CHAR,
 						'May' AS MONTH,
 						'May' AS MONTH_DESC,
 						'31' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 						UNION
-				SELECT 6 AS MONTH_NUM,
+                SELECT 6 AS MONTH_NUM,
+                        '06' AS MONTH_NUM_CHAR,
 						'Jun' AS MONTH,
 						'June' AS MONTH_DESC,
 						'30' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 						UNION
-				SELECT 7 AS MONTH_NUM,
+                SELECT 7 AS MONTH_NUM,
+                        '07' AS MONTH_NUM_CHAR,
 						'Jul' AS MONTH,
 						'July' AS MONTH_DESC,
 						'31' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 						UNION
-				SELECT 8 AS MONTH_NUM,
+                SELECT 8 AS MONTH_NUM,
+                        '08' AS MONTH_NUM_CHAR,
 						'Aug' AS MONTH,
 						'August' AS MONTH_DESC,
 						'31' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 						UNION
-				SELECT 9 AS MONTH_NUM,
+                SELECT 9 AS MONTH_NUM,
+                        '09' AS MONTH_NUM_CHAR,
 						'Sep' AS MONTH,
-						'Spetember' AS MONTH_DESC,
+						'September' AS MONTH_DESC,
 						'30' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 						UNION
-				SELECT 10 AS MONTH_NUM,
+                SELECT 10 AS MONTH_NUM,
+                        '10' AS MONTH_NUM_CHAR,
 						'Oct' AS MONTH,
 						'October' AS MONTH_DESC,
 						'31' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 						UNION
-				SELECT 11 AS MONTH_NUM,
+                SELECT 11 AS MONTH_NUM,
+                        '11' AS MONTH_NUM_CHAR,
 						'Nov' AS MONTH,
 						'November' AS MONTH_DESC,
 						'30' AS MONTH_END_DAY
 					FROM
 					"SY_DUMMY"
 						UNION
-				SELECT 12 AS MONTH_NUM,
+                SELECT 12 AS MONTH_NUM,
+                        '12' AS MONTH_NUM_CHAR,
 						'Dec' AS MONTH,
 						'December' AS MONTH_DESC,
 						'31' AS MONTH_END_DAY
