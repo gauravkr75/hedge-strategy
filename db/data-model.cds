@@ -122,3 +122,18 @@ entity LAYER_MONTH_COMBO {
         END_MONTH   : Integer;
         DURATION    : Integer;
 }
+
+entity SPOT_AND_QUOTE {
+    key QUOTE_DATE : Date;
+    key TENOR      : String(2);
+    key FROM_CURR  : String(5);
+    key TO_CURR    : String(5);
+        Price      : Decimal(9, 5);
+}
+
+entity SPOT_RATES {
+    key YEAR          : Integer;
+    key MONTH         : String(3);
+    key TENOR     : Integer;
+        AVG_SPOT_RATE : Decimal(9, 5);
+}

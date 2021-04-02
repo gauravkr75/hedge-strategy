@@ -15,7 +15,7 @@
     "sap-hdbext-promisfied": "^2.202101.1"
   },
   "devDependencies": {
-    "@sap/hdi-deploy": "^3.11.15",
+    "@sap/hdi-deploy": "^4",
     "@sap/ux-specification": "^1.84.0"
   },
   "scripts": {

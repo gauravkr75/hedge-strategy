@@ -34,6 +34,8 @@
       <viewAttribute id="MONTH_NUM"/>
       <viewAttribute id="MONTH_END_DAY"/>
       <viewAttribute id="MONTH_DESC"/>
+    
+      <viewAttribute id="MONTH_NUM_CHAR"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="TF_MONTH_INFO"/>
@@ -44,6 +46,8 @@
       <viewAttribute id="MONTH_NUM"/>
       <viewAttribute id="MONTH_END_DAY"/>
       <viewAttribute id="MONTH_DESC"/>
+    
+      <viewAttribute id="MONTH_NUM_CHAR"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Projection_3$$$$TF_MONTH_INFO$$"/>
@@ -57,7 +61,6 @@
       <viewAttribute id="DURATION"/>
       <viewAttribute id="RECORD_KEY"/>
       <viewAttribute id="START_MONTH"/>
-      <viewAttribute hidden="true" id="JOIN$END_MONTH$MONTH_NUM"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Projection_1">
@@ -66,24 +69,23 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="BLOCK_KEY" source="BLOCK_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DURATION" source="DURATION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_KEY" source="RECORD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="END_MONTH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="START_MONTH"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$END_MONTH$MONTH_NUM" source="END_MONTH"/>
     </input>
     <input node="Projection_3">
-      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="MONTH_DESC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$END_MONTH$MONTH_NUM" source="MONTH_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="MONTH_NUM"/>
     </input>
-    <joinAttribute name="JOIN$END_MONTH$MONTH_NUM"/>
+    <joinAttribute name="END_MONTH"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
     <viewAttributes>
       <viewAttribute id="LAYER"/>
       <viewAttribute id="LAYER_KEY"/>
       <viewAttribute id="BLOCK_KEY"/>
-      <viewAttribute id="START_MONTH"/>
       <viewAttribute id="END_MONTH"/>
       <viewAttribute id="DURATION"/>
       <viewAttribute id="RECORD_KEY"/>
+      <viewAttribute id="START_MONTH"/>
       <viewAttribute hidden="true" id="JOIN$START_MONTH$MONTH_NUM"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -143,13 +145,18 @@
 
   <sortAttributes>
 
+
     <sortAttribute id="LAYER" direction="ASC"/>
+
 
     <sortAttribute id="LAYER_KEY" direction="ASC"/>
 
+
     <sortAttribute id="BLOCK_KEY" direction="ASC"/>
 
+
     <sortAttribute id="RECORD_KEY" direction="ASC"/>
+
 
   </sortAttributes>
 
@@ -157,41 +164,41 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="361.75405278666415" y="112"/>
+      <upperLeftCorner x="361" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999997" y="391.9999976158142"/>
+      <upperLeftCorner x="91" y="391"/>
       <rectangleSize height="30" width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="236.9999988079071"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="167.48486328125"/>
-    </shape>
-    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="183.58740234375"/>
-    </shape>
-    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
-      <upperLeftCorner x="620" y="30"/>
-      <rectangleSize width="183.58740234375"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="512" y="391.9999976158142"/>
+      <upperLeftCorner x="512" y="391"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="391.9999976158142"/>
+      <upperLeftCorner x="302" y="391"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-  </shapes>
+  
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="236"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="183"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="167"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="183"/>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>
