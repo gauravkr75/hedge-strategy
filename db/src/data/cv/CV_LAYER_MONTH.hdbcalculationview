@@ -61,6 +61,7 @@
       <viewAttribute id="DURATION"/>
       <viewAttribute id="RECORD_KEY"/>
       <viewAttribute id="START_MONTH"/>
+      <viewAttribute hidden="true" id="JOIN$END_MONTH$MONTH_NUM"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Projection_1">
@@ -69,13 +70,14 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="BLOCK_KEY" source="BLOCK_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DURATION" source="DURATION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_KEY" source="RECORD_KEY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="END_MONTH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="START_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$END_MONTH$MONTH_NUM" source="END_MONTH"/>
     </input>
     <input node="Projection_3">
-      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="MONTH_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="MONTH_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$END_MONTH$MONTH_NUM" source="MONTH_NUM"/>
     </input>
-    <joinAttribute name="END_MONTH"/>
+    <joinAttribute name="JOIN$END_MONTH$MONTH_NUM"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
     <viewAttributes>

@@ -133,7 +133,20 @@ entity SPOT_AND_QUOTE {
 
 entity SPOT_RATES {
     key YEAR          : Integer;
-    key MONTH         : String(3);
-    key TENOR     : Integer;
+    key MONTH         : Integer;
+    key TENOR         : Integer;
         AVG_SPOT_RATE : Decimal(9, 5);
+}
+
+entity LAYER_YEAR_SPOT_QUOTE {
+    key LAYER       : Integer;
+    key YEAR        : Integer;
+    key LAYER_KEY   : String(40);
+    key BLOCK_KEY   : String(10);
+    key RECORD_KEY  : String(10);
+        START_MONTH : Integer;
+        END_MONTH   : Integer;
+        SPOT_PRICE  : Decimal(9, 5);
+        QUOTE_PRICE : Decimal(9, 5);
+        PNL         : Decimal(9, 5);
 }
