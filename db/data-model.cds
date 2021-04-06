@@ -150,3 +150,26 @@ entity LAYER_YEAR_SPOT_QUOTE {
         QUOTE_PRICE : Decimal(9, 5);
         PNL         : Decimal(9, 5);
 }
+
+entity SPOT_QUOTE_WEEKLY {
+    key QUOTE_DATE : Date;
+    key TENOR      : String(2);
+    key FROM_CURR  : String(5);
+    key TO_CURR    : String(5);
+        Price      : Decimal(9, 5);
+}
+
+entity SPOT_QUOTE_WEEKLY_FORECAST {
+    key QUOTE_DATE : Date;
+    key TENOR      : String(2);
+    key FROM_CURR  : String(5);
+    key TO_CURR    : String(5);
+        Price      : Decimal(9, 5);
+}
+
+entity SPOT_RATES_FORECAST {
+    key YEAR          : Integer;
+    key MONTH         : Integer;
+    key TENOR         : Integer;
+        AVG_SPOT_RATE : Decimal(9, 5);
+}

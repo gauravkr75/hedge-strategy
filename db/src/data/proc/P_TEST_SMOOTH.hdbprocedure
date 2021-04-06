@@ -13,6 +13,13 @@ BEGIN
     DECLARE T_STATISTICS "TT_STATISTICS";
     DECLARE T_SMOOTH_PARAMS "TT_TRI_EXP_SMOOTH_PARAMS";
     DECLARE T_AUTO_SMOTH_PARAMS "TT_AUTO_EXP_SMOOTH_PARAMS";
+    DECLARE I INTEGER;
+    DECLARE V_TENOR NVARCHAR(02);
+    DECLARE V_MAX_DATE DATE;
+    DECLARE V_MIN_TIMESTAMP INTEGER;
+    DECLARE V_FROM_CURR NVARCHAR(5);
+    DECLARE V_TO_CURR NVARCHAR(5);
+    DECLARE T_RESULT "T_SPOT_QUOTE_WEEKLY";
 
     T_SMOOTH_PARAMS = SELECT "NAME",
                             "INTARGS",
@@ -21,7 +28,7 @@ BEGIN
                         FROM "T_TRI_EXP_SMOOTH_PARAMS";
     
     T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
-                                    3 AS INT_VALUE, 
+                                    52 AS INT_VALUE, 
                                     NULL AS DOUBLE_VALUE, 
                                     NULL AS STRING_VALUE
                             FROM "SY_DUMMY"
@@ -36,13 +43,13 @@ BEGIN
                                     52 AS INT_VALUE, 
                                     NULL AS DOUBLE_VALUE, 
                                     NULL AS STRING_VALUE
-                            FROM "SY_DUMMY"
-                                UNION
-                            SELECT 'FORECAST_MODEL_NAME' AS PARAM_NAME,
-                                    NULL AS INT_VALUE, 
-                                    NULL AS DOUBLE_VALUE, 
-                                    'TESM' AS STRING_VALUE
                             FROM "SY_DUMMY";
+                            --     UNION
+                            -- SELECT 'FORECAST_MODEL_NAME' AS PARAM_NAME,
+                            --         NULL AS INT_VALUE, 
+                            --         NULL AS DOUBLE_VALUE, 
+                            --         'TESM' AS STRING_VALUE
+                            --FROM "SY_DUMMY";
 
     IF IV_SMOOTH_TYPE = 1 THEN
 
@@ -53,18 +60,57 @@ BEGIN
 
     ELSEIF IV_SMOOTH_TYPE = 2 THEN
 
-        T_SPOT = SELECT /* (DAYS_BETWEEN(:V_MIN_DATE, DATE) + 1) */TO_INTEGER("$rowid$") AS ID, SPOT
-                FROM "T_HISTORICAL_CURVES_WEEK" ORDER BY DATE;
+        FOR I IN 0..12 DO
 
-        CALL "PAL_AUTO_EXPSMOOTH"(P1 => :T_SPOT, P2 => :T_AUTO_SMOTH_PARAMS, P3 => :OT_FORECAST, P4 => :OT_STATISTICS_AUTO_EXP);
+            IF I < 10 THEN
+                SELECT CONCAT('0', TO_NVARCHAR(:I)) INTO V_TENOR FROM SY_DUMMY;
+            ELSE
+                SELECT TO_NVARCHAR(:I) INTO V_TENOR FROM SY_DUMMY;
+            END IF;
+
+            T_DATA = SELECT /* (DAYS_BETWEEN(:V_MIN_DATE, DATE) + 1) */TO_INTEGER("$rowid$") AS ID, PRICE
+                    FROM "T_SPOT_QUOTE_WEEKLY" WHERE TENOR = :V_TENOR ORDER BY QUOTE_DATE;
+            
+            SELECT MAX(QUOTE_DATE) INTO V_MAX_DATE FROM T_SPOT_QUOTE_WEEKLY WHERE TENOR = :V_TENOR;
+            SELECT TOP 1 FROM_CURR INTO V_FROM_CURR FROM T_SPOT_QUOTE_WEEKLY WHERE TENOR = :V_TENOR;
+            SELECT TOP 1 TO_CURR INTO V_TO_CURR FROM T_SPOT_QUOTE_WEEKLY WHERE TENOR = :V_TENOR;
+
+            CALL "PAL_AUTO_EXPSMOOTH"(P1 => :T_DATA, P2 => :T_AUTO_SMOTH_PARAMS, P3 => :OT_FORECAST, P4 => :OT_STATISTICS_AUTO_EXP);
+            
+            T_TEMP = SELECT * FROM :OT_FORECAST WHERE PI1_LOWER IS NOT NULL ORDER BY TIMESTAMP;
+
+            SELECT MIN(TIMESTAMP) INTO V_MIN_TIMESTAMP FROM :T_TEMP;
+
+            T_OUT = SELECT ADD_DAYS(:V_MAX_DATE, (( MOD (TIMESTAMP, :V_MIN_TIMESTAMP - 1) ) * 7)) AS QUOTE_DATE, 
+                            :V_TENOR AS TENOR, 
+                            :V_FROM_CURR AS FROM_CURR,
+                            :V_TO_CURR AS TO_CURR,
+                            TO_DECIMAL(VALUE, 9, 5) AS PRICE
+                        FROM :T_TEMP;
+
+            :T_RESULT.INSERT(:T_OUT);
+
+        END FOR;
 
     END IF;
     
-    DELETE FROM "T_SPOT_FORECAST_OUT";
+    DELETE FROM "T_SPOT_QUOTE_WEEKLY_FORECAST";
 
-    INSERT INTO "T_SPOT_FORECAST_OUT"
-    SELECT 'Spot' AS TYPE, TIMESTAMP, VALUE, PI1_LOWER,
-            PI1_UPPER, PI2_LOWER, PI2_UPPER
-        FROM :OT_FORECAST;
+    INSERT INTO "T_SPOT_QUOTE_WEEKLY_FORECAST"
+    SELECT * FROM :T_RESULT;
+
+    T_AVG_PRICE = SELECT YEAR, MONTH, TENOR, AVG(AVG_SPOT_RATE) AS AVG_SPOT_RATE
+                    FROM 
+                    ( SELECT
+                        YEAR("QUOTE_DATE") AS YEAR,
+                        MONTH("QUOTE_DATE") AS MONTH,
+                        "TENOR",
+                        "PRICE" AS AVG_SPOT_RATE
+                    FROM :T_RESULT )
+                    GROUP BY MONTH, YEAR, TENOR;
+
+    DELETE FROM "T_SPOT_RATES_FORECAST";
+    INSERT INTO "T_SPOT_RATES_FORECAST"
+    SELECT * FROM :T_AVG_PRICE;
     
 END

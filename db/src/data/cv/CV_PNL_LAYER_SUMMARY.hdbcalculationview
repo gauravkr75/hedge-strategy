@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_PNL_LAYER_SUMMARY" applyPrivilegeType="NONE" dataCategory="CUBE" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CV_PNL_LAYER_SUMMARY"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="CV_LAYER_PNL_BACKCASTING">
+    <resourceUri>CV_LAYER_PNL_BACKCASTING</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+
+<logicalModel id="CV_LAYER_PNL_BACKCASTING">
+  <attributes>
+    <attribute id="LAYER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER"/>
+      <keyMapping columnObjectName="CV_LAYER_PNL_BACKCASTING" columnName="LAYER"/>
+    </attribute>
+    <attribute id="LAYER_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER_KEY"/>
+      <keyMapping columnObjectName="CV_LAYER_PNL_BACKCASTING" columnName="LAYER_KEY"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="PNL" order="3" aggregationType="sum" measureType="simple" unconverted="false">
+      <descriptions defaultDescription="PNL"/>
+      <measureMapping columnObjectName="CV_LAYER_PNL_BACKCASTING" columnName="PNL"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+
+
+  <localDimensions/>
+
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>

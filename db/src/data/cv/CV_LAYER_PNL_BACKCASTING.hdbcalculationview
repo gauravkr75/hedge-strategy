@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_LAYER_PNL" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_LAYER_PNL_BACKCASTING" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="CV_LAYER_PNL"/>
 <localVariables/>
 <variableMappings/>
@@ -100,7 +100,7 @@
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="PNL" datatype="DECIMAL" length="9" scale="5" expressionLanguage="SQL">
-        <formula>&quot;SPOT_PRICE&quot; - &quot;QUOTE_PRICE&quot;</formula>
+        <formula>( &quot;SPOT_PRICE&quot; - &quot;QUOTE_PRICE&quot; )  / &quot;LAYER&quot;</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="Join_1">
