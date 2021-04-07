@@ -1,5 +1,8 @@
 annotate CatalogService.Layer with @(UI : {
-    SelectionFields : [YEAR, SMART_KEY],
+    SelectionFields : [
+    YEAR,
+    SMART_KEY
+    ],
     LineItem        : [
     {
         $Type  : 'UI.DataFieldForAction',
@@ -12,7 +15,10 @@ annotate CatalogService.Layer with @(UI : {
         Label  : 'Flush Data'
     },
 
-    {Value : SMART_KEY, Label : 'Smart Key'},
+    {
+        Value : SMART_KEY,
+        Label : 'Smart Key'
+    },
     //{Value : SIMULATION_ID, Label : 'Simulation ID'},
 
     {Value : YEAR},
@@ -39,3 +45,50 @@ annotate CatalogService.Layer with @(UI : {
     {Value : LAYER_PNL}
     ]
 });
+
+annotate CatalogService.LayerSummary with @(UI : {
+    SelectionFields : [Layer],
+    LineItem        : [
+    {Value : LAYER},
+    {Value : LAYER_KEY},
+    {Value : BACKCASTING_PNL},
+    {Value : FORECASTING_PNL}
+    ]
+});
+
+@sap.semantics :                        'aggregate'
+annotate CatalogService.Backcasting with @(
+    Analytics : {Query : true},
+    UI        : {
+        LineItem                                     : [
+        {Value : LAYER},
+        {value : LAYER_KEY},
+        {Value : BLOCK_KEY},
+        {Value : RECORD_KEY},
+        {Value : START_MONTH},
+        {Value : END_MONTH},
+        {Value : QUOTE_YEAR},
+        {Value : QUOTE_PRICE},
+        {Value : SPOT_YEAR},
+        {Value : SPOT_PRICE},
+        {Value : PNL}
+        ],
+        SelectionPresentationVariant #DefaultVariant : {
+            PresentationVariant : DefaultPresentVariant,
+            SelectionVariant    : DefaultSelectVariant
+        },
+        PresentationVariant #DefaultPresentVariant   : {Visualizations : ['@UI.LineItem#Default']}
+    }
+) {
+    LAYER       @sap.aggregation.role : 'dimension';
+    LAYER_KEY   @sap.aggregation.role : 'dimension';
+    BLOCK_KEY   @sap.aggregation.role : 'dimension';
+    RECORD_KEY  @sap.aggregation.role : 'dimension';
+    START_MONTH @sap.aggregation.role : 'dimension';
+    END_MONTH   @sap.aggregation.role : 'dimension';
+    QUOTE_YEAR  @sap.aggregation.role : 'dimension';
+    QUOTE_PRICE @DefaultAggregation   : #SUM  @sap.aggregation.role : 'measure';
+    SPOT_YEAR   @sap.aggregation.role : 'dimension';
+    SPOT_PRICE  @DefaultAggregation   : #SUM  @sap.aggregation.role : 'measure';
+    PNL         @DefaultAggregation   : #SUM  @sap.aggregation.role : 'measure';
+};
