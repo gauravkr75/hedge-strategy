@@ -184,9 +184,16 @@ context CV {
         key![LAYER_KEY]       : String(40)   @title : 'Layer Key';
            ![BACKCASTING_PNL] : Decimal(9, 5)@title : 'Backcasting PNL';
            ![FORECASTING_PNL] : Decimal(9, 5)@title : 'Forecasting PNL';
+           ToBackcasting      : Association to many LAYER_PNL_BACKCASTING
+                                    on  ToBackcasting.LAYER     = LAYER
+                                    and ToBackcasting.LAYER_KEY = LAYER_KEY;
+           ToForecasting      : Association to many LAYER_PNL_FORECASTING
+                                    on  ToForecasting.LAYER     = LAYER
+                                    and ToForecasting.LAYER_KEY = LAYER_KEY;
     }
 
     @cds.persistence.exists
+    @cds.persistence.calcview
     entity![LAYER_PNL_BACKCASTING]{
         key![LAYER]       : Integer      @title : 'Layer';
         key![LAYER_KEY]   : String(40)   @title : 'Layer Key';
@@ -199,5 +206,22 @@ context CV {
            ![SPOT_YEAR]   : Integer      @title : 'Spot Year';
            ![SPOT_PRICE]  : Decimal(9, 5)@title : 'Spot Price';
            ![PNL]         : Decimal(9, 5)@title : 'PNL';
+           PARENT         : Association to PNL_LAYER_SUMMARY;
+    }
+
+    @cds.persistence.exists
+    entity![LAYER_PNL_FORECASTING]{
+        key![LAYER]       : Integer      @title : 'Layer';
+        key![LAYER_KEY]   : String(40)   @title : 'Layer Key';
+        key![BLOCK_KEY]   : String(10)   @title : 'Block Key';
+        key![RECORD_KEY]  : String(10)   @title : 'Record Key';
+           ![START_MONTH] : Integer      @title : 'Start Month';
+           ![END_MONTH]   : Integer      @title : 'End Month';
+           ![QUOTE_YEAR]  : Integer      @title : 'Quote Year';
+           ![QUOTE_PRICE] : Decimal(9, 5)@title : 'Quote Price';
+           ![SPOT_YEAR]   : Integer      @title : 'Spot Year';
+           ![SPOT_PRICE]  : Decimal(9, 5)@title : 'Spot Price';
+           ![PNL]         : Decimal(9, 5)@title : 'PNL';
+           PARENT         : Association to PNL_LAYER_SUMMARY;
     }
 }

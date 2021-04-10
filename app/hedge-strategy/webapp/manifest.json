@@ -1,5 +1,5 @@
 {
-    "_version": "1.29.0",
+    "_version": "1.31.0",
     "sap.app": {
         "id": "hedgestrategy",
         "type": "application",
@@ -7,8 +7,8 @@
         "applicationVersion": {
             "version": "1.0.0"
         },
-        "title": "Hedging Strategy",
-        "description": "Demo of Hedging Strategy",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
         "dataSources": {
             "mainService": {
                 "uri": "/catalog/",
@@ -73,46 +73,58 @@
             "routes": [
                 {
                     "pattern": ":?query:",
-                    "name": "LayerList",
-                    "target": "LayerList"
+                    "name": "LayerSummaryList",
+                    "target": "LayerSummaryList"
                 },
                 {
-                    "pattern": "Layer({key}):?query:",
-                    "name": "LayerObjectPage",
-                    "target": "LayerObjectPage"
+                    "pattern": "LayerSummary({key}):?query:",
+                    "name": "LayerSummaryObjectPage",
+                    "target": "LayerSummaryObjectPage"
                 }
             ],
             "targets": {
-                "LayerList": {
+                "LayerSummaryList": {
                     "type": "Component",
-                    "id": "LayerList",
+                    "id": "LayerSummaryList",
                     "name": "sap.fe.templates.ListReport",
                     "options": {
                         "settings": {
-                            "entitySet": "Layer",
+                            "entitySet": "LayerSummary",
                             "variantManagement": "Page",
                             "navigation": {
-                                "Layer": {
+                                "LayerSummary": {
                                     "detail": {
-                                        "route": "LayerObjectPage"
+                                        "route": "LayerSummaryObjectPage"
                                     }
                                 }
                             },
                             "controlConfiguration": {
-                                "@com.sap.vocabularies.UI.v1.LineItem": {}
+                                "@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                }
                             }
                         }
                     }
                 },
-                "LayerObjectPage": {
+                "LayerSummaryObjectPage": {
                     "type": "Component",
-                    "id": "LayerObjectPage",
+                    "id": "LayerSummaryObjectPage",
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
-                            "entitySet": "Layer",
+                            "entitySet": "LayerSummary",
                             "navigation": {},
-                            "content": {}
+                            "content": {},
+                            "controlConfiguration": {
+                                "ToBackcasting/@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "tableSettings": {
+                                        "type": "AnalyticalTable",
+                                        "personalization": true
+                                    }
+                                }
+                            }
                         }
                     }
                 }

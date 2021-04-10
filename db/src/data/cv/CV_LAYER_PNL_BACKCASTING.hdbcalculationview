@@ -102,6 +102,13 @@
       <calculatedViewAttribute id="PNL" datatype="DECIMAL" length="9" scale="5" expressionLanguage="SQL">
         <formula>( &quot;SPOT_PRICE&quot; - &quot;QUOTE_PRICE&quot; )  / &quot;LAYER&quot;</formula>
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="PARENT_LAYER" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>&quot;LAYER&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="PARENT_LAYER_KEY" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>&quot;LAYER_KEY&quot;</formula>
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="Join_1">
       <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
@@ -169,6 +176,15 @@
     <attribute id="PNL" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PNL"/>
       <keyMapping columnObjectName="Join_2" columnName="PNL"/>
+    </attribute>
+  
+    <attribute id="PARENT_LAYER" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_LAYER"/>
+      <keyMapping columnObjectName="Join_2" columnName="PARENT_LAYER"/>
+    </attribute>
+    <attribute id="PARENT_LAYER_KEY" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_LAYER_KEY"/>
+      <keyMapping columnObjectName="Join_2" columnName="PARENT_LAYER_KEY"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

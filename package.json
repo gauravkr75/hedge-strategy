@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@sap/hdi-deploy": "^4",
-    "@sap/ux-specification": "^1.84.0"
+    "@sap/ux-specification": "^1.84.7"
   },
   "scripts": {
     "start": "npx cds run"
@@ -39,6 +39,8 @@
     }
   },
   "sapux": [
-    "app/hedgestrategy"
+    "app/hedgestrategy",
+    "app/hedge-strategy",
+    "app/test"
   ]
 }

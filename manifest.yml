@@ -1,0 +1,29 @@
+# Generated manifest.yml based on template version 0.1.0
+# appName = HedgeStrategy
+# language=nodejs
+# multiTenant=false
+---
+applications:
+# -----------------------------------------------------------------------------------
+# Backend Service
+# -----------------------------------------------------------------------------------
+- name: HedgeStrategy-srv
+  random-route: true  # for development only
+  path: srv
+  memory: 256M
+  buildpack: nodejs_buildpack
+  services:
+  - HedgeStrategy-db
+
+# -----------------------------------------------------------------------------------
+# HANA Database Content Deployer App
+# -----------------------------------------------------------------------------------
+- name: HedgeStrategy-db-deployer
+  path: db
+  no-route: true
+  health-check-type: process
+  memory: 256M
+  instances: 1
+  buildpack: nodejs_buildpack
+  services:
+  - HedgeStrategy-db

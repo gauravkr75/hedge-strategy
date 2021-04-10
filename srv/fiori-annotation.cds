@@ -47,24 +47,74 @@ annotate CatalogService.Layer with @(UI : {
 });
 
 annotate CatalogService.LayerSummary with @(UI : {
-    SelectionFields : [Layer],
-    LineItem        : [
+    SelectionFields         : [LAYER],
+    LineItem                : [
     {Value : LAYER},
     {Value : LAYER_KEY},
     {Value : BACKCASTING_PNL},
     {Value : FORECASTING_PNL}
-    ]
+    ],
+    HeaderInfo              : {
+        TypeName       : 'Hedging Strategy',
+        TypeNamePlural : 'Hedging Strategy',
+        ImageUrl       : 'sap-icon://sales-quote',
+        Title          : {Value : LAYER},
+        Description    : {Value : LAYER_KEY}
+    },
+    HeaderFacets            : [
+    {
+        $Type  : 'UI.ReferenceFacet',
+        Target : '@UI.DataPoint#BackCasting'
+    },
+    {
+        $Type  : 'UI.ReferenceFacet',
+        Target : '@UI.DataPoint#ForeCasting'
+    }
+    ],
+
+    DataPoint #BackCasting  : {
+        Value : BACKCASTING_PNL,
+        Title : 'Backcasting Profit/Loss'
+    },
+    DataPoint #ForeCasting  : {
+        Value : FORECASTING_PNL,
+        Title : 'Forecasting Profit/Loss'
+    },
+
+    Facets                  : [
+    {
+        $Type  : 'UI.ReferenceFacet',
+        Target : '@UI.FieldGroup#GeneralData',
+        Label  : 'General Info'
+    },
+    {
+        $Type  : 'UI.ReferenceFacet',
+        Target : 'ToForecasting/@UI.LineItem',
+        Label  : 'Forecasting'
+    },
+    {
+        $Type  : 'UI.ReferenceFacet',
+        Target : 'ToBackcasting/@UI.LineItem',
+        Label  : 'Backcasting'
+    }
+    ],
+
+    FieldGroup #GeneralData : {Data : [
+    {Value : LAYER},
+    {Value : LAYER_KEY}
+    ]}
+
 });
 
-@sap.semantics :                        'aggregate'
 annotate CatalogService.Backcasting with @(
-    Analytics : {Query : true},
-    UI        : {
+    sap.semantics : 'aggregate',
+    Analytics     : {Query : true},
+    UI            : {
         LineItem                                     : [
-        {Value : LAYER},
-        {value : LAYER_KEY},
-        {Value : BLOCK_KEY},
-        {Value : RECORD_KEY},
+        // {Value : LAYER},
+        // {Value : LAYER_KEY},
+        // {Value : BLOCK_KEY},
+        //{Value : RECORD_KEY},
         {Value : START_MONTH},
         {Value : END_MONTH},
         {Value : QUOTE_YEAR},
@@ -72,14 +122,24 @@ annotate CatalogService.Backcasting with @(
         {Value : SPOT_YEAR},
         {Value : SPOT_PRICE},
         {Value : PNL}
-        ],
-        SelectionPresentationVariant #DefaultVariant : {
-            PresentationVariant : DefaultPresentVariant,
-            SelectionVariant    : DefaultSelectVariant
-        },
-        PresentationVariant #DefaultPresentVariant   : {Visualizations : ['@UI.LineItem#Default']}
+        ]
+        // Chart                                        : {
+        //     Title               : 'Backcasting',
+        //     ChartType           : #Column,
+        //     Dimensions          : [LAYER],
+        //     DimensionAttributes : [{
+        //         Dimension : LAYER,
+        //         Role      : #Category
+        //     }],
+        //     Measures            : [PNL],
+        //     MeasureAttributes   : [{
+        //         Measure : PNL,
+        //         Role    : #Axis1
+        //     }]
+        // }
     }
 ) {
+
     LAYER       @sap.aggregation.role : 'dimension';
     LAYER_KEY   @sap.aggregation.role : 'dimension';
     BLOCK_KEY   @sap.aggregation.role : 'dimension';
@@ -92,3 +152,25 @@ annotate CatalogService.Backcasting with @(
     SPOT_PRICE  @DefaultAggregation   : #SUM  @sap.aggregation.role : 'measure';
     PNL         @DefaultAggregation   : #SUM  @sap.aggregation.role : 'measure';
 };
+
+annotate CatalogService.Forecasting with @(UI : {
+    HeaderInfo : {
+        TypeName       : 'Forecast',
+        TypeNamePlural : 'Forecasts',
+        Title          : {Value : LAYER},
+        Description    : {Value : LAYER_KEY}
+    },
+    LineItem   : [
+    {Value : LAYER},
+    {Value : LAYER_KEY},
+    {Value : BLOCK_KEY},
+    //{Value : RECORD_KEY},
+    {Value : START_MONTH},
+    {Value : END_MONTH},
+    {Value : QUOTE_YEAR},
+    {Value : QUOTE_PRICE},
+    {Value : SPOT_YEAR},
+    {Value : SPOT_PRICE},
+    {Value : PNL}
+    ]
+});

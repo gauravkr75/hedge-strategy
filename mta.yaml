@@ -21,7 +21,7 @@ modules:
  - name: HedgeStrategy-srv
  # ------------------------------------------------------------
    type: nodejs
-   path: gen/srv
+   path: srv
    requires:
     # Resources extracted from CAP configuration
     - name: HedgeStrategy-db
@@ -54,4 +54,5 @@ resources:
      service-plan: hdi-shared
    properties:
      hdi-service-name: ${service-name}
+
 
