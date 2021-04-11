@@ -10,7 +10,7 @@ applications:
 - name: HedgeStrategy-srv
   random-route: true  # for development only
   path: srv
-  memory: 256M
+  memory: 2048M
   buildpack: nodejs_buildpack
   services:
   - HedgeStrategy-db

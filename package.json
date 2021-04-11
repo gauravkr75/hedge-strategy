@@ -10,7 +10,6 @@
     "@sap/cds-odata-v2-adapter-proxy": "^1.5.1",
     "@sap/hana-client": "^2.7.16",
     "@sap/hdbext": "^7.1.0",
-    "@tensorflow/tfjs": "^2.8.6",
     "express": "^4",
     "sap-hdbext-promisfied": "^2.202101.1"
   },
@@ -22,9 +21,6 @@
     "start": "npx cds run"
   },
   "cds": {
-    "build": {
-      "target": "."
-    },
     "hana": {
       "deploy-format": "hdbtable"
     },
