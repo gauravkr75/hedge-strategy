@@ -20,7 +20,9 @@ service CatalogService {
     entity LayerSummary as projection on CV.PNL_LAYER_SUMMARY;
 
     @Aggregation.ApplySupported.PropertyRestrictions : true
+    @readonly
     entity Backcasting  as projection on CV.LAYER_PNL_BACKCASTING ;
+    @readonly
     entity Forecasting  as projection on CV.LAYER_PNL_FORECASTING;
     action determinePNL(@title : 'Coverage' duration : Integer, @title : 'Layer' layer : Integer) returns String;
     action flushResults() returns String;
