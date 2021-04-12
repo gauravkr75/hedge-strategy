@@ -173,6 +173,16 @@ context T {
         key TENOR         : Integer;
             AVG_SPOT_RATE : Decimal(9, 5);
     }
+
+    entity EXISTING_LAYER_HEDGE_COMBO {
+        key LAYER       : Integer;
+        key LAYER_KEY   : String(40);
+        key BLOCK_KEY   : String(10);
+        key RECORD_KEY  : String(10);
+            START_MONTH : Integer;
+            END_MONTH   : Integer;
+            DURATION    : Integer;
+    }
 }
 
 context CV {
@@ -180,16 +190,19 @@ context CV {
     @cds.persistence.exists
     @cds.persistence.calcview
     entity![PNL_LAYER_SUMMARY]{
-        key![LAYER]           : Integer      @title : 'Layer';
-        key![LAYER_KEY]       : String(40)   @title : 'Layer Key';
-           ![BACKCASTING_PNL] : Decimal(9, 5)@title : 'Backcasting PNL';
-           ![FORECASTING_PNL] : Decimal(9, 5)@title : 'Forecasting PNL';
-           ToBackcasting      : Association to many LAYER_PNL_BACKCASTING
-                                    on  ToBackcasting.LAYER     = LAYER
-                                    and ToBackcasting.LAYER_KEY = LAYER_KEY;
-           ToForecasting      : Association to many LAYER_PNL_FORECASTING
-                                    on  ToForecasting.LAYER     = LAYER
-                                    and ToForecasting.LAYER_KEY = LAYER_KEY;
+        key![LAYER]              : Integer      @title : 'Layer';
+        key![LAYER_KEY]          : String(40)   @title : 'Layer Key';
+           ![BACKCASTING_PNL]    : Decimal(9, 5)@title : 'Backcasting PNL';
+           ![FORECASTING_PNL]    : Decimal(9, 5)@title : 'Forecasting PNL';
+           EXISTING_PNL          : Decimal(9, 5)@title : 'Existing PNL';
+           RELATIVE_PNL_BACKCAST : Decimal(9, 5)@title : 'Relative Gain/Loss(Backcast)';
+           RELATIVE_PNL_FORECAST : Decimal(9, 5)@title : 'Relative Gain/Loss(Forecast)';
+           ToBackcasting         : Association to many LAYER_PNL_BACKCASTING
+                                       on  ToBackcasting.LAYER     = LAYER
+                                       and ToBackcasting.LAYER_KEY = LAYER_KEY;
+           ToForecasting         : Association to many LAYER_PNL_FORECASTING
+                                       on  ToForecasting.LAYER     = LAYER
+                                       and ToForecasting.LAYER_KEY = LAYER_KEY;
     }
 
     @cds.persistence.exists

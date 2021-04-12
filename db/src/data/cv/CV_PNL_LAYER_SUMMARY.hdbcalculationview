@@ -10,6 +10,9 @@
   <DataSource id="CV_LAYER_PNL_FORECASTING">
     <resourceUri>CV_LAYER_PNL_FORECASTING</resourceUri>
   </DataSource>
+  <DataSource id="CV_LAYER_PNL_EXISTING">
+    <resourceUri>CV_LAYER_PNL_EXISTING</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
@@ -69,25 +72,73 @@
     <joinAttribute name="LAYER"/>
     <joinAttribute name="LAYER_KEY"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_3">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY"/>
+      <viewAttribute id="PNL" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="CV_LAYER_PNL_EXISTING"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY"/>
+      <viewAttribute id="BACKCASTING_PNL"/>
+      <viewAttribute id="FORECASTING_PNL"/>
+      <viewAttribute id="EXISTING_PNL"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="RELATIVE_PNL_BACKCAST" datatype="DECIMAL" length="9" scale="5" expressionLanguage="SQL">
+        <formula>&quot;BACKCASTING_PNL&quot; - &quot;EXISTING_PNL&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="RELATIVE_PNL_FORECAST" datatype="DECIMAL" length="9" scale="5" expressionLanguage="SQL">
+        <formula>&quot;FORECASTING_PNL&quot; - &quot;EXISTING_PNL&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER_KEY" source="LAYER_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BACKCASTING_PNL" source="BACKCASTING_PNL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORECASTING_PNL" source="FORECASTING_PNL"/>
+    </input>
+    <input node="Aggregation_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXISTING_PNL" source="PNL"/>
+    </input>
+  </calculationView>
 </calculationViews>
 
-<logicalModel id="Join_1">
+<logicalModel id="Join_2">
   <attributes>
     <attribute id="LAYER" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAYER"/>
-      <keyMapping columnObjectName="Join_1" columnName="LAYER"/>
+      <keyMapping columnObjectName="Join_2" columnName="LAYER"/>
     </attribute>
     <attribute id="LAYER_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAYER_KEY"/>
-      <keyMapping columnObjectName="Join_1" columnName="LAYER_KEY"/>
+      <keyMapping columnObjectName="Join_2" columnName="LAYER_KEY"/>
     </attribute>
     <attribute id="BACKCASTING_PNL" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PNL"/>
-      <keyMapping columnObjectName="Join_1" columnName="BACKCASTING_PNL"/>
+      <descriptions defaultDescription="BACKCASTING_PNL"/>
+      <keyMapping columnObjectName="Join_2" columnName="BACKCASTING_PNL"/>
     </attribute>
     <attribute id="FORECASTING_PNL" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORECASTING_PNL"/>
+      <keyMapping columnObjectName="Join_2" columnName="FORECASTING_PNL"/>
+    </attribute>
+    <attribute id="EXISTING_PNL" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PNL"/>
-      <keyMapping columnObjectName="Join_1" columnName="FORECASTING_PNL"/>
+      <keyMapping columnObjectName="Join_2" columnName="EXISTING_PNL"/>
+    </attribute>
+    <attribute id="RELATIVE_PNL_BACKCAST" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELATIVE_PNL_BACKCAST"/>
+      <keyMapping columnObjectName="Join_2" columnName="RELATIVE_PNL_BACKCAST"/>
+    </attribute>
+    <attribute id="RELATIVE_PNL_FORECAST" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELATIVE_PNL_FORECAST"/>
+      <keyMapping columnObjectName="Join_2" columnName="RELATIVE_PNL_FORECAST"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -97,31 +148,48 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="213.23951013324876" y="112"/>
+      <upperLeftCorner x="337.8268736718046" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999997" y="461.9999988079071"/>
+      <upperLeftCorner x="91.99999999999991" y="621.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999997" y="356.9999988079071"/>
+      <upperLeftCorner x="91.99999999999991" y="516.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301.99999999999994" y="356.9999988079071"/>
+      <upperLeftCorner x="301.9999999999999" y="516.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="213.23951013324876" y="217"/>
+      <upperLeftCorner x="118.6666666666666" y="356.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Rank_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="149.38427734375"/>
+      <rectangleSize width="149"/>
     </shape>
     <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="149"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="405.8649461248091" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="337.8268736718046" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="192.96533203125"/>
+    </shape>
+    <shape modelObjectName="Aggregation_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="149.38427734375"/>
     </shape>

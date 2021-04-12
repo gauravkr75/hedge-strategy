@@ -104,7 +104,9 @@
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="PARENT_LAYER" datatype="INTEGER" expressionLanguage="SQL">
+    
         <formula>&quot;LAYER&quot;</formula>
+    
       </calculatedViewAttribute>
       <calculatedViewAttribute id="PARENT_LAYER_KEY" datatype="NVARCHAR" length="13" expressionLanguage="SQL">
         <formula>&quot;LAYER_KEY&quot;</formula>
@@ -180,7 +182,9 @@
   
     <attribute id="PARENT_LAYER" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARENT_LAYER"/>
+  
       <keyMapping columnObjectName="Join_2" columnName="PARENT_LAYER"/>
+  
     </attribute>
     <attribute id="PARENT_LAYER_KEY" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARENT_LAYER_KEY"/>
