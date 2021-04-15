@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_NUMBER_OF_SIMULATIONS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_NUMBER_OF_SIMULATIONS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="CV_LAYER_PNL_BACKCASTING">
+    <resourceUri>CV_LAYER_PNL_BACKCASTING</resourceUri>
+  </DataSource>
+  <DataSource id="CV_LAYER_PNL_FORECASTING">
+    <resourceUri>CV_LAYER_PNL_FORECASTING</resourceUri>
+  </DataSource>
+  <DataSource id="T_LAYER_MONTH_COMBO">
+    <resourceUri>T_LAYER_MONTH_COMBO</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="RECORD_PROC_BACKCAST" aggregationType="count"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="CV_LAYER_PNL_BACKCASTING">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_PROC_BACKCAST" source="BLOCK_KEY"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="RECORD_PROC_FORECAST" aggregationType="count"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="CV_LAYER_PNL_FORECASTING">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_PROC_FORECAST" source="BLOCK_KEY"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_3">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY" aggregationType="count"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="T_LAYER_MONTH_COMBO"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="RECORD_PROC_FORECAST"/>
+      <viewAttribute id="NUM_OF_SIMULATION"/>
+      <viewAttribute id="LAYER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_PROC_FORECAST" source="RECORD_PROC_FORECAST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
+    </input>
+    <input node="Aggregation_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUM_OF_SIMULATION" source="LAYER_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
+    </input>
+    <joinAttribute name="LAYER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Projection_1" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="RECORD_PROC_BACKCAST"/>
+      <viewAttribute id="RECORD_PROC_FORECAST"/>
+      <viewAttribute id="NUM_OF_SIMULATION"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="RECORD_PROC_COUNT" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>TO_INTEGER(&quot;RECORD_PROC_BACKCAST&quot;) + TO_INTEGER(&quot;RECORD_PROC_FORECAST&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_PROC_BACKCAST" source="RECORD_PROC_BACKCAST"/>
+    </input>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_PROC_FORECAST" source="RECORD_PROC_FORECAST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUM_OF_SIMULATION" source="NUM_OF_SIMULATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
+    </input>
+    <joinAttribute name="LAYER"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1_2">
+  <attributes>
+    <attribute id="LAYER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="LAYER"/>
+    </attribute>
+    <attribute id="RECORD_PROC_BACKCAST" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BLOCK_KEY"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="RECORD_PROC_BACKCAST"/>
+    </attribute>
+    <attribute id="RECORD_PROC_FORECAST" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BLOCK_KEY"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="RECORD_PROC_FORECAST"/>
+    </attribute>
+    <attribute id="RECORD_PROC_COUNT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORD_PROC_COUNT"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="RECORD_PROC_COUNT"/>
+    </attribute>
+  
+    <attribute id="NUM_OF_SIMULATION" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER_KEY"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="NUM_OF_SIMULATION"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="236"/>
+    </shape>
+    <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="323" y="33"/>
+      <rectangleSize width="237.57763671875"/>
+    </shape>
+  
+    <shape modelObjectName="Aggregation_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="149.38427734375"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="563" y="354"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

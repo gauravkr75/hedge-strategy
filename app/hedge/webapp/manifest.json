@@ -1,14 +1,14 @@
 {
     "_version": "1.31.0",
     "sap.app": {
-        "id": "hedging",
+        "id": "hedge",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
             "version": "1.0.0"
         },
-        "title": "Hedge Strategy",
-        "description": "Hedge Strategy and Risk Management",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
         "tags": {
             "keywords": []
         },
@@ -140,7 +140,7 @@
                             }
                         },
                         "tableSettings": {
-                            "type": "AnalyticalTable"
+                            "type": "GridTable"
                         }
                     }
                 },

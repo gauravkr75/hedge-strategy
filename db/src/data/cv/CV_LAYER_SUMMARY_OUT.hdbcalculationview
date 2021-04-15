@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_LAYER_SUMMARY_OUT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_LAYER_SUMMARY_OUT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="TF_LAYER_SUMMARY_OUT" type="TABLE_FUNCTION">
+    <resourceUri>TF_LAYER_SUMMARY_OUT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+
+<logicalModel id="TF_LAYER_SUMMARY_OUT">
+  <attributes>
+    <attribute id="EXISTING_PNL" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXISTING_PNL"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="EXISTING_PNL"/>
+    </attribute>
+    <attribute id="NUM_OF_SIMULATIONS" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NUM_OF_SIMULATIONS"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="NUM_OF_SIMULATIONS"/>
+    </attribute>
+    <attribute id="LAYER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="LAYER"/>
+    </attribute>
+    <attribute id="FORECASTING_PNL" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORECASTING_PNL"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="FORECASTING_PNL"/>
+    </attribute>
+    <attribute id="SOURCE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="SOURCE"/>
+    </attribute>
+    <attribute id="RECORD_PROC_BACKCAST" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORD_PROC_BACKCAST"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="RECORD_PROC_BACKCAST"/>
+    </attribute>
+    <attribute id="BACKCASTING_PNL" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BACKCASTING_PNL"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="BACKCASTING_PNL"/>
+    </attribute>
+    <attribute id="RECORD_PROC_COUNT" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORD_PROC_COUNT"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="RECORD_PROC_COUNT"/>
+    </attribute>
+    <attribute id="LAYER_KEY" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER_KEY"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="LAYER_KEY"/>
+    </attribute>
+    <attribute id="RECORD_PROC_FORECAST" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORD_PROC_FORECAST"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="RECORD_PROC_FORECAST"/>
+    </attribute>
+    <attribute id="RELATIVE_PNL_FORECAST" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELATIVE_PNL_FORECAST"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="RELATIVE_PNL_FORECAST"/>
+    </attribute>
+    <attribute id="RELATIVE_PNL_BACKCAST" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELATIVE_PNL_BACKCAST"/>
+      <keyMapping columnObjectName="TF_LAYER_SUMMARY_OUT" columnName="RELATIVE_PNL_BACKCAST"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes>
+    <calculatedAttribute id="FROM_CURR" order="13" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="5">
+        <formula>'USD'</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+    <calculatedAttribute id="TO_CURR" order="14" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="13">
+        <formula>'EUR'</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+    <calculatedAttribute id="LAYER_TEXT" order="15" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="13">
+        <formula>CONCAT('Layer: ', &quot;LAYER&quot;)</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+    <calculatedAttribute id="LAYER_KEY_TEXT" order="16" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="30">
+        <formula>CONCAT('Layer Key: ', &quot;LAYER_KEY&quot;)</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+  </calculatedAttributes>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>

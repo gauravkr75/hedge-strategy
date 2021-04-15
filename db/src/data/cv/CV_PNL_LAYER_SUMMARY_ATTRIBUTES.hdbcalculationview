@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_PNL_LAYER_SUMMARY_ATTRIBUTES" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PNL_LAYER_SUMMARY_ATTRIBUTES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="CV_LAYER_PNL_BACKCASTING">
+    <resourceUri>CV_LAYER_PNL_BACKCASTING</resourceUri>
+  </DataSource>
+  <DataSource id="CV_LAYER_PNL_FORECASTING">
+    <resourceUri>CV_LAYER_PNL_FORECASTING</resourceUri>
+  </DataSource>
+  <DataSource id="T_SPOT_AND_QUOTE">
+    <resourceUri>T_SPOT_AND_QUOTE</resourceUri>
+  </DataSource>
+  <DataSource id="T_SPOT_QUOTE_WEEKLY_FORECAST">
+    <resourceUri>T_SPOT_QUOTE_WEEKLY_FORECAST</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="Backcast">
+    <viewAttributes>
+      <viewAttribute id="LAYER" aggregationType="count"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="CV_LAYER_PNL_BACKCASTING"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Forecast">
+    <viewAttributes>
+      <viewAttribute id="LAYER" aggregationType="count"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="CV_LAYER_PNL_FORECASTING"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="BackcastPeriod">
+    <viewAttributes>
+      <viewAttribute id="START_BACKCAST_DATE" aggregationType="min"/>
+      <viewAttribute id="END_BACKCAST_DATE" aggregationType="max"/>
+      <viewAttribute id="TENOR" aggregationType="count"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="T_SPOT_AND_QUOTE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_BACKCAST_DATE" source="QUOTE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_BACKCAST_DATE" source="QUOTE_DATE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="ForecastPeriod">
+    <viewAttributes>
+      <viewAttribute id="START_FORECAST_DATE" aggregationType="min"/>
+      <viewAttribute id="END_FORECAST_DATE" aggregationType="max"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="T_SPOT_QUOTE_WEEKLY_FORECAST">
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_FORECAST_DATE" source="QUOTE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_FORECAST_DATE" source="QUOTE_DATE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="fullOuter" multiJoinNode="Join_1" multiJoinCentralTable="Backcast" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="START_BACKCAST_DATE"/>
+      <viewAttribute id="END_BACKCAST_DATE"/>
+      <viewAttribute id="START_FORECAST_DATE"/>
+      <viewAttribute id="END_FORECAST_DATE"/>
+      <viewAttribute id="TENOR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BackcastPeriod">
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_BACKCAST_DATE" source="START_BACKCAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_BACKCAST_DATE" source="END_BACKCAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+    </input>
+    <input node="ForecastPeriod">
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_FORECAST_DATE" source="START_FORECAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_FORECAST_DATE" source="END_FORECAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_BACKCAST_DATE" source="START_FORECAST_DATE"/>
+    </input>
+    <joinAttribute name="START_BACKCAST_DATE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="fullOuter" multiJoinNode="Join_1" multiJoinCentralTable="Backcast" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="TOTAL_FORECAST_REC"/>
+      <viewAttribute id="START_BACKCAST_DATE"/>
+      <viewAttribute id="END_BACKCAST_DATE"/>
+      <viewAttribute id="START_FORECAST_DATE"/>
+      <viewAttribute id="END_FORECAST_DATE"/>
+      <viewAttribute id="LAYER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Forecast">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_FORECAST_REC" source="LAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
+    </input>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_BACKCAST_DATE" source="START_BACKCAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_BACKCAST_DATE" source="END_BACKCAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_FORECAST_DATE" source="START_FORECAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_FORECAST_DATE" source="END_FORECAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_FORECAST_REC" source="TENOR"/>
+    </input>
+    <joinAttribute name="TOTAL_FORECAST_REC"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_3" cardinality="CN_N" joinType="fullOuter" multiJoinNode="Join_1" multiJoinCentralTable="Backcast" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="TOTAL_BACKCAST_REC"/>
+      <viewAttribute id="TOTAL_FORECAST_REC"/>
+      <viewAttribute id="START_BACKCAST_DATE"/>
+      <viewAttribute id="END_BACKCAST_DATE"/>
+      <viewAttribute id="START_FORECAST_DATE"/>
+      <viewAttribute id="END_FORECAST_DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FROM_CURR" datatype="NVARCHAR" length="5" expressionLanguage="SQL">
+        <formula>'USD'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TO_CURR" datatype="NVARCHAR" length="5" expressionLanguage="SQL">
+        <formula>'EUR'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Backcast">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_BACKCAST_REC" source="LAYER"/>
+    </input>
+    <input node="Join_1_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_FORECAST_REC" source="TOTAL_FORECAST_REC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_BACKCAST_DATE" source="START_BACKCAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_BACKCAST_DATE" source="END_BACKCAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_FORECAST_DATE" source="START_FORECAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_FORECAST_DATE" source="END_FORECAST_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_BACKCAST_REC" source="LAYER"/>
+    </input>
+    <joinAttribute name="TOTAL_BACKCAST_REC"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1_3">
+  <attributes>
+    <attribute id="FROM_CURR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FROM_CURR"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="FROM_CURR"/>
+    </attribute>
+    <attribute id="TO_CURR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TO_CURR"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="TO_CURR"/>
+    </attribute>
+    <attribute id="TOTAL_BACKCAST_REC" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="TOTAL_BACKCAST_REC"/>
+    </attribute>
+    <attribute id="TOTAL_FORECAST_REC" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="TOTAL_FORECAST_REC"/>
+    </attribute>
+    <attribute id="START_BACKCAST_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QUOTE_DATE"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="START_BACKCAST_DATE"/>
+    </attribute>
+    <attribute id="END_BACKCAST_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QUOTE_DATE_1"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="END_BACKCAST_DATE"/>
+    </attribute>
+    <attribute id="START_FORECAST_DATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QUOTE_DATE"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="START_FORECAST_DATE"/>
+    </attribute>
+    <attribute id="END_FORECAST_DATE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QUOTE_DATE_1"/>
+      <keyMapping columnObjectName="Join_1_3" columnName="END_FORECAST_DATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="474.7377768962724" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Backcast" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.0000000000001" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Forecast" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="722.0000000000001" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="BackcastPeriod" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512.0000000000001" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ForecastPeriod" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999997" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="474.73777689627235" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Backcast" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="121.255859375"/>
+    </shape>
+    <shape modelObjectName="Forecast" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="121.255859375"/>
+    </shape>
+    <shape modelObjectName="BackcastPeriod" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="221.08837890625"/>
+    </shape>
+    <shape modelObjectName="ForecastPeriod" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="920" y="30"/>
+      <rectangleSize width="221.68994140625"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

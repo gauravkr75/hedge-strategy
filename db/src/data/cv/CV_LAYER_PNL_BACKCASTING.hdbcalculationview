@@ -13,6 +13,12 @@
   <DataSource id="Projection_3$$$$T_SPOT_RATES$$">
     <resourceUri>T_SPOT_RATES</resourceUri>
   </DataSource>
+  <DataSource id="TF_MONTH_INFO" type="TABLE_FUNCTION">
+    <resourceUri>TF_MONTH_INFO</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_5$$$$TF_MONTH_INFO$$" type="TABLE_FUNCTION">
+    <resourceUri>TF_MONTH_INFO</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
@@ -131,64 +137,171 @@
     <joinAttribute name="END_MONTH"/>
     <joinAttribute name="SPOT_YEAR"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+    <viewAttributes>
+      <viewAttribute id="MONTH_END_DAY"/>
+      <viewAttribute id="MONTH_DESC"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="MONTH_NUM_CHAR"/>
+      <viewAttribute id="MONTH_NUM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TF_MONTH_INFO"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
+    <viewAttributes>
+      <viewAttribute id="MONTH_END_DAY"/>
+      <viewAttribute id="MONTH_DESC"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="MONTH_NUM_CHAR"/>
+      <viewAttribute id="MONTH_NUM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_5$$$$TF_MONTH_INFO$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_3" multiJoinCentralTable="Join_2" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY"/>
+      <viewAttribute id="BLOCK_KEY"/>
+      <viewAttribute id="RECORD_KEY"/>
+      <viewAttribute id="START_MONTH"/>
+      <viewAttribute id="END_MONTH"/>
+      <viewAttribute id="QUOTE_YEAR"/>
+      <viewAttribute id="QUOTE_PRICE"/>
+      <viewAttribute id="SPOT_YEAR"/>
+      <viewAttribute id="SPOT_PRICE"/>
+      <viewAttribute id="PNL"/>
+      <viewAttribute id="PARENT_LAYER"/>
+      <viewAttribute id="PARENT_LAYER_KEY"/>
+      <viewAttribute id="END_MONTH_DESC"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER_KEY" source="LAYER_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BLOCK_KEY" source="BLOCK_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_KEY" source="RECORD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="START_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="END_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUOTE_YEAR" source="QUOTE_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUOTE_PRICE" source="QUOTE_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SPOT_YEAR" source="SPOT_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SPOT_PRICE" source="SPOT_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PNL" source="PNL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_LAYER" source="PARENT_LAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_LAYER_KEY" source="PARENT_LAYER_KEY"/>
+    </input>
+    <input node="Projection_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH_DESC" source="MONTH_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="MONTH_NUM"/>
+    </input>
+    <joinAttribute name="END_MONTH"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3_2" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_3" multiJoinCentralTable="Join_2" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY"/>
+      <viewAttribute id="BLOCK_KEY"/>
+      <viewAttribute id="RECORD_KEY"/>
+      <viewAttribute id="START_MONTH"/>
+      <viewAttribute id="END_MONTH"/>
+      <viewAttribute id="QUOTE_YEAR"/>
+      <viewAttribute id="QUOTE_PRICE"/>
+      <viewAttribute id="SPOT_YEAR"/>
+      <viewAttribute id="SPOT_PRICE"/>
+      <viewAttribute id="PNL"/>
+      <viewAttribute id="PARENT_LAYER"/>
+      <viewAttribute id="PARENT_LAYER_KEY"/>
+      <viewAttribute id="START_MONTH_DESC"/>
+      <viewAttribute id="END_MONTH_DESC"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_3_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER" source="LAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER_KEY" source="LAYER_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BLOCK_KEY" source="BLOCK_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_KEY" source="RECORD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="START_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="END_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUOTE_YEAR" source="QUOTE_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUOTE_PRICE" source="QUOTE_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SPOT_YEAR" source="SPOT_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SPOT_PRICE" source="SPOT_PRICE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PNL" source="PNL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_LAYER" source="PARENT_LAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_LAYER_KEY" source="PARENT_LAYER_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH_DESC" source="END_MONTH_DESC"/>
+    </input>
+    <input node="Projection_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH_DESC" source="MONTH_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="MONTH_NUM"/>
+    </input>
+    <joinAttribute name="START_MONTH"/>
+  </calculationView>
 </calculationViews>
 
-<logicalModel id="Join_2">
+<logicalModel id="Join_3_2">
   <attributes>
     <attribute id="LAYER" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAYER"/>
-      <keyMapping columnObjectName="Join_2" columnName="LAYER"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="LAYER"/>
     </attribute>
     <attribute id="LAYER_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAYER_KEY"/>
-      <keyMapping columnObjectName="Join_2" columnName="LAYER_KEY"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="LAYER_KEY"/>
     </attribute>
     <attribute id="BLOCK_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BLOCK_KEY"/>
-      <keyMapping columnObjectName="Join_2" columnName="BLOCK_KEY"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="BLOCK_KEY"/>
     </attribute>
     <attribute id="RECORD_KEY" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RECORD_KEY"/>
-      <keyMapping columnObjectName="Join_2" columnName="RECORD_KEY"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="RECORD_KEY"/>
     </attribute>
     <attribute id="START_MONTH" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="START_MONTH"/>
-      <keyMapping columnObjectName="Join_2" columnName="START_MONTH"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="START_MONTH"/>
     </attribute>
     <attribute id="END_MONTH" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="END_MONTH"/>
-      <keyMapping columnObjectName="Join_2" columnName="END_MONTH"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="END_MONTH"/>
     </attribute>
     <attribute id="QUOTE_YEAR" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="YEAR"/>
-      <keyMapping columnObjectName="Join_2" columnName="QUOTE_YEAR"/>
+      <descriptions defaultDescription="QUOTE_YEAR"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="QUOTE_YEAR"/>
     </attribute>
     <attribute id="QUOTE_PRICE" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="AVG_SPOT_RATE"/>
-      <keyMapping columnObjectName="Join_2" columnName="QUOTE_PRICE"/>
+      <descriptions defaultDescription="QUOTE_PRICE"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="QUOTE_PRICE"/>
     </attribute>
     <attribute id="SPOT_YEAR" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SPOT_YEAR"/>
-      <keyMapping columnObjectName="Join_2" columnName="SPOT_YEAR"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="SPOT_YEAR"/>
     </attribute>
     <attribute id="SPOT_PRICE" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="AVG_SPOT_RATE"/>
-      <keyMapping columnObjectName="Join_2" columnName="SPOT_PRICE"/>
+      <descriptions defaultDescription="SPOT_PRICE"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="SPOT_PRICE"/>
     </attribute>
     <attribute id="PNL" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PNL"/>
-      <keyMapping columnObjectName="Join_2" columnName="PNL"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="PNL"/>
     </attribute>
-  
     <attribute id="PARENT_LAYER" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARENT_LAYER"/>
-  
-      <keyMapping columnObjectName="Join_2" columnName="PARENT_LAYER"/>
-  
+      <keyMapping columnObjectName="Join_3_2" columnName="PARENT_LAYER"/>
     </attribute>
     <attribute id="PARENT_LAYER_KEY" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARENT_LAYER_KEY"/>
-      <keyMapping columnObjectName="Join_2" columnName="PARENT_LAYER_KEY"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="PARENT_LAYER_KEY"/>
+    </attribute>
+    <attribute id="START_MONTH_DESC" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MONTH_DESC"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="START_MONTH_DESC"/>
+    </attribute>
+    <attribute id="END_MONTH_DESC" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MONTH_DESC"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="END_MONTH_DESC"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -198,27 +311,27 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="328" y="112"/>
+      <upperLeftCorner x="520.2364155206097" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="536"/>
+      <upperLeftCorner x="92.00000000000011" y="711.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="536"/>
+      <upperLeftCorner x="302.00000000000006" y="711.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="395" y="376"/>
+      <upperLeftCorner x="376.9904131422506" y="551.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118" y="376"/>
+      <upperLeftCorner x="118.66666666666669" y="551.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -230,7 +343,7 @@
       <rectangleSize width="179"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="328" y="217"/>
+      <upperLeftCorner x="145.33333333333331" y="391.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -240,6 +353,31 @@
     <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="179"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="520.2364155206097" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_3">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="199.30322265625"/>
+    </shape>
+    <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_3">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="194.78076171875"/>
+    </shape>
+    <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_3">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="470.4019836225215" y="391.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="680.4019836225215" y="391.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>

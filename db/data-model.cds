@@ -1,3 +1,4 @@
+/* Context T to be used to define database tables */
 context T {
 
     entity RATES {
@@ -185,56 +186,91 @@ context T {
     }
 }
 
+/* Context CV to be used to define database tables */
 context CV {
 
     @cds.persistence.exists
     @cds.persistence.calcview
-    entity![PNL_LAYER_SUMMARY]{
+    entity![LAYER_SUMMARY_OUT]{
         key![LAYER]              : Integer      @title : 'Layer';
         key![LAYER_KEY]          : String(40)   @title : 'Layer Key';
            ![BACKCASTING_PNL]    : Decimal(9, 5)@title : 'Backcasting PNL';
            ![FORECASTING_PNL]    : Decimal(9, 5)@title : 'Forecasting PNL';
            EXISTING_PNL          : Decimal(9, 5)@title : 'Existing PNL';
-           RELATIVE_PNL_BACKCAST : Decimal(9, 5)@title : 'Relative Gain/Loss(Backcast)';
-           RELATIVE_PNL_FORECAST : Decimal(9, 5)@title : 'Relative Gain/Loss(Forecast)';
+           RELATIVE_PNL_BACKCAST : Decimal(9, 5)@title : '% Rel. Gain/Loss(Backcast)';
+           RELATIVE_PNL_FORECAST : Decimal(9, 5)@title : '% Rel. Gain/Loss(Forecast)';
+           //           SOURCE                : String(10)   @title : 'Source';
+           NUM_OF_SIMULATIONS    : Integer      @title : 'No. of Simulations';
+           RECORD_PROC_COUNT     : Integer      @title : 'Total Records Processed';
+           FROM_CURR             : String(5)    @title : 'From Currency';
+           TO_CURR               : String(5)    @title : 'To Currency';
+           LAYER_TEXT            : String(13);
+           LAYER_KEY_TEXT        : String(30);
            ToBackcasting         : Association to many LAYER_PNL_BACKCASTING
                                        on  ToBackcasting.LAYER     = LAYER
                                        and ToBackcasting.LAYER_KEY = LAYER_KEY;
            ToForecasting         : Association to many LAYER_PNL_FORECASTING
                                        on  ToForecasting.LAYER     = LAYER
                                        and ToForecasting.LAYER_KEY = LAYER_KEY;
+           ToExisting            : Association to many LAYER_PNL_EXISTING
+                                       on  ToExisting.LAYER     = 2
+                                       and ToExisting.LAYER_KEY = '12_6';
     }
 
     @cds.persistence.exists
     @cds.persistence.calcview
     entity![LAYER_PNL_BACKCASTING]{
-        key![LAYER]       : Integer      @title : 'Layer';
-        key![LAYER_KEY]   : String(40)   @title : 'Layer Key';
-        key![BLOCK_KEY]   : String(10)   @title : 'Block Key';
-        key![RECORD_KEY]  : String(10)   @title : 'Record Key';
-           ![START_MONTH] : Integer      @title : 'Start Month';
-           ![END_MONTH]   : Integer      @title : 'End Month';
-           ![QUOTE_YEAR]  : Integer      @title : 'Quote Year';
-           ![QUOTE_PRICE] : Decimal(9, 5)@title : 'Quote Price';
-           ![SPOT_YEAR]   : Integer      @title : 'Spot Year';
-           ![SPOT_PRICE]  : Decimal(9, 5)@title : 'Spot Price';
-           ![PNL]         : Decimal(9, 5)@title : 'PNL';
-           PARENT         : Association to PNL_LAYER_SUMMARY;
+        key![LAYER]         : Integer      @title : 'Layer';
+        key![LAYER_KEY]     : String(40)   @title : 'Layer Key';
+        key![BLOCK_KEY]     : String(10)   @title : 'Block Key';
+        key![RECORD_KEY]    : String(10)   @title : 'Record Key';
+           ![START_MONTH]   : Integer      @title : 'Start Month Code';
+           ![END_MONTH]     : Integer      @title : 'End Month Code';
+           ![QUOTE_YEAR]    : Integer      @title : 'Quote Year';
+           ![QUOTE_PRICE]   : Decimal(9, 5)@title : 'Quote Price';
+           ![SPOT_YEAR]     : Integer      @title : 'Spot Year';
+           ![SPOT_PRICE]    : Decimal(9, 5)@title : 'Spot Price';
+           ![PNL]           : Decimal(9, 5)@title : 'PNL';
+           START_MONTH_DESC : String(20)   @title : 'Start Month';
+           END_MONTH_DESC   : String(20)   @title : 'End Month';
+           PARENT           : Association to LAYER_SUMMARY_OUT;
     }
 
     @cds.persistence.exists
+    @cds.persistence.calcview
     entity![LAYER_PNL_FORECASTING]{
-        key![LAYER]       : Integer      @title : 'Layer';
-        key![LAYER_KEY]   : String(40)   @title : 'Layer Key';
-        key![BLOCK_KEY]   : String(10)   @title : 'Block Key';
-        key![RECORD_KEY]  : String(10)   @title : 'Record Key';
-           ![START_MONTH] : Integer      @title : 'Start Month';
-           ![END_MONTH]   : Integer      @title : 'End Month';
-           ![QUOTE_YEAR]  : Integer      @title : 'Quote Year';
-           ![QUOTE_PRICE] : Decimal(9, 5)@title : 'Quote Price';
-           ![SPOT_YEAR]   : Integer      @title : 'Spot Year';
-           ![SPOT_PRICE]  : Decimal(9, 5)@title : 'Spot Price';
-           ![PNL]         : Decimal(9, 5)@title : 'PNL';
-           PARENT         : Association to PNL_LAYER_SUMMARY;
+        key![LAYER]         : Integer      @title : 'Layer';
+        key![LAYER_KEY]     : String(40)   @title : 'Layer Key';
+        key![BLOCK_KEY]     : String(10)   @title : 'Block Key';
+        key![RECORD_KEY]    : String(10)   @title : 'Record Key';
+           ![START_MONTH]   : Integer      @title : 'Start Month Code';
+           ![END_MONTH]     : Integer      @title : 'End Month Code';
+           ![QUOTE_YEAR]    : Integer      @title : 'Quote Year';
+           ![QUOTE_PRICE]   : Decimal(9, 5)@title : 'Quote Price';
+           ![SPOT_YEAR]     : Integer      @title : 'Spot Year';
+           ![SPOT_PRICE]    : Decimal(9, 5)@title : 'Spot Price';
+           ![PNL]           : Decimal(9, 5)@title : 'PNL';
+           START_MONTH_DESC : String(20)   @title : 'Start Month';
+           END_MONTH_DESC   : String(20)   @title : 'End Month';
+           PARENT           : Association to LAYER_SUMMARY_OUT;
+    }
+
+    @cds.persistence.exists
+    entity![LAYER_PNL_EXISTING]{
+        key![LAYER]         : Integer      @title : 'Layer';
+        key![LAYER_KEY]     : String(40)   @title : 'Layer Key';
+        key![BLOCK_KEY]     : String(10)   @title : 'Block Key';
+        key![RECORD_KEY]    : String(10)   @title : 'Record Key';
+           ![START_MONTH]   : Integer      @title : 'Start Month Code';
+           ![END_MONTH]     : Integer      @title : 'End Month Code';
+           ![QUOTE_YEAR]    : Integer      @title : 'Quote Year';
+           ![QUOTE_PRICE]   : Decimal(9, 5)@title : 'Quote Price';
+           ![SPOT_YEAR]     : Integer      @title : 'Spot Year';
+           ![SPOT_PRICE]    : Decimal(9, 5)@title : 'Spot Price';
+           ![PNL]           : Decimal(9, 5)@title : 'PNL';
+           START_MONTH_DESC : String(20)   @title : 'Start Month';
+           END_MONTH_DESC   : String(20)   @title : 'End Month';
+           PARENT           : Association to LAYER_SUMMARY_OUT;
+
     }
 }

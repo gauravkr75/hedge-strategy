@@ -1,0 +1,109 @@
+FUNCTION "TF_LAYER_SUMMARY_OUT"() 
+  RETURNS TABLE(
+    "LAYER" INTEGER,
+    "LAYER_KEY" NVARCHAR(40),
+    "BACKCASTING_PNL" DECIMAL(9, 5),
+    "FORECASTING_PNL" DECIMAL(9, 5),
+    "EXISTING_PNL" DECIMAL(9, 5),
+    "RELATIVE_PNL_BACKCAST" DECIMAL(9, 5),
+    "RELATIVE_PNL_FORECAST" DECIMAL(9, 5),
+    "RECORD_PROC_BACKCAST" BIGINT,
+    "RECORD_PROC_FORECAST" BIGINT,
+    "RECORD_PROC_COUNT" INTEGER,
+    "SOURCE" NVARCHAR(10),
+    "NUM_OF_SIMULATIONS" INTEGER
+  ) 
+  LANGUAGE SQLSCRIPT 
+  SQL SECURITY INVOKER AS 
+BEGIN 
+  /*****************************
+  Write your function logic
+  ****************************/
+
+    T_OUT = SELECT TOP 1 "LAYER",
+                    "LAYER_KEY",
+                    "BACKCASTING_PNL",
+                    "FORECASTING_PNL",
+                    "EXISTING_PNL",
+                    "RELATIVE_PNL_BACKCAST",
+                    "RELATIVE_PNL_FORECAST",
+                    "RECORD_PROC_BACKCAST",
+                    "RECORD_PROC_FORECAST",
+                    "RECORD_PROC_COUNT",
+                    "SOURCE",
+                    "NUM_OF_SIMULATIONS"
+                    FROM CV_PNL_LAYER_SUMMARY WHERE LAYER = 1
+                UNION
+                SELECT TOP 1 "LAYER",
+                    "LAYER_KEY",
+                    "BACKCASTING_PNL",
+                    "FORECASTING_PNL",
+                    "EXISTING_PNL",
+                    "RELATIVE_PNL_BACKCAST",
+                    "RELATIVE_PNL_FORECAST",
+                    "RECORD_PROC_BACKCAST",
+                    "RECORD_PROC_FORECAST",
+                    "RECORD_PROC_COUNT",
+                    "SOURCE",
+                    "NUM_OF_SIMULATIONS"
+                    FROM CV_PNL_LAYER_SUMMARY WHERE LAYER = 2
+                UNION
+                SELECT TOP 1 "LAYER",
+                    "LAYER_KEY",
+                    "BACKCASTING_PNL",
+                    "FORECASTING_PNL",
+                    "EXISTING_PNL",
+                    "RELATIVE_PNL_BACKCAST",
+                    "RELATIVE_PNL_FORECAST",
+                    "RECORD_PROC_BACKCAST",
+                    "RECORD_PROC_FORECAST",
+                    "RECORD_PROC_COUNT",
+                    "SOURCE",
+                    "NUM_OF_SIMULATIONS"
+                    FROM CV_PNL_LAYER_SUMMARY WHERE LAYER = 3
+                UNION
+                SELECT TOP 1 "LAYER",
+                    "LAYER_KEY",
+                    "BACKCASTING_PNL",
+                    "FORECASTING_PNL",
+                    "EXISTING_PNL",
+                    "RELATIVE_PNL_BACKCAST",
+                    "RELATIVE_PNL_FORECAST",
+                    "RECORD_PROC_BACKCAST",
+                    "RECORD_PROC_FORECAST",
+                    "RECORD_PROC_COUNT",
+                    "SOURCE",
+                    "NUM_OF_SIMULATIONS"
+                    FROM CV_PNL_LAYER_SUMMARY WHERE LAYER = 4
+                UNION
+                SELECT TOP 1 "LAYER",
+                    "LAYER_KEY",
+                    "BACKCASTING_PNL",
+                    "FORECASTING_PNL",
+                    "EXISTING_PNL",
+                    "RELATIVE_PNL_BACKCAST",
+                    "RELATIVE_PNL_FORECAST",
+                    "RECORD_PROC_BACKCAST",
+                    "RECORD_PROC_FORECAST",
+                    "RECORD_PROC_COUNT",
+                    "SOURCE",
+                    "NUM_OF_SIMULATIONS"
+                    FROM CV_PNL_LAYER_SUMMARY WHERE LAYER = 5
+                UNION
+                SELECT TOP 1 "LAYER",
+                    "LAYER_KEY",
+                    "BACKCASTING_PNL",
+                    "FORECASTING_PNL",
+                    "EXISTING_PNL",
+                    "RELATIVE_PNL_BACKCAST",
+                    "RELATIVE_PNL_FORECAST",
+                    "RECORD_PROC_BACKCAST",
+                    "RECORD_PROC_FORECAST",
+                    "RECORD_PROC_COUNT",
+                    "SOURCE",
+                    "NUM_OF_SIMULATIONS"
+                    FROM CV_PNL_LAYER_SUMMARY WHERE LAYER = 6;
+    
+    RETURN :T_OUT;
+
+END
