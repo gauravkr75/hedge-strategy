@@ -202,8 +202,8 @@ context CV {
            //           SOURCE                : String(10)   @title : 'Source';
            NUM_OF_SIMULATIONS    : Integer      @title : 'No. of Simulations';
            RECORD_PROC_COUNT     : Integer      @title : 'Total Records Processed';
-           FROM_CURR             : String(5)    @title : 'From Currency';
-           TO_CURR               : String(5)    @title : 'To Currency';
+           FROM_CURR             : String(5)    @title : 'Currency 1';
+           TO_CURR               : String(5)    @title : 'Currency 2';
            LAYER_TEXT            : String(13);
            LAYER_KEY_TEXT        : String(30);
            ToBackcasting         : Association to many LAYER_PNL_BACKCASTING

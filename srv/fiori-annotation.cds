@@ -17,7 +17,7 @@ annotate CatalogService.Layer with @(UI : {
 
     {
         Value : SMART_KEY,
-        Label : 'Smart Key'
+        Label : 'Smart Key',
     },
     //{Value : SIMULATION_ID, Label : 'Simulation ID'},
 
@@ -55,13 +55,15 @@ annotate CatalogService.LayerSummary with @(
     //{Value : SOURCE},
     {Value : LAYER},
     {Value : LAYER_KEY},
-    {Value : NUM_OF_SIMULATIONS},
-    {Value : RECORD_PROC_COUNT},
     {Value : BACKCASTING_PNL},
-    {Value : FORECASTING_PNL},
     {Value : EXISTING_PNL},
     {Value : RELATIVE_PNL_BACKCAST},
-    {Value : RELATIVE_PNL_FORECAST}
+    {Value : FORECASTING_PNL},
+    //{Value : RELATIVE_PNL_FORECAST},
+    {Value : FROM_CURR},
+    {Value : TO_CURR},
+    {Value : NUM_OF_SIMULATIONS},
+    {Value : RECORD_PROC_COUNT}
     ],
     HeaderInfo              : {
         TypeName       : 'Hedging Strategy',
