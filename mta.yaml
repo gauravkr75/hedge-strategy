@@ -13,7 +13,7 @@ build-parameters:
 modules:
   - name: HedgeStrategy-srv
     type: nodejs
-    path: gen/srv
+    path: srv
     requires:
       - name: HedgeStrategy-db
     provides:
@@ -24,7 +24,7 @@ modules:
       memory: 2048M
   - name: HedgeStrategy-db-deployer
     type: hdb
-    path: gen/db
+    path: db
     parameters:
       buildpack: nodejs_buildpack
     requires:
