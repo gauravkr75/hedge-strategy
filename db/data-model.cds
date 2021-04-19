@@ -184,6 +184,16 @@ context T {
             END_MONTH   : Integer;
             DURATION    : Integer;
     }
+
+    entity TWO_LAYER_OVERLAP_COMBO {
+        key LAYER       : Integer;
+        key LAYER_KEY   : String(40);
+        key BLOCK_KEY   : String(10);
+        key RECORD_KEY  : String(10);
+            START_MONTH : Integer;
+            END_MONTH   : Integer;
+            DURATION    : Integer;
+    }
 }
 
 /* Context CV to be used to define database tables */
@@ -202,8 +212,8 @@ context CV {
            //           SOURCE                : String(10)   @title : 'Source';
            NUM_OF_SIMULATIONS    : Integer      @title : 'No. of Simulations';
            RECORD_PROC_COUNT     : Integer      @title : 'Total Records Processed';
-           FROM_CURR             : String(5)    @title : 'Currency 1';
-           TO_CURR               : String(5)    @title : 'Currency 2';
+           FROM_CURR             : String(5)    @title : 'Currency 2';
+           TO_CURR               : String(5)    @title : 'Currency 1';
            LAYER_TEXT            : String(13);
            LAYER_KEY_TEXT        : String(30);
            ToBackcasting         : Association to many LAYER_PNL_BACKCASTING

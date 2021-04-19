@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_LAYER_PNL_EXISTING" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_LAYER_PNL_OVERLAP" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="CV_LAYER_PNL"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="T_EXISTING_LAYER_HEDGE_COMBO">
-    <resourceUri>T_EXISTING_LAYER_HEDGE_COMBO</resourceUri>
+  <DataSource id="T_LAYER_MONTH_COMBO">
+    <resourceUri>T_LAYER_MONTH_COMBO</resourceUri>
   </DataSource>
   <DataSource id="T_SPOT_RATES">
     <resourceUri>T_SPOT_RATES</resourceUri>
@@ -32,7 +32,7 @@
       <viewAttribute id="DURATION"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="T_EXISTING_LAYER_HEDGE_COMBO"/>
+    <input node="T_LAYER_MONTH_COMBO"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
     <viewAttributes>
@@ -114,7 +114,7 @@
         <formula>&quot;LAYER&quot;</formula>
     
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="PARENT_LAYER_KEY" datatype="NVARCHAR" length="13" expressionLanguage="SQL">
+      <calculatedViewAttribute id="PARENT_LAYER_KEY" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
         <formula>&quot;LAYER_KEY&quot;</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
@@ -159,7 +159,7 @@
     <calculatedViewAttributes/>
     <input node="Projection_5$$$$TF_MONTH_INFO$$"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_3_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_3" multiJoinCentralTable="Projection_4" multiJoinOrder="Outside In">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_3" multiJoinCentralTable="Join_2" multiJoinOrder="Outside In">
     <viewAttributes>
       <viewAttribute id="LAYER"/>
       <viewAttribute id="LAYER_KEY"/>
@@ -198,7 +198,7 @@
     </input>
     <joinAttribute name="END_MONTH"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_3_2" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_3" multiJoinCentralTable="Projection_4" multiJoinOrder="Outside In">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3_2" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_3" multiJoinCentralTable="Join_2" multiJoinOrder="Outside In">
     <viewAttributes>
       <viewAttribute id="LAYER"/>
       <viewAttribute id="LAYER_KEY"/>
@@ -369,16 +369,16 @@
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_3">
-      <upperLeftCorner x="275" y="37"/>
+      <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="194"/>
     </shape>
     <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_3">
-      <upperLeftCorner x="-54" y="36"/>
+      <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="199"/>
     </shape>
     <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_3">
-      <upperLeftCorner x="559" y="30"/>
-      <rectangleSize width="194"/>
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="136"/>
     </shape></shapes>
 </layout>
 </Calculation:scenario>

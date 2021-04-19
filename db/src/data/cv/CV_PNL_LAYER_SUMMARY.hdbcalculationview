@@ -135,8 +135,6 @@
     <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
       <partitionViewAttributeName id="LAYER"/>
       <order byViewAttributeName="BACKCASTING_PNL" direction="DESC"/>
-      <order byViewAttributeName="FORECASTING_PNL" direction="DESC"/>
-      <order byViewAttributeName="EXISTING_PNL" direction="DESC"/>
       <rankThreshold/>
     </rankingFilter>
   </calculationView>
@@ -241,7 +239,9 @@
   
     <attribute id="NUM_OF_SIMULATIONS" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAYER_KEY"/>
+  
       <keyMapping columnObjectName="Join_3" columnName="NUM_OF_SIMULATIONS"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
