@@ -4,8 +4,8 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="T_LAYER_MONTH_COMBO">
-    <resourceUri>T_LAYER_MONTH_COMBO</resourceUri>
+  <DataSource id="T_TWO_LAYER_OVERLAP_COMBO">
+    <resourceUri>T_TWO_LAYER_OVERLAP_COMBO</resourceUri>
   </DataSource>
   <DataSource id="T_SPOT_RATES">
     <resourceUri>T_SPOT_RATES</resourceUri>
@@ -32,7 +32,7 @@
       <viewAttribute id="DURATION"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="T_LAYER_MONTH_COMBO"/>
+    <input node="T_TWO_LAYER_OVERLAP_COMBO"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
     <viewAttributes>
