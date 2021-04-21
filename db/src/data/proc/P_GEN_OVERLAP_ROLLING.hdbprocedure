@@ -1,0 +1,93 @@
+PROCEDURE "P_GEN_OVERLAP_ROLLING"( OUT OT_OUT "T_LAYER_MONTH_COMBO" )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+    DECLARE I INTEGER;
+    DECLARE J INTEGER;
+    DECLARE V_COUNT INTEGER;
+    DECLARE V_LAYER_KEY NVARCHAR(40);
+    DECLARE V_BLOCK_KEY NVARCHAR(10);
+    DECLARE V_RECORD_KEY NVARCHAR(10);
+    DECLARE V_END_MONTH INTEGER;
+    DECLARE V_START_MONTH INTEGER;
+    DECLARE V_START_MONTH_CHAR NVARCHAR(02);
+    DECLARE V_END_MONTH_CHAR NVARCHAR(02);
+    DECLARE V_STRLEN INTEGER;
+
+    DECLARE T_TEMP "T_LAYER_MONTH_COMBO";
+    DECLARE T_OUT "T_LAYER_MONTH_COMBO";
+
+    T_DATA = SELECT * FROM ( SELECT *, CASE WHEN START_BLOCK = START_MONTH_CHAR THEN TRUE
+                ELSE FALSE END AS VALID FROM (
+            SELECT
+                "LAYER",
+                "LAYER_KEY",
+                SUBSTRING("BLOCK_KEY", 1, 2) AS START_BLOCK,
+                "BLOCK_KEY",
+                CASE WHEN LENGTH(TO_NVARCHAR(START_MONTH)) = 1 THEN CONCAT('0', TO_NVARCHAR(START_MONTH))
+                ELSE TO_NVARCHAR(START_MONTH)
+                END AS START_MONTH_CHAR,
+                "RECORD_KEY",
+                "START_MONTH",
+                "END_MONTH",
+                "DURATION"
+            FROM "T_LAYER_MONTH_COMBO" WHERE LAYER = 2
+            ORDER BY LAYER_KEY, BLOCK_KEY ) );
+
+    T_PROCESS = SELECT * FROM :T_DATA WHERE VALID = TRUE;
+
+    FOR I IN 1..RECORD_COUNT(:T_PROCESS) DO
+
+        V_LAYER_KEY = :T_PROCESS.LAYER_KEY[:I];
+        V_BLOCK_KEY = :T_PROCESS.BLOCK_KEY[:I];
+        V_END_MONTH = :T_PROCESS.END_MONTH[:I];
+        V_START_MONTH = :T_PROCESS.START_MONTH[:I];
+        V_START_MONTH_CHAR = :T_PROCESS.START_MONTH_CHAR[:I];
+
+        T_SECOND_LAYER = SELECT "LAYER",
+                                "LAYER_KEY",
+                                "BLOCK_KEY",
+                                "RECORD_KEY",
+                                "START_MONTH",
+                                "END_MONTH",
+                                "DURATION" FROM :T_DATA
+                                WHERE LAYER_KEY = :V_LAYER_KEY AND BLOCK_KEY = :V_BLOCK_KEY AND VALID = FALSE;
+        
+        SELECT ABS( 12 - :V_END_MONTH ) INTO V_COUNT FROM "SY_DUMMY"  ;
+
+        FOR J IN 1..:V_COUNT DO
+
+            V_END_MONTH = :V_END_MONTH + 1;
+
+            SELECT TO_NVARCHAR(:V_END_MONTH) INTO V_END_MONTH_CHAR FROM "SY_DUMMY";
+
+            SELECT LENGTH(:V_END_MONTH_CHAR) INTO V_STRLEN FROM "SY_DUMMY";
+
+            IF V_STRLEN = 1 THEN
+                SELECT CONCAT('0', TO_NVARCHAR(:V_END_MONTH)) INTO V_END_MONTH_CHAR FROM "SY_DUMMY";
+            END IF;
+
+            T_TEMP = SELECT 2 AS LAYER, 
+                            :V_LAYER_KEY AS LAYER_KEY,
+                            :V_BLOCK_KEY AS BLOCK_KEY,
+                            CONCAT(CONCAT(:V_START_MONTH_CHAR, '_'), :V_END_MONTH_CHAR) AS RECORD_KEY,
+                            :V_START_MONTH AS START_MONTH,
+                            :V_END_MONTH AS END_MONTH,
+                            ABS( :V_END_MONTH - :V_START_MONTH ) + 1 AS DURATION 
+                        FROM "SY_DUMMY"
+                        UNION
+                    SELECT * FROM :T_SECOND_LAYER;
+
+            :T_OUT.INSERT(:T_TEMP);
+
+        END FOR;
+
+    END FOR;
+
+    OT_OUT = SELECT * FROM :T_OUT ORDER BY LAYER_KEY, BLOCK_KEY;
+
+END
