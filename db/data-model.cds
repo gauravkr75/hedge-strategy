@@ -195,6 +195,17 @@ context T {
             END_MONTH   : Integer;
             DURATION    : Integer;
     }
+
+    entity LAYER_OVERLAP_ROLLING_COMBO {
+        key ID          : Integer;
+            LAYER       : Integer;
+            LAYER_KEY   : String(40);
+            BLOCK_KEY   : String(10);
+            RECORD_KEY  : String(10);
+            START_MONTH : Integer;
+            END_MONTH   : Integer;
+            DURATION    : Integer;
+    }
 }
 
 /* Context CV to be used to define database tables */
