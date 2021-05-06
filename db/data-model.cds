@@ -197,11 +197,10 @@ context T {
     }
 
     entity LAYER_OVERLAP_ROLLING_COMBO {
-        key ID          : Integer;
-            LAYER       : Integer;
-            LAYER_KEY   : String(40);
-            BLOCK_KEY   : String(10);
-            RECORD_KEY  : String(10);
+        key LAYER       : Integer;
+        key LAYER_KEY   : String(40);
+        key BLOCK_KEY   : String(10);
+        key RECORD_KEY  : String(10);
             START_MONTH : Integer;
             END_MONTH   : Integer;
             DURATION    : Integer;
