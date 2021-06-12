@@ -205,9 +205,18 @@ context T {
             END_MONTH   : Integer;
             DURATION    : Integer;
     }
+
+    entity EXPOSURE_POSITION_FLOWS {
+        key PERIOD            : String(02);
+        key PLANNING_YEAR     : Integer;
+        key VALID_FROM        : Date;
+        key EXPOSURE_CURRENCY : String(05);
+        key TARGET_CURRENCY   : String(05);
+            EXPOSURE_AMOUNT   : Decimal(16, 5);
+    }
 }
 
-/* Context CV to be used to define database tables */
+/* Context CV to be used to define Calculation Views */
 context CV {
 
     @cds.persistence.exists

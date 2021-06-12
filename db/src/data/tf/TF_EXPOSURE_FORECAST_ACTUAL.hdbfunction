@@ -1,0 +1,174 @@
+FUNCTION "TF_EXPOSURE_FORECAST_ACTUAL"( )
+    RETURNS TABLE( PERIOD INTEGER,
+                   PLANNING_YEAR INTEGER,
+                   EXPOSURE_CURRENCY NVARCHAR(5),
+                   TARGET_CURRENCY NVARCHAR(5),
+                   ACTUAL DECIMAL(16,5),
+                   FORECASTED DECIMAL(16,5),
+                   RATIO DECIMAL
+                )
+    LANGUAGE SQLSCRIPT 
+    SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+    DECLARE T_RATIO_FORECAST "TT_FORECAST";
+    DECLARE V_NUM_FORECAST INTEGER;
+    DECLARE T_STATISTICS_AUTO_EXP "TT_STATISTICS_AUTO_EXP";
+    DECLARE V_PERIOD INTEGER;
+    DECLARE V_YEAR INTEGER;
+    DECLARE V_EXP_CURR NVARCHAR(03);
+    DECLARE V_TAR_CURR NVARCHAR(03);
+    DECLARE I INTEGER;
+    DECLARE V_RATIO DECIMAL;
+
+    --DECLARE T_DATA "TT_AUTO_EXP_DATA";
+
+    T_EXP_AMOUNT =  SELECT TO_INTEGER(B.PERIOD) AS PERIOD,
+                        B.PLANNING_YEAR,
+                        B.EXPOSURE_CURRENCY,
+                        B.TARGET_CURRENCY,
+                        A.ACTUAL,
+                        B.EXPOSURE_AMOUNT AS FORECASTED,
+                        ROUND ((A.ACTUAL / B.EXPOSURE_AMOUNT), 3) AS RATIO
+                        FROM(
+                            SELECT A.PERIOD,
+                                A.PLANNING_YEAR,
+                                A.EXPOSURE_CURRENCY,
+                                A.TARGET_CURRENCY,
+                                SUM(B.EXPOSURE_AMOUNT) AS ACTUAL
+                            FROM (
+                                    SELECT *
+                                    FROM (
+                                            SELECT *,
+                                                CASE
+                                                    WHEN MONTH(VALID_FROM) = PERIOD
+                                                    AND YEAR(VALID_FROM) = PLANNING_YEAR THEN 'X'
+                                                    ELSE ''
+                                                END AS PERIOD_CHECK
+                                            FROM T_EXPOSURE_POSITION_FLOWS
+                                        )
+                                    WHERE PERIOD_CHECK = 'X'
+                                        AND EXPOSURE_CURRENCY = 'USD'
+                                ) AS A
+                                INNER JOIN T_EXPOSURE_POSITION_FLOWS AS B ON A.PLANNING_YEAR = B.PLANNING_YEAR
+                                AND A.PERIOD = B.PERIOD
+                                AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY
+                                AND A.TARGET_CURRENCY = B.TARGET_CURRENCY
+                            GROUP BY A.PERIOD,
+                                A.PLANNING_YEAR,
+                                A.EXPOSURE_CURRENCY,
+                                A.TARGET_CURRENCY
+                        ) AS A
+                        RIGHT OUTER JOIN (
+                            SELECT A.*,
+                                B.EXPOSURE_AMOUNT
+                            FROM (
+                                    SELECT PERIOD,
+                                        PLANNING_YEAR,
+                                        EXPOSURE_CURRENCY,
+                                        TARGET_CURRENCY,
+                                        MIN(VALID_FROM) AS VALID_FROM
+                                    FROM T_EXPOSURE_POSITION_FLOWS
+                                    WHERE EXPOSURE_CURRENCY = 'USD'
+                                    GROUP BY PERIOD,
+                                        PLANNING_YEAR,
+                                        EXPOSURE_CURRENCY,
+                                        TARGET_CURRENCY
+                                ) AS A
+                                INNER JOIN T_EXPOSURE_POSITION_FLOWS AS B ON A.PERIOD = B.PERIOD
+                                AND A.PLANNING_YEAR = B.PLANNING_YEAR
+                                AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY
+                                AND A.TARGET_CURRENCY = B.TARGET_CURRENCY
+                                AND A.VALID_FROM = B.VALID_FROM
+                        ) AS B ON A.PERIOD = B.PERIOD
+                        AND A.PLANNING_YEAR = B.PLANNING_YEAR
+                        AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY
+                        AND A.TARGET_CURRENCY = B.TARGET_CURRENCY;
+
+    -- SELECT COUNT(*) INTO V_NUM_FORECAST FROM :T_EXP_AMOUNT 
+    --     WHERE ACTUAL IS NOT NULL AND PLANNING_YEAR >= YEAR(CURRENT_UTCDATE);
+
+    T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
+                                    12 AS INT_VALUE, 
+                                    null AS DOUBLE_VALUE, 
+                                    null AS STRING_VALUE
+                            FROM "SY_DUMMY"
+                                UNION                  
+                            SELECT 'MODELSELECTION' AS PARAM_NAME,
+                                    1 AS INT_VALUE, 
+                                    null AS DOUBLE_VALUE, 
+                                    null AS STRING_VALUE
+                            FROM "SY_DUMMY"
+                                UNION
+                            SELECT 'CYCLE' AS PARAM_NAME,
+                                    12 AS INT_VALUE, 
+                                    0.0 AS DOUBLE_VALUE, 
+                                    null AS STRING_VALUE
+                            FROM "SY_DUMMY";
+
+    T_DATA = SELECT TO_INTEGER("$rowid$") AS ID, TO_DOUBLE(RATIO) AS RATIO FROM :T_EXP_AMOUNT
+                WHERE ACTUAL IS NOT NULL AND PLANNING_YEAR <= YEAR(CURRENT_UTCDATE)
+                ORDER BY PLANNING_YEAR, PERIOD;
+    
+    SELECT TOP 1 EXPOSURE_CURRENCY, TARGET_CURRENCY INTO V_EXP_CURR, V_TAR_CURR 
+        FROM :T_EXP_AMOUNT;
+
+    SELECT TOP 1 PERIOD, PLANNING_YEAR INTO V_PERIOD, V_YEAR
+        FROM :T_EXP_AMOUNT 
+        WHERE ACTUAL IS NULL AND PLANNING_YEAR NOT IN (2018, 2019) --HardCoding - To be removed
+        ORDER BY PLANNING_YEAR , PERIOD ;
+
+    CALL "PAL_AUTO_EXPSMOOTH"(P1 => :T_DATA, P2 => :T_AUTO_SMOTH_PARAMS, P3 => :T_RATIO_FORECAST, P4 => :T_STATISTICS_AUTO_EXP);
+    
+    T_TEMP_OUT = SELECT TIMESTAMP AS ID, 
+                    ROUND(VALUE, 3) AS RATIO
+                    FROM :T_RATIO_FORECAST 
+                    WHERE "PI1_LOWER" IS NOT NULL
+                    ORDER BY TIMESTAMP;
+
+    FOR I IN 1..RECORD_COUNT(:T_TEMP_OUT) DO
+
+        V_RATIO = :T_TEMP_OUT.RATIO[:I];
+
+        IF :I = 1 THEN
+            T_EXP_TEMP = SELECT :V_PERIOD AS PERIOD, V_YEAR AS PLANNING_YEAR, :V_EXP_CURR AS EXPOSURE_CURRENCY,
+                            :V_TAR_CURR AS TARGET_CURRENCY, :V_RATIO AS RATIO FROM "SY_DUMMY";
+        ELSE
+            T_EXP_TEMP = SELECT * FROM :T_EXP_TEMP
+                            UNION
+                         SELECT :V_PERIOD AS PERIOD, V_YEAR AS PLANNING_YEAR, :V_EXP_CURR AS EXPOSURE_CURRENCY,
+                            :V_TAR_CURR AS TARGET_CURRENCY, :V_RATIO AS RATIO FROM "SY_DUMMY";
+        END IF;
+
+        IF :V_PERIOD = 12 THEN
+            V_PERIOD = 1;
+            V_YEAR = :V_YEAR + 1;
+        ELSE
+            V_PERIOD = :V_PERIOD + 1;
+        END IF;
+
+    END FOR;
+
+    T_EXP_ALL_RATIO =  SELECT A.PERIOD, A.PLANNING_YEAR, A.EXPOSURE_CURRENCY, A.TARGET_CURRENCY, A.ACTUAL, A.FORECASTED,
+                        IFNULL(A.RATIO, B.RATIO) AS RATIO
+                        FROM :T_EXP_AMOUNT AS A
+                        LEFT OUTER JOIN :T_EXP_TEMP AS B
+                        ON A.PERIOD = B.PERIOD
+                        AND A.PLANNING_YEAR = B.PLANNING_YEAR
+                        AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY
+                        AND A.TARGET_CURRENCY = B.TARGET_CURRENCY;
+    
+    RETURN SELECT PERIOD ,
+                   PLANNING_YEAR ,
+                   EXPOSURE_CURRENCY ,
+                   TARGET_CURRENCY ,
+                   CASE WHEN ACTUAL IS NULL AND RATIO IS NOT NULL THEN FORECASTED * RATIO
+                   ELSE ACTUAL
+                   END AS ACTUAL,
+                   FORECASTED ,
+                   RATIO 
+                   FROM :T_EXP_ALL_RATIO;
+END;

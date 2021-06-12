@@ -1,0 +1,4 @@
+TYPE "TT_AUTO_EXP_DATA" AS TABLE (
+    "ID" INTEGER,
+    "DATA" DOUBLE
+ );
