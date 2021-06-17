@@ -1,10 +1,11 @@
-FUNCTION "TF_EXPOSURE_FORECAST_ACTUAL"( IP_EXP_CURRENCY NVARCHAR(03) )
+FUNCTION "TF_EXPOSURE_FORECAST_RATIO"( IP_EXP_CURRENCY NVARCHAR(03) )
     RETURNS TABLE( PERIOD INTEGER,
                    PLANNING_YEAR INTEGER,
                    EXPOSURE_CURRENCY NVARCHAR(5),
                    TARGET_CURRENCY NVARCHAR(5),
                    ACTUAL DECIMAL(16,5),
-                   FORECASTED DECIMAL(16,5)
+                   FORECASTED DECIMAL(16,5),
+                   RATIO DECIMAL
                 )
     LANGUAGE SQLSCRIPT 
     SQL SECURITY INVOKER AS 
@@ -30,7 +31,8 @@ BEGIN
                         B.EXPOSURE_CURRENCY,
                         B.TARGET_CURRENCY,
                         A.ACTUAL,
-                        B.EXPOSURE_AMOUNT AS FORECASTED
+                        B.EXPOSURE_AMOUNT AS FORECASTED,
+                        ROUND ((A.ACTUAL / B.EXPOSURE_AMOUNT), 3) AS RATIO
                         FROM(
                             SELECT A.PERIOD,
                                 A.PLANNING_YEAR,
@@ -86,6 +88,9 @@ BEGIN
                         AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY
                         AND A.TARGET_CURRENCY = B.TARGET_CURRENCY;
 
+    -- SELECT COUNT(*) INTO V_NUM_FORECAST FROM :T_EXP_AMOUNT 
+    --     WHERE ACTUAL IS NOT NULL AND PLANNING_YEAR >= YEAR(CURRENT_UTCDATE);
+
     T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
                                     12 AS INT_VALUE, 
                                     null AS DOUBLE_VALUE, 
@@ -104,7 +109,7 @@ BEGIN
                                     null AS STRING_VALUE
                             FROM "SY_DUMMY";
 
-    T_DATA = SELECT TO_INTEGER("$rowid$") AS ID, ACTUAL FROM :T_EXP_AMOUNT
+    T_DATA = SELECT TO_INTEGER("$rowid$") AS ID, TO_DOUBLE(RATIO) AS RATIO FROM :T_EXP_AMOUNT
                 WHERE ACTUAL IS NOT NULL AND PLANNING_YEAR <= YEAR(CURRENT_UTCDATE)
                 ORDER BY PLANNING_YEAR, PERIOD;
     
@@ -113,29 +118,29 @@ BEGIN
 
     SELECT TOP 1 PERIOD, PLANNING_YEAR INTO V_PERIOD, V_YEAR
         FROM :T_EXP_AMOUNT 
-        WHERE ACTUAL IS NULL AND PLANNING_YEAR NOT IN (2018, 2019) --Hard Coding - To be removed
+        WHERE ACTUAL IS NULL AND PLANNING_YEAR NOT IN (2018, 2019) --HardCoding - To be removed
         ORDER BY PLANNING_YEAR , PERIOD ;
 
     CALL "PAL_AUTO_EXPSMOOTH"(P1 => :T_DATA, P2 => :T_AUTO_SMOTH_PARAMS, P3 => :T_RATIO_FORECAST, P4 => :T_STATISTICS_AUTO_EXP);
     
     T_TEMP_OUT = SELECT TIMESTAMP AS ID, 
-                    VALUE AS ACTUAL
+                    ROUND(VALUE, 3) AS RATIO
                     FROM :T_RATIO_FORECAST 
                     WHERE "PI1_LOWER" IS NOT NULL
                     ORDER BY TIMESTAMP;
 
     FOR I IN 1..RECORD_COUNT(:T_TEMP_OUT) DO
 
-        V_RATIO = :T_TEMP_OUT.ACTUAL[:I];
+        V_RATIO = :T_TEMP_OUT.RATIO[:I];
 
         IF :I = 1 THEN
             T_EXP_TEMP = SELECT :V_PERIOD AS PERIOD, V_YEAR AS PLANNING_YEAR, :V_EXP_CURR AS EXPOSURE_CURRENCY,
-                            :V_TAR_CURR AS TARGET_CURRENCY, :V_RATIO AS ACTUAL FROM "SY_DUMMY";
+                            :V_TAR_CURR AS TARGET_CURRENCY, :V_RATIO AS RATIO FROM "SY_DUMMY";
         ELSE
             T_EXP_TEMP = SELECT * FROM :T_EXP_TEMP
                             UNION
                          SELECT :V_PERIOD AS PERIOD, V_YEAR AS PLANNING_YEAR, :V_EXP_CURR AS EXPOSURE_CURRENCY,
-                            :V_TAR_CURR AS TARGET_CURRENCY, :V_RATIO AS ACTUAL FROM "SY_DUMMY";
+                            :V_TAR_CURR AS TARGET_CURRENCY, :V_RATIO AS RATIO FROM "SY_DUMMY";
         END IF;
 
         IF :V_PERIOD = 12 THEN
@@ -147,8 +152,8 @@ BEGIN
 
     END FOR;
 
-    T_EXP_ALL_RATIO =  SELECT A.PERIOD, A.PLANNING_YEAR, A.EXPOSURE_CURRENCY, A.TARGET_CURRENCY,
-                            IFNULL(A.ACTUAL, B.ACTUAL) AS ACTUAL, A.FORECASTED
+    T_EXP_ALL_RATIO =  SELECT A.PERIOD, A.PLANNING_YEAR, A.EXPOSURE_CURRENCY, A.TARGET_CURRENCY, A.ACTUAL, A.FORECASTED,
+                        IFNULL(A.RATIO, B.RATIO) AS RATIO
                         FROM :T_EXP_AMOUNT AS A
                         LEFT OUTER JOIN :T_EXP_TEMP AS B
                         ON A.PERIOD = B.PERIOD
@@ -160,7 +165,10 @@ BEGIN
                    PLANNING_YEAR ,
                    EXPOSURE_CURRENCY ,
                    TARGET_CURRENCY ,
-                   ACTUAL,
-                   FORECASTED
+                   CASE WHEN ACTUAL IS NULL AND RATIO IS NOT NULL THEN FORECASTED * RATIO
+                   ELSE ACTUAL
+                   END AS ACTUAL,
+                   FORECASTED ,
+                   ROUND(RATIO, 3) AS RATIO
                    FROM :T_EXP_ALL_RATIO;
 END;
