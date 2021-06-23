@@ -214,6 +214,12 @@ context T {
         key TARGET_CURRENCY   : String(05);
             EXPOSURE_AMOUNT   : Decimal(16, 5);
     }
+
+    entity AUTO_EXP_SMOOTH_STATS {
+        key STAT_ID             : Integer64;
+            STAT_NAME           : String(100);
+            STAT_VALUE          : String(100);
+    }
 }
 
 /* Context CV to be used to define Calculation Views */

@@ -4,5 +4,6 @@
     "**/.git": true,
     "**/.vscode": true
 },
-"actions": []
+"actions": [],
+"SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/hedge-strategy/db/src/data/proc"
 }

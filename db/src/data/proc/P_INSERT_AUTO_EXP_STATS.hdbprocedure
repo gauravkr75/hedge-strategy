@@ -1,0 +1,17 @@
+PROCEDURE "P_INSERT_AUTO_EXP_STATS"( IN IT_AUTO_EXP_STATS "TT_STATISTICS_AUTO_EXP" )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic
+   *************************************/
+    
+    DECLARE V_STAT_ID BIGINT;
+    
+    SELECT "S_AUTO_EXP_SMOOTH_ID".NEXTVAL INTO V_STAT_ID FROM "SY_DUMMY";
+
+    INSERT INTO "T_AUTO_EXP_SMOOTH_STATS"
+    SELECT :V_STAT_ID AS STAT_ID, "STAT_NAME", "STAT_VALUE"
+        FROM :IT_AUTO_EXP_STATS;
+END

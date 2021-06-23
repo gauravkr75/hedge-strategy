@@ -1,11 +1,18 @@
 FUNCTION "TF_EXPOSURE_FORECAST_RATIO"( IP_EXP_CURRENCY NVARCHAR(03) )
-    RETURNS TABLE( PERIOD INTEGER,
+    RETURNS TABLE( 
+                   PERIOD INTEGER,
                    PLANNING_YEAR INTEGER,
                    EXPOSURE_CURRENCY NVARCHAR(5),
                    TARGET_CURRENCY NVARCHAR(5),
                    ACTUAL DECIMAL(16,5),
                    FORECASTED DECIMAL(16,5),
-                   RATIO DECIMAL
+                   RATIO DECIMAL,
+                   MODELNAME NVARCHAR(100),
+                   MSE NVARCHAR(100),
+                   ALPHA NVARCHAR(100),
+                   BETA NVARCHAR(100),
+                   PHI NVARCHAR(100),
+                   DAMPED NVARCHAR(100)
                 )
     LANGUAGE SQLSCRIPT 
     SQL SECURITY INVOKER AS 
@@ -23,6 +30,12 @@ BEGIN
     DECLARE V_TAR_CURR NVARCHAR(03);
     DECLARE I INTEGER;
     DECLARE V_RATIO DECIMAL;
+    DECLARE V_MODELNAME NVARCHAR(100);
+    DECLARE V_MSE NVARCHAR(100);
+    DECLARE V_ALPHA NVARCHAR(100);
+    DECLARE V_BETA NVARCHAR(100);
+    DECLARE V_PHI NVARCHAR(100);
+    DECLARE V_DAMPED NVARCHAR(100);
 
     --DECLARE T_DATA "TT_AUTO_EXP_DATA";
 
@@ -107,7 +120,26 @@ BEGIN
                                     12 AS INT_VALUE, 
                                     0.0 AS DOUBLE_VALUE, 
                                     null AS STRING_VALUE
-                            FROM "SY_DUMMY";
+                            FROM "SY_DUMMY"
+                            
+                                /*UNION
+                            SELECT 'ALPHA' AS PARAM_NAME,
+                                    null AS INT_VALUE, 
+                                    0.366 AS DOUBLE_VALUE, 
+                                    null AS STRING_VALUE
+                            FROM "SY_DUMMY"
+                                UNION
+                            SELECT 'BETA' AS PARAM_NAME,
+                                    null AS INT_VALUE, 
+                                    0.673 AS DOUBLE_VALUE, 
+                                    null AS STRING_VALUE
+                            FROM "SY_DUMMY"
+                                UNION
+                            SELECT 'PHI' AS PARAM_NAME,
+                                    null AS INT_VALUE, 
+                                    0.271 AS DOUBLE_VALUE, 
+                                    null AS STRING_VALUE 
+                            FROM "SY_DUMMY" */;
 
     T_DATA = SELECT TO_INTEGER("$rowid$") AS ID, TO_DOUBLE(RATIO) AS RATIO FROM :T_EXP_AMOUNT
                 WHERE ACTUAL IS NOT NULL AND PLANNING_YEAR <= YEAR(CURRENT_UTCDATE)
@@ -160,7 +192,57 @@ BEGIN
                         AND A.PLANNING_YEAR = B.PLANNING_YEAR
                         AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY
                         AND A.TARGET_CURRENCY = B.TARGET_CURRENCY;
+
+    --CALL "P_INSERT_AUTO_EXP_STATS"(:T_STATISTICS_AUTO_EXP);
+
+    T_STAT1 = SELECT "STAT_VALUE"
+                    FROM :T_STATISTICS_AUTO_EXP
+                    WHERE STAT_NAME = 'FORECAST_MODEL_NAME';
+
+    T_STAT2 = SELECT "STAT_VALUE"
+                    FROM :T_STATISTICS_AUTO_EXP
+                    WHERE STAT_NAME = 'MSE';
     
+    T_STAT3 = SELECT "STAT_VALUE"
+                    FROM :T_STATISTICS_AUTO_EXP
+                    WHERE STAT_NAME = 'ALPHA';
+    
+    T_STAT4 = SELECT "STAT_VALUE"
+                    FROM :T_STATISTICS_AUTO_EXP
+                    WHERE STAT_NAME = 'BETA';
+                    
+    T_STAT5 = SELECT "STAT_VALUE"
+                    FROM :T_STATISTICS_AUTO_EXP
+                    WHERE STAT_NAME = 'PHI' ;
+                    
+    T_STAT6 = SELECT "STAT_VALUE"
+                    FROM :T_STATISTICS_AUTO_EXP
+                    WHERE STAT_NAME = 'DAMPED' ;
+
+    IF NOT IS_EMPTY(:T_STAT1) THEN
+        SELECT "STAT_VALUE" INTO V_MODELNAME FROM :T_STAT1;
+    END IF;
+
+    IF NOT IS_EMPTY(:T_STAT2) THEN
+        SELECT "STAT_VALUE" INTO V_MSE FROM :T_STAT2;
+    END IF;
+
+    IF NOT IS_EMPTY(:T_STAT3) THEN
+        SELECT "STAT_VALUE" INTO V_ALPHA FROM :T_STAT3;
+    END IF;
+
+    IF NOT IS_EMPTY(:T_STAT4) THEN
+        SELECT "STAT_VALUE" INTO V_BETA FROM :T_STAT4;
+    END IF;
+
+    IF NOT IS_EMPTY(:T_STAT5) THEN
+        SELECT "STAT_VALUE" INTO V_PHI FROM :T_STAT5;
+    END IF;
+
+    IF NOT IS_EMPTY(:T_STAT6) THEN
+        SELECT "STAT_VALUE" INTO V_DAMPED FROM :T_STAT6;
+    END IF;
+
     RETURN SELECT PERIOD ,
                    PLANNING_YEAR ,
                    EXPOSURE_CURRENCY ,
@@ -169,6 +251,12 @@ BEGIN
                    ELSE ACTUAL
                    END AS ACTUAL,
                    FORECASTED ,
-                   ROUND(RATIO, 3) AS RATIO
+                   ROUND(RATIO, 3) AS RATIO,
+                   :V_MODELNAME AS MODELNAME,
+                   :V_MSE AS MSE,
+                   :V_ALPHA AS ALPHA,
+                   :V_BETA AS BETA,
+                   :V_PHI AS PHI,
+                   :V_DAMPED AS DAMPED
                    FROM :T_EXP_ALL_RATIO;
 END;
