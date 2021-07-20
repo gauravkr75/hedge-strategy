@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="CV_FORECASTED_EXPOSURE_REPORT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_FORECASTED_EXPOSURE_REPORT"/>
+<localVariables>
+  <variable id="IP_MODEL" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="NVARCHAR" length="1">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_LAYER1_MIN_PER" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="INTEGER" length="10">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_LAYER1_MAX_PER" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="INTEGER" length="10">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_LAYER2_MIN_PER" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="INTEGER" length="10">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_LAYER2_MAX_PER" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="INTEGER" length="10">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_LAYER_KEY" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="NVARCHAR" length="6">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_START_MONTH" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="INTEGER" length="10">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_YEAR" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="INTEGER" length="10">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_EXP_CURRENCY" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="NVARCHAR" length="3">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="TF_FORECASTED_EXPOSURE_REPORT">
+    <targetVariable name="IP_MODEL" resourceUri="TF_FORECASTED_EXPOSURE_REPORT"/>
+    <localVariable>IP_MODEL</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="TF_FORECASTED_EXPOSURE_REPORT">
+    <targetVariable name="IP_LAYER1_MIN_PER" resourceUri="TF_FORECASTED_EXPOSURE_REPORT"/>
+    <localVariable>IP_LAYER1_MIN_PER</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="TF_FORECASTED_EXPOSURE_REPORT">
+    <targetVariable name="IP_LAYER1_MAX_PER" resourceUri="TF_FORECASTED_EXPOSURE_REPORT"/>
+    <localVariable>IP_LAYER1_MAX_PER</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="TF_FORECASTED_EXPOSURE_REPORT">
+    <targetVariable name="IP_LAYER2_MIN_PER" resourceUri="TF_FORECASTED_EXPOSURE_REPORT"/>
+    <localVariable>IP_LAYER2_MIN_PER</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="TF_FORECASTED_EXPOSURE_REPORT">
+    <targetVariable name="IP_LAYER2_MAX_PER" resourceUri="TF_FORECASTED_EXPOSURE_REPORT"/>
+    <localVariable>IP_LAYER2_MAX_PER</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="TF_FORECASTED_EXPOSURE_REPORT">
+    <targetVariable name="IP_LAYER_KEY" resourceUri="TF_FORECASTED_EXPOSURE_REPORT"/>
+    <localVariable>IP_LAYER_KEY</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="TF_FORECASTED_EXPOSURE_REPORT">
+    <targetVariable name="IP_START_MONTH" resourceUri="TF_FORECASTED_EXPOSURE_REPORT"/>
+    <localVariable>IP_START_MONTH</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="TF_FORECASTED_EXPOSURE_REPORT">
+    <targetVariable name="IP_YEAR" resourceUri="TF_FORECASTED_EXPOSURE_REPORT"/>
+    <localVariable>IP_YEAR</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="TF_FORECASTED_EXPOSURE_REPORT">
+    <targetVariable name="IP_EXP_CURRENCY" resourceUri="TF_FORECASTED_EXPOSURE_REPORT"/>
+    <localVariable>IP_EXP_CURRENCY</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="TF_FORECASTED_EXPOSURE_REPORT" type="TABLE_FUNCTION">
+    <resourceUri>TF_FORECASTED_EXPOSURE_REPORT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+
+<logicalModel id="TF_FORECASTED_EXPOSURE_REPORT">
+  <attributes>
+    <attribute id="HEDGE_YEAR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HEDGE_YEAR"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="HEDGE_YEAR"/>
+    </attribute>
+    <attribute id="HEDGE_MONTH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HEDGE_MONTH"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="HEDGE_MONTH"/>
+    </attribute>
+    <attribute id="FORWARD_SETTLE_YEAR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORWARD_SETTLE_YEAR"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="FORWARD_SETTLE_YEAR"/>
+    </attribute>
+    <attribute id="FORWARD_SETTLE_MONTH" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORWARD_SETTLE_MONTH"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="FORWARD_SETTLE_MONTH"/>
+    </attribute>
+    <attribute id="LAYER1_PERCENTAGE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER1_PERCENTAGE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="LAYER1_PERCENTAGE"/>
+    </attribute>
+    <attribute id="LAYER2_PERCENTAGE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER2_PERCENTAGE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="LAYER2_PERCENTAGE"/>
+    </attribute>
+    <attribute id="LAYER_SEQUENCE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER_SEQUENCE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="LAYER_SEQUENCE"/>
+    </attribute>
+    <attribute id="FORECAST" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORECAST"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="FORECAST"/>
+    </attribute>
+    <attribute id="MIN_VALUE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MIN_VALUE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="MIN_VALUE"/>
+    </attribute>
+    <attribute id="MAX_VALUE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAX_VALUE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="MAX_VALUE"/>
+    </attribute>
+    <attribute id="BPL_PER" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPL_PER"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="BPL_PER"/>
+    </attribute>
+    <attribute id="MKT_VAL_RATIO_PER" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MKT_VAL_RATIO_PER"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="MKT_VAL_RATIO_PER"/>
+    </attribute>
+    <attribute id="FORECAST_COMP_PER" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORECAST_COMP_PER"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="FORECAST_COMP_PER"/>
+    </attribute>
+    <attribute id="PROPOSED_PERCENT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROPOSED_PERCENT"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="PROPOSED_PERCENT"/>
+    </attribute>
+    <attribute id="PROPOSED_VALUE" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROPOSED_VALUE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT" columnName="PROPOSED_VALUE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>
