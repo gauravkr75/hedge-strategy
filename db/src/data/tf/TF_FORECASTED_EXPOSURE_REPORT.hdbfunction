@@ -191,6 +191,8 @@ BEGIN
                                  WHEN E.AVG_SPOT_RATE <= D.AVG_SPOT_RATE AND A.LAYER_SEQUENCE = 'L2' THEN :IP_LAYER2_MIN_PER
                                  WHEN E.AVG_SPOT_RATE > D.AVG_SPOT_RATE AND A.LAYER_SEQUENCE = 'L1' THEN :IP_LAYER1_MAX_PER
                                  WHEN E.AVG_SPOT_RATE > D.AVG_SPOT_RATE AND A.LAYER_SEQUENCE = 'L2' THEN :IP_LAYER2_MAX_PER
+                                 WHEN A.LAYER_SEQUENCE = 'L1' THEN :IP_LAYER1_MIN_PER
+                                 WHEN A.LAYER_SEQUENCE = 'L2' THEN :IP_LAYER2_MIN_PER
                             END AS MKT_VAL_RATIO
                             FROM :T_DATA AS A
                             LEFT OUTER JOIN "TF_EXPOSURE_FORECAST_ACTUAL"(:IP_EXP_CURRENCY) AS B
