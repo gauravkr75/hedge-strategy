@@ -21,7 +21,7 @@ modules:
         properties:
           srv-url: "${default-url}"
     parameters:
-      memory: 2048M
+      memory: 1024M
   - name: HedgeStrategy-db-deployer
     type: hdb
     path: db

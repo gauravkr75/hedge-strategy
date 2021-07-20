@@ -5,6 +5,7 @@ FUNCTION "TF_EXPOSURE_FORECAST_ACTUAL"( IP_EXP_CURRENCY NVARCHAR(03) )
                    TARGET_CURRENCY NVARCHAR(5),
                    ACTUAL DECIMAL(16,5),
                    FORECASTED DECIMAL(16,5),
+                   PREDICTED BOOLEAN,
                    MODELNAME NVARCHAR(100),
                    MSE NVARCHAR(100),
                    ALPHA NVARCHAR(100),
@@ -160,7 +161,10 @@ BEGIN
     END FOR;
 
     T_EXP_ALL_RATIO =  SELECT A.PERIOD, A.PLANNING_YEAR, A.EXPOSURE_CURRENCY, A.TARGET_CURRENCY,
-                            IFNULL(A.ACTUAL, B.ACTUAL) AS ACTUAL, A.FORECASTED
+                            IFNULL(A.ACTUAL, B.ACTUAL) AS ACTUAL, A.FORECASTED,
+                            CASE WHEN A.ACTUAL IS NULL THEN TRUE
+                                 ELSE FALSE
+                            END AS PREDICTED
                         FROM :T_EXP_AMOUNT AS A
                         LEFT OUTER JOIN :T_EXP_TEMP AS B
                         ON A.PERIOD = B.PERIOD
@@ -168,7 +172,7 @@ BEGIN
                         AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY
                         AND A.TARGET_CURRENCY = B.TARGET_CURRENCY;
     
-                        T_STAT1 = SELECT "STAT_VALUE"
+    T_STAT1 = SELECT "STAT_VALUE"
                     FROM :T_STATISTICS_AUTO_EXP
                     WHERE STAT_NAME = 'FORECAST_MODEL_NAME';
 
@@ -222,6 +226,7 @@ BEGIN
                    TARGET_CURRENCY ,
                    ACTUAL,
                    FORECASTED,
+                   PREDICTED,
                    :V_MODELNAME AS MODELNAME,
                    :V_MSE AS MSE,
                    :V_ALPHA AS ALPHA,
