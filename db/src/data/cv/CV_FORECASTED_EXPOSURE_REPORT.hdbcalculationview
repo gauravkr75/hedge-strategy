@@ -4,65 +4,65 @@
 <localVariables>
   <variable id="IP_MODEL" parameter="true">
     <descriptions defaultDescription=" "/>
-    <variableProperties datatype="NVARCHAR" length="1">
+    <variableProperties datatype="NVARCHAR" length="1" mandatory="true">
       <valueDomain type="empty"/>
-      <selection/>
+      <selection multiLine="false" type="SingleValue"/>
     </variableProperties>
   </variable>
   <variable id="IP_LAYER1_MIN_PER" parameter="true">
     <descriptions defaultDescription=" "/>
-    <variableProperties datatype="INTEGER" length="10">
+    <variableProperties datatype="INTEGER" length="10" mandatory="true">
       <valueDomain type="empty"/>
-      <selection/>
+      <selection multiLine="false" type="SingleValue"/>
     </variableProperties>
   </variable>
   <variable id="IP_LAYER1_MAX_PER" parameter="true">
     <descriptions defaultDescription=" "/>
-    <variableProperties datatype="INTEGER" length="10">
+    <variableProperties datatype="INTEGER" length="10" mandatory="true">
       <valueDomain type="empty"/>
-      <selection/>
+      <selection multiLine="false" type="SingleValue"/>
     </variableProperties>
   </variable>
   <variable id="IP_LAYER2_MIN_PER" parameter="true">
     <descriptions defaultDescription=" "/>
-    <variableProperties datatype="INTEGER" length="10">
+    <variableProperties datatype="INTEGER" length="10" mandatory="true">
       <valueDomain type="empty"/>
-      <selection/>
+      <selection multiLine="false" type="SingleValue"/>
     </variableProperties>
   </variable>
   <variable id="IP_LAYER2_MAX_PER" parameter="true">
     <descriptions defaultDescription=" "/>
-    <variableProperties datatype="INTEGER" length="10">
+    <variableProperties datatype="INTEGER" length="10" mandatory="true">
       <valueDomain type="empty"/>
-      <selection/>
+      <selection multiLine="false" type="SingleValue"/>
     </variableProperties>
   </variable>
   <variable id="IP_LAYER_KEY" parameter="true">
     <descriptions defaultDescription=" "/>
-    <variableProperties datatype="NVARCHAR" length="6">
+    <variableProperties datatype="NVARCHAR" length="6" mandatory="true">
       <valueDomain type="empty"/>
-      <selection/>
+      <selection multiLine="false" type="SingleValue"/>
     </variableProperties>
   </variable>
   <variable id="IP_START_MONTH" parameter="true">
     <descriptions defaultDescription=" "/>
-    <variableProperties datatype="INTEGER" length="10">
+    <variableProperties datatype="INTEGER" length="10" mandatory="true">
       <valueDomain type="empty"/>
-      <selection/>
+      <selection multiLine="false" type="SingleValue"/>
     </variableProperties>
   </variable>
   <variable id="IP_YEAR" parameter="true">
     <descriptions defaultDescription=" "/>
-    <variableProperties datatype="INTEGER" length="10">
+    <variableProperties datatype="INTEGER" length="10" mandatory="true">
       <valueDomain type="empty"/>
-      <selection/>
+      <selection multiLine="false" type="SingleValue"/>
     </variableProperties>
   </variable>
   <variable id="IP_EXP_CURRENCY" parameter="true">
     <descriptions defaultDescription=" "/>
-    <variableProperties datatype="NVARCHAR" length="3">
+    <variableProperties datatype="NVARCHAR" length="3" mandatory="true">
       <valueDomain type="empty"/>
-      <selection/>
+      <selection multiLine="false" type="SingleValue"/>
     </variableProperties>
   </variable>
 </localVariables>
