@@ -1,0 +1,44 @@
+FUNCTION "TF_EXPOSURE_FORECAST_RATIO_BASED"( )
+    RETURNS TABLE( 
+                   PERIOD INTEGER,
+                   PLANNING_YEAR INTEGER,
+                   EXPOSURE_CURRENCY NVARCHAR(5),
+                   TARGET_CURRENCY NVARCHAR(5),
+                   ACTUAL DECIMAL(16,5),
+                   FORECASTED DECIMAL(16,5),
+                   RATIO DECIMAL,
+                   PREDICTED BOOLEAN,
+                   MODELNAME NVARCHAR(100),
+                   MSE NVARCHAR(100),
+                   ALPHA NVARCHAR(100),
+                   BETA NVARCHAR(100),
+                   PHI NVARCHAR(100),
+                   DAMPED NVARCHAR(100)
+                )
+    LANGUAGE SQLSCRIPT 
+    SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    DECLARE I INT;
+    DECLARE V_EXP_CURR NVARCHAR(5);
+
+    T_UNQ_EXP_CURR = SELECT DISTINCT EXPOSURE_CURRENCY FROM T_EXPOSURE_POSITION_FLOWS;
+
+    FOR I IN 1..RECORD_COUNT(:T_UNQ_EXP_CURR) DO
+
+        V_EXP_CURR = :T_UNQ_EXP_CURR.EXPOSURE_CURRENCY[:I];
+
+        IF :I = 1 THEN
+            T_OUTPUT = SELECT * FROM "TF_EXPOSURE_FORECAST_RATIO"(:V_EXP_CURR);
+        END IF;
+
+        T_OUTPUT = SELECT * FROM :T_OUTPUT
+                        UNION
+                   SELECT * FROM "TF_EXPOSURE_FORECAST_RATIO"(:V_EXP_CURR);
+
+    END FOR;
+
+    RETURN SELECT * FROM :T_OUTPUT;
+END;

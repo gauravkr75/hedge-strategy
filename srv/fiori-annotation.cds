@@ -1,48 +1,48 @@
 annotate CatalogService.Layer with @(UI : {
     SelectionFields : [
-    YEAR,
-    SMART_KEY
+        YEAR,
+        SMART_KEY
     ],
     LineItem        : [
-    {
-        $Type  : 'UI.DataFieldForAction',
-        Action : 'CatalogService.EntityContainer/determinePNL',
-        Label  : 'Determine PNL'
-    },
-    {
-        $Type  : 'UI.DataFieldForAction',
-        Action : 'CatalogService.EntityContainer/flushResults',
-        Label  : 'Flush Data'
-    },
+        {
+            $Type  : 'UI.DataFieldForAction',
+            Action : 'CatalogService.EntityContainer/determinePNL',
+            Label  : 'Determine PNL'
+        },
+        {
+            $Type  : 'UI.DataFieldForAction',
+            Action : 'CatalogService.EntityContainer/flushResults',
+            Label  : 'Flush Data'
+        },
 
-    {
-        Value : SMART_KEY,
-        Label : 'Smart Key',
-    },
-    //{Value : SIMULATION_ID, Label : 'Simulation ID'},
+        {
+            Value : SMART_KEY,
+            Label : 'Smart Key',
+        },
+        //{Value : SIMULATION_ID, Label : 'Simulation ID'},
 
-    {Value : YEAR},
-    {Value : LAYER},
-    {Value : MONTH_START},
+        {Value : YEAR},
+        {Value : LAYER},
+        {Value : MONTH_START},
 
-    //{Value : MONTH_START_ID, Label : 'Month Start ID'},
+        //{Value : MONTH_START_ID, Label : 'Month Start ID'},
 
-    {Value : MONTH_START_DATE},
-    {Value : MONTH_END},
+        {Value : MONTH_START_DATE},
+        {Value : MONTH_END},
 
-    //{Value : MONTH_END_ID, Label : 'Month End ID'},
+        //{Value : MONTH_END_ID, Label : 'Month End ID'},
 
-    {Value : FORWARD_MONTH},
+        {Value : FORWARD_MONTH},
 
-    //{Value : MONTH_START_KEY, Label : 'Month Start Key'},
+        //{Value : MONTH_START_KEY, Label : 'Month Start Key'},
 
-    {Value : MONTH_END_DATE},
+        {Value : MONTH_END_DATE},
 
-    //{Value : MONTH_END_KEY, Label : 'Month End Key'},
+        //{Value : MONTH_END_KEY, Label : 'Month End Key'},
 
-    {Value : FORWARD_PRICE},
-    {Value : SPOT_PRICE},
-    {Value : LAYER_PNL}
+        {Value : FORWARD_PRICE},
+        {Value : SPOT_PRICE},
+        {Value : LAYER_PNL}
     ]
 });
 
@@ -52,18 +52,18 @@ annotate CatalogService.LayerSummary with @(
                                           UI : {
     SelectionFields         : [LAYER],
     LineItem                : [
-    //{Value : SOURCE},
-    {Value : LAYER},
-    {Value : LAYER_KEY},
-    {Value : BACKCASTING_PNL},
-    {Value : EXISTING_PNL},
-    {Value : RELATIVE_PNL_BACKCAST},
-    {Value : FORECASTING_PNL},
-    //{Value : RELATIVE_PNL_FORECAST},
-    {Value : FROM_CURR},
-    {Value : TO_CURR},
-    {Value : NUM_OF_SIMULATIONS},
-    {Value : RECORD_PROC_COUNT}
+        //{Value : SOURCE},
+        {Value : LAYER},
+        {Value : LAYER_KEY},
+        {Value : BACKCASTING_PNL},
+        {Value : EXISTING_PNL},
+        {Value : RELATIVE_PNL_BACKCAST},
+        {Value : FORECASTING_PNL},
+        //{Value : RELATIVE_PNL_FORECAST},
+        {Value : FROM_CURR},
+        {Value : TO_CURR},
+        {Value : NUM_OF_SIMULATIONS},
+        {Value : RECORD_PROC_COUNT}
     ],
     HeaderInfo              : {
         TypeName       : 'Hedging Strategy',
@@ -73,26 +73,26 @@ annotate CatalogService.LayerSummary with @(
         Description    : {Value : LAYER_KEY_TEXT}
     },
     HeaderFacets            : [
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Target : '@UI.DataPoint#BackCasting'
-    },
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Target : '@UI.DataPoint#Existing'
-    },
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Target : '@UI.DataPoint#ForeCasting'
-    },
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Target : '@UI.DataPoint#RelBackcast'
-    },
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Target : '@UI.DataPoint#RelForecast'
-    }
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.DataPoint#BackCasting'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.DataPoint#Existing'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.DataPoint#ForeCasting'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.DataPoint#RelBackcast'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.DataPoint#RelForecast'
+        }
     ],
 
     DataPoint #Existing     : {
@@ -117,34 +117,34 @@ annotate CatalogService.LayerSummary with @(
     },
 
     Facets                  : [
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Target : '@UI.FieldGroup#GeneralData',
-        Label  : 'General Info'
-    },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.FieldGroup#GeneralData',
+            Label  : 'General Info'
+        },
 
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Target : 'ToBackcasting/@UI.LineItem',
-        Label  : 'Backcasting'
-    },
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Target : 'ToExisting/@UI.LineItem',
-        Label  : 'Existing'
-    },
-    {
-        $Type  : 'UI.ReferenceFacet',
-        Target : 'ToForecasting/@UI.LineItem',
-        Label  : 'Forecasting'
-    }
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : 'ToBackcasting/@UI.LineItem',
+            Label  : 'Backcasting'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : 'ToExisting/@UI.LineItem',
+            Label  : 'Existing'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : 'ToForecasting/@UI.LineItem',
+            Label  : 'Forecasting'
+        }
     ],
 
     FieldGroup #GeneralData : {Data : [
-    {Value : LAYER},
-    {Value : LAYER_KEY},
-    {Value : FROM_CURR},
-    {Value : TO_CURR}
+        {Value : LAYER},
+        {Value : LAYER_KEY},
+        {Value : FROM_CURR},
+        {Value : TO_CURR}
     ]}
 
 }); //{
@@ -169,17 +169,17 @@ annotate CatalogService.Backcasting with @(
         Description    : {Value : LAYER_KEY}
     },
     UI            : {LineItem : [
-    // {Value : LAYER},
-    // {Value : LAYER_KEY},
-    // {Value : BLOCK_KEY},
-    //{Value : RECORD_KEY},
-    //{Value : START_MONTH},
-    //{Value : END_MONTH},
-    {Value : QUOTE_YEAR},
-    {Value : QUOTE_PRICE},
-    //{Value : SPOT_YEAR},
-    {Value : SPOT_PRICE},
-    {Value : PNL}
+        // {Value : LAYER},
+        // {Value : LAYER_KEY},
+        // {Value : BLOCK_KEY},
+        //{Value : RECORD_KEY},
+        //{Value : START_MONTH},
+        //{Value : END_MONTH},
+        {Value : QUOTE_YEAR},
+        {Value : QUOTE_PRICE},
+        //{Value : SPOT_YEAR},
+        {Value : SPOT_PRICE},
+        {Value : PNL}
     ]
     // Chart                                        : {
     //     Title               : 'Backcasting',
@@ -221,17 +221,17 @@ annotate CatalogService.Forecasting with @(
         Description    : {Value : LAYER_KEY}
     },
     UI            : {LineItem : [
-    //{Value : LAYER},
-    //{Value : LAYER_KEY},
-    //{Value : BLOCK_KEY},
-    //{Value : RECORD_KEY},
-    {Value : START_MONTH},
-    {Value : QUOTE_YEAR},
-    {Value : END_MONTH},
-    {Value : SPOT_YEAR},
-    {Value : QUOTE_PRICE},
-    {Value : SPOT_PRICE},
-    {Value : PNL}
+        //{Value : LAYER},
+        //{Value : LAYER_KEY},
+        //{Value : BLOCK_KEY},
+        //{Value : RECORD_KEY},
+        {Value : START_MONTH},
+        {Value : QUOTE_YEAR},
+        {Value : END_MONTH},
+        {Value : SPOT_YEAR},
+        {Value : QUOTE_PRICE},
+        {Value : SPOT_PRICE},
+        {Value : PNL}
     ]}
 ) {
 
@@ -258,17 +258,17 @@ annotate CatalogService.Existing with @(
         Description    : {Value : LAYER_KEY}
     },
     UI            : {LineItem : [
-    //{Value : LAYER},
-    //{Value : LAYER_KEY},
-    //{Value : BLOCK_KEY},
-    //{Value : RECORD_KEY},
-    //{Value : START_MONTH},
-    {Value : QUOTE_YEAR},
-    //{Value : END_MONTH},
-    //{Value : SPOT_YEAR},
-    {Value : QUOTE_PRICE},
-    {Value : SPOT_PRICE},
-    {Value : PNL}
+        //{Value : LAYER},
+        //{Value : LAYER_KEY},
+        //{Value : BLOCK_KEY},
+        //{Value : RECORD_KEY},
+        //{Value : START_MONTH},
+        {Value : QUOTE_YEAR},
+        //{Value : END_MONTH},
+        //{Value : SPOT_YEAR},
+        {Value : QUOTE_PRICE},
+        {Value : SPOT_PRICE},
+        {Value : PNL}
     ]}
 ) {
 
@@ -284,3 +284,95 @@ annotate CatalogService.Existing with @(
     SPOT_PRICE  @DefaultAggregation   : #SUM  @sap.aggregation.role : 'measure';
     PNL         @DefaultAggregation   : #SUM  @sap.aggregation.role : 'measure';
 };
+
+annotate CatalogService.ForecastReport with @(UI : {LineItem : [
+    {Value : HEDGE_YEAR},
+    {Value : HEDGE_MONTH},
+    {Value : FORWARD_SETTLE_YEAR},
+    {Value : FORWARD_SETTLE_MONTH},
+    {Value : LAYER_SEQUENCE},
+    {Value : LAYER1_PERCENTAGE},
+    {Value : LAYER2_PERCENTAGE},
+    {Value : FORECAST},
+    {Value : MIN_VALUE},
+    {Value : MAX_VALUE},
+    {Value : BPL_PER},
+    {Value : MKT_VAL_RATIO_PER},
+    {Value : FORECAST_COMP_PER},
+    {Value : PROPOSED_PERCENT},
+    {Value : PROPOSED_VALUE}
+
+]});
+
+annotate CatalogService.HedgeProfile with @(UI : {
+    PresentationVariant : {
+        SortOrder      : [{
+            Property   : DEFAULT,
+            Descending : true
+        }]
+    },
+    SelectionFields     : [PROFILE_NAME],
+    LineItem            : [
+        {
+            $Type  : 'UI.DataFieldForAction',
+            Action : 'CatalogService.EntityContainer/HedgeProfile_setDefault',
+            Label  : 'Set as Active'
+        },
+        {
+            Value       : DefaultText,
+            Criticality : DefaultCritical,
+            Title       : 'Status'
+        },
+        {Value : PROFILE_NAME},
+        {Value : MODEL},
+        {Value : LAYER1_MIN_PER},
+        {Value : LAYER1_MAX_PER},
+        {Value : LAYER2_MIN_PER},
+        {Value : LAYER2_MAX_PER},
+        {Value : LAYER_KEY},
+        {Value : START_MONTH},
+        {Value : YEAR}
+    ],
+    HeaderInfo          : {
+        TypeName       : 'Hedge Profile',
+        TypeNamePlural : 'Hedge Profile(s)',
+        ImageUrl       : 'sap-icon://sales-quote',
+        Title          : {Value : PROFILE_NAME}
+    },
+    HeaderFacets        : [
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.DataPoint#Model'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.DataPoint#Status'
+        }
+    ],
+    DataPoint #Model    : {
+        Value : MODEL,
+        Title : 'Model Name'
+    },
+    DataPoint #Status   : {
+        Value       : DefaultText,
+        Title       : 'Status',
+        Criticality : DefaultCritical
+    },
+    Facets              : [{
+        $Type  : 'UI.ReferenceFacet',
+        Target : '@UI.FieldGroup#Profile',
+        Label  : 'Profile Parameters'
+    }],
+
+    FieldGroup #Profile : {Data : [
+        {Value : PROFILE_NAME},
+        {Value : MODEL},
+        {Value : LAYER1_MIN_PER},
+        {Value : LAYER1_MAX_PER},
+        {Value : LAYER2_MIN_PER},
+        {Value : LAYER2_MAX_PER},
+        {Value : LAYER_KEY},
+        {Value : START_MONTH},
+        {Value : YEAR}
+    ]}
+});

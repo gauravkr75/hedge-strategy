@@ -1,4 +1,6 @@
 /* Context T to be used to define database tables */
+using {cuid} from '@sap/cds/common';
+
 context T {
 
     entity RATES {
@@ -216,9 +218,23 @@ context T {
     }
 
     entity AUTO_EXP_SMOOTH_STATS {
-        key STAT_ID             : Integer64;
-            STAT_NAME           : String(100);
-            STAT_VALUE          : String(100);
+        key STAT_ID    : Integer64;
+            STAT_NAME  : String(100);
+            STAT_VALUE : String(100);
+    }
+
+    @assert.unique : {Profile : [PROFILE_NAME]}
+    entity HEDGE_PROFILE : cuid {
+        PROFILE_NAME   : String(30)@title : 'Profile Name';
+        MODEL          : String(10)@title : 'Forecast Model';
+        LAYER1_MIN_PER : Integer   @title : 'Layer 1 Min %';
+        LAYER1_MAX_PER : Integer   @title : 'Layer 1 Max %';
+        LAYER2_MIN_PER : Integer   @title : 'Layer 2 Min %';
+        LAYER2_MAX_PER : Integer   @title : 'Layer 2 Max %';
+        LAYER_KEY      : String(6) @title : 'Layer Key';
+        START_MONTH    : Integer   @title : 'Starting Month';
+        YEAR           : Integer   @title : 'Starting Year';
+        DEFAULT        : String(1) @title : 'Default';
     }
 }
 
@@ -308,5 +324,25 @@ context CV {
            END_MONTH_DESC   : String(20)   @title : 'End Month';
            PARENT           : Association to LAYER_SUMMARY_OUT;
 
+    }
+
+    @cds.persistence.exists
+    @cds.persistence.calcview
+    entity![FORECASTED_EXPOSURE_REPORT](IP_MODEL : String(1), IP_LAYER1_MIN_PER : Integer, IP_LAYER1_MAX_PER : Integer, IP_LAYER2_MIN_PER : Integer, IP_LAYER2_MAX_PER : Integer, IP_LAYER_KEY : String(10), IP_START_MONTH : Integer, IP_YEAR : Integer, IP_EXP_CURRENCY : String(3)) {
+        key![HEDGE_YEAR]           : Integer        @title : 'HEDGE_YEAR: HEDGE_YEAR';
+        key![HEDGE_MONTH]          : Integer        @title : 'HEDGE_MONTH: HEDGE_MONTH';
+        key![FORWARD_SETTLE_YEAR]  : Integer        @title : 'FORWARD_SETTLE_YEAR: FORWARD_SETTLE_YEAR';
+        key![FORWARD_SETTLE_MONTH] : Integer        @title : 'FORWARD_SETTLE_MONTH: FORWARD_SETTLE_MONTH';
+        key![LAYER_SEQUENCE]       : String(2)      @title : 'LAYER_SEQUENCE: LAYER_SEQUENCE';
+           ![LAYER1_PERCENTAGE]    : String(7)      @title : 'LAYER1_PERCENTAGE: LAYER1_PERCENTAGE';
+           ![LAYER2_PERCENTAGE]    : String(7)      @title : 'LAYER2_PERCENTAGE: LAYER2_PERCENTAGE';
+           ![FORECAST]             : Decimal(34, 10)@title : 'FORECAST: FORECAST';
+           ![MIN_VALUE]            : Decimal(34, 10)@title : 'MIN_VALUE: MIN_VALUE';
+           ![MAX_VALUE]            : Decimal(34, 10)@title : 'MAX_VALUE: MAX_VALUE';
+           ![BPL_PER]              : Decimal(34, 10)@title : 'BPL_PER: BPL_PER';
+           ![MKT_VAL_RATIO_PER]    : Decimal(34, 10)@title : 'MKT_VAL_RATIO_PER: MKT_VAL_RATIO_PER';
+           ![FORECAST_COMP_PER]    : Decimal(34, 10)@title : 'FORECAST_COMP_PER: FORECAST_COMP_PER';
+           ![PROPOSED_PERCENT]     : Decimal(34, 10)@title : 'PROPOSED_PERCENT: PROPOSED_PERCENT';
+           ![PROPOSED_VALUE]       : Decimal(34, 10)@title : 'PROPOSED_VALUE: PROPOSED_VALUE';
     }
 }

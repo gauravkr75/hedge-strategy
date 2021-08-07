@@ -41,6 +41,24 @@
         "cwd": "${workspaceFolder}"
       },
       "isBackground": true
+    },
+    {
+      "label": "cds-deploy-to-hana-hedge-strategy-hedge-strategy-hdi_KUMARG",
+      "type": "shell",
+      "command": "cds",
+      "args": [
+        "deploy",
+        "--to",
+        "hana:hedge-strategy-hdi_KUMARG",
+        "--no-save"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": [
+        "$cap-hdi-bind-handler"
+      ]
     }
   ]
 }

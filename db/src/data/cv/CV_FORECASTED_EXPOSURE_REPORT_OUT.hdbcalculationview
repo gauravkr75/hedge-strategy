@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_FORECASTED_EXPOSURE_REPORT_OUT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CV_FORECASTED_EXPOSURE_REPORT_OUT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="TF_FORECASTED_EXPOSURE_REPORT_OUT" type="TABLE_FUNCTION">
+    <resourceUri>TF_FORECASTED_EXPOSURE_REPORT_OUT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+
+<logicalModel id="TF_FORECASTED_EXPOSURE_REPORT_OUT">
+  <attributes>
+    <attribute id="HEDGE_YEAR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HEDGE_YEAR"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="HEDGE_YEAR"/>
+    </attribute>
+    <attribute id="HEDGE_MONTH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HEDGE_MONTH"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="HEDGE_MONTH"/>
+    </attribute>
+    <attribute id="FORWARD_SETTLE_YEAR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORWARD_SETTLE_YEAR"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="FORWARD_SETTLE_YEAR"/>
+    </attribute>
+    <attribute id="FORWARD_SETTLE_MONTH" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORWARD_SETTLE_MONTH"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="FORWARD_SETTLE_MONTH"/>
+    </attribute>
+    <attribute id="LAYER1_PERCENTAGE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER1_PERCENTAGE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="LAYER1_PERCENTAGE"/>
+    </attribute>
+    <attribute id="LAYER2_PERCENTAGE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER2_PERCENTAGE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="LAYER2_PERCENTAGE"/>
+    </attribute>
+    <attribute id="LAYER_SEQUENCE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER_SEQUENCE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="LAYER_SEQUENCE"/>
+    </attribute>
+    <attribute id="EXPOSURE_CURRENCY" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXPOSURE_CURRENCY"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="EXPOSURE_CURRENCY"/>
+    </attribute>
+    <attribute id="FORECAST" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORECAST"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="FORECAST"/>
+    </attribute>
+    <attribute id="MIN_VALUE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MIN_VALUE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="MIN_VALUE"/>
+    </attribute>
+    <attribute id="MAX_VALUE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAX_VALUE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="MAX_VALUE"/>
+    </attribute>
+    <attribute id="BPL_PER" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPL_PER"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="BPL_PER"/>
+    </attribute>
+    <attribute id="FORECAST_COMP_PER" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORECAST_COMP_PER"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="FORECAST_COMP_PER"/>
+    </attribute>
+    <attribute id="MKT_VAL_RATIO_PER" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MKT_VAL_RATIO_PER"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="MKT_VAL_RATIO_PER"/>
+    </attribute>
+    <attribute id="PROPOSED_PERCENT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROPOSED_PERCENT"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="PROPOSED_PERCENT"/>
+    </attribute>
+    <attribute id="PROPOSED_VALUE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROPOSED_VALUE"/>
+      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="PROPOSED_VALUE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,13 @@
+PROCEDURE "P_SET_HEDGE_PROFILE_ACTIVE"( IN IV_PROFILE_ID NVARCHAR(40) )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic
+   *************************************/
+
+    UPDATE T_HEDGE_PROFILE SET DEFAULT = '' WHERE DEFAULT = 'X';
+    UPDATE T_HEDGE_PROFILE SET DEFAULT = 'X' WHERE ID = :IV_PROFILE_ID;
+
+END
