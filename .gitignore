@@ -65,3 +65,4 @@ gen/db/.env
 # auto generated wildcard
 gen/db/.env
 .vscode/settings.json
+.vscode/settings.json

@@ -34,6 +34,7 @@ BEGIN
     ****************************/
     DECLARE I INT;
     DECLARE J INT;
+    DECLARE V_YEAR INT;
     DECLARE V_YEAR_INC NVARCHAR(1);
 
     T_LAYER_DATA = SELECT *,
@@ -73,18 +74,20 @@ BEGIN
 
         J = :IP_START_MONTH;
         I = 1;
+        V_YEAR = :IP_YEAR;
         WHILE I < 12 DO
 
             J = :J + 1;
             IF :J > 12 THEN 
                 J = 1;
                 V_YEAR_INC = 'X';
+                V_YEAR = :V_YEAR + 1;
             END IF;
 
                         
             T_DATA_FORMAT = SELECT * FROM :T_DATA_FORMAT
                             UNION 
-                         SELECT :IP_LAYER_KEY AS LAYER_KEY, :IP_YEAR AS HEDGE_YEAR , :J AS HEDGE_MONTH
+                         SELECT :IP_LAYER_KEY AS LAYER_KEY, :V_YEAR AS HEDGE_YEAR , :J AS HEDGE_MONTH
                             FROM "SY_DUMMY"; 
             I = :I + 1;
         END WHILE;
