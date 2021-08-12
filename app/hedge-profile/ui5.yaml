@@ -10,7 +10,7 @@ server:
       ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
       backend:
       - path: /v2
-        url: https://enr-na-enr-na-dev-dev-hedgestrategy-srv.cfapps.us10.hana.ondemand.com
+        url: https://localhost:4004
       ui5:
         path: 
         - /resources
