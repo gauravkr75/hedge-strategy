@@ -3,6 +3,7 @@ using {
     CV
 } from '../db/data-model';
 
+@requires: 'authenticated-user'
 service CatalogService {
     //@readonly
     //@Aggregation.ApplySupported.PropertyRestrictions : true
