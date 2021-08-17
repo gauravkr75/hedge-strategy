@@ -96,7 +96,6 @@
                 "type": "sap.ui.model.resource.ResourceModel",
                 "uri": "i18n/ObjectPage/HedgeProfile/i18n.properties"
             },
-            
             "": {
                 "dataSource": "mainService",
                 "preload": true,
@@ -111,7 +110,19 @@
             }
         },
         "extends": {
-            "extensions": {}
+            "extensions": {
+                "sap.ui.controllerExtensions": {
+                    "sap.suite.ui.generic.template.ListReport.view.ListReport": {
+                        "controllerName": "hedgeprofile.ext.controller.ListReportExt",
+                        "sap.ui.generic.app": {
+                            "HedgeProfile": {
+                                "EntitySet": "HedgeProfile",
+                                "Actions": {}
+                            }
+                        }
+                    }
+                }
+            }
         },
         "contentDensities": {
             "compact": true
@@ -139,6 +150,9 @@
                             "dateSettings": {
                                 "useDateRange": true
                             }
+                        },
+                        "dataLoadSettings": {
+                            "loadDataOnAppLaunch": "always"
                         }
                     }
                 },

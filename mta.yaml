@@ -128,7 +128,7 @@ resources:
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
-  appname: hedge-profile
+  appname: hedging
 build-parameters:
   before-all:
   - builder: custom
