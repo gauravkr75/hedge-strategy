@@ -3,7 +3,7 @@ using {
     CV
 } from '../db/data-model';
 
-@requires: 'authenticated-user'
+@requires : 'authenticated-user'
 service CatalogService {
     //@readonly
     //@Aggregation.ApplySupported.PropertyRestrictions : true
@@ -40,23 +40,23 @@ service CatalogService {
     }
     entity HedgeProfile as
         select from T.HEDGE_PROFILE {
-            @title : 'Profile ID'
-            key ID ,
-                PROFILE_NAME   @mandatory,
-                MODEL          @mandatory,
-                LAYER1_MIN_PER @mandatory,
-                LAYER1_MAX_PER @mandatory,
-                LAYER2_MIN_PER @mandatory,
-                LAYER2_MAX_PER @mandatory,
-                LAYER_KEY      @mandatory,
-                START_MONTH    @(
+                @title :                                    'Profile ID'
+            key ID,
+                PROFILE_NAME                       @mandatory,
+                MODEL                              @mandatory,
+                LAYER1_MIN_PER                     @mandatory,
+                LAYER1_MAX_PER                     @mandatory,
+                LAYER2_MIN_PER                     @mandatory,
+                LAYER2_MAX_PER                     @mandatory,
+                LAYER_KEY                          @mandatory,
+                START_MONTH                        @(
                 mandatory,
                 assert.range : [
                     1,
                     12
                 ]
             ),
-                YEAR           @(
+                YEAR                               @(
                 mandatory,
                 assert.range : [
                     0001,
@@ -79,9 +79,10 @@ service CatalogService {
                         'Active'
                     else
                         'Inactive'
-                end as DefaultText     : String(10) @title : 'Status'
+                end as DefaultText     : String(10)@title : 'Status'
 
-        }actions {
+        } actions {
             action setDefault() returns String;
         }
+    entity FileUpload as projection on T.FILE_UPLOAD;
 }

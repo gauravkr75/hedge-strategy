@@ -48,55 +48,26 @@ BEGIN
                         B.EXPOSURE_AMOUNT AS FORECASTED,
                         ROUND ((A.ACTUAL / B.EXPOSURE_AMOUNT), 3) AS RATIO
                         FROM(
-                            SELECT A.PERIOD,
-                                A.PLANNING_YEAR,
-                                A.EXPOSURE_CURRENCY,
-                                A.TARGET_CURRENCY,
-                                SUM(B.EXPOSURE_AMOUNT) AS ACTUAL
-                            FROM (
-                                    SELECT *
-                                    FROM (
-                                            SELECT *,
-                                                CASE
-                                                    WHEN MONTH(VALID_FROM) = PERIOD
-                                                    AND YEAR(VALID_FROM) = PLANNING_YEAR THEN 'X'
-                                                    ELSE ''
-                                                END AS PERIOD_CHECK
-                                            FROM T_EXPOSURE_POSITION_FLOWS
-                                        )
-                                    WHERE PERIOD_CHECK = 'X'
-                                        AND EXPOSURE_CURRENCY = :IP_EXP_CURRENCY
-                                ) AS A
-                                INNER JOIN T_EXPOSURE_POSITION_FLOWS AS B ON A.PLANNING_YEAR = B.PLANNING_YEAR
-                                AND A.PERIOD = B.PERIOD
-                                AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY
-                                AND A.TARGET_CURRENCY = B.TARGET_CURRENCY
-                            GROUP BY A.PERIOD,
-                                A.PLANNING_YEAR,
-                                A.EXPOSURE_CURRENCY,
-                                A.TARGET_CURRENCY
+                            SELECT PERIOD, 
+                                PLANNING_YEAR, 
+                                EXPOSURE_CURRENCY, 
+                                TARGET_CURRENCY, 
+                                SUM(ACTUAL_AMOUNT) AS ACTUAL 
+                                FROM "T_ACTUAL_POSTING"
+                                WHERE EXPOSURE_CURRENCY = :IP_EXP_CURRENCY
+                                GROUP BY 
+                                PERIOD, PLANNING_YEAR, EXPOSURE_CURRENCY, TARGET_CURRENCY
                         ) AS A
                         RIGHT OUTER JOIN (
-                            SELECT A.*,
-                                B.EXPOSURE_AMOUNT
-                            FROM (
-                                    SELECT PERIOD,
-                                        PLANNING_YEAR,
-                                        EXPOSURE_CURRENCY,
-                                        TARGET_CURRENCY,
-                                        MIN(VALID_FROM) AS VALID_FROM
-                                    FROM T_EXPOSURE_POSITION_FLOWS
-                                    WHERE EXPOSURE_CURRENCY = :IP_EXP_CURRENCY
-                                    GROUP BY PERIOD,
-                                        PLANNING_YEAR,
-                                        EXPOSURE_CURRENCY,
-                                        TARGET_CURRENCY
-                                ) AS A
-                                INNER JOIN T_EXPOSURE_POSITION_FLOWS AS B ON A.PERIOD = B.PERIOD
-                                AND A.PLANNING_YEAR = B.PLANNING_YEAR
-                                AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY
-                                AND A.TARGET_CURRENCY = B.TARGET_CURRENCY
-                                AND A.VALID_FROM = B.VALID_FROM
+                            SELECT PERIOD, 
+                                PLANNING_YEAR, 
+                                EXPOSURE_CURRENCY, 
+                                TARGET_CURRENCY, 
+                                SUM(EXPOSURE_AMOUNT) AS EXPOSURE_AMOUNT 
+                                FROM "T_EXPOSURE_POSITION_FLOWS"
+                                WHERE EXPOSURE_CURRENCY = :IP_EXP_CURRENCY
+                                GROUP BY 
+                                PERIOD, PLANNING_YEAR, EXPOSURE_CURRENCY, TARGET_CURRENCY
                         ) AS B ON A.PERIOD = B.PERIOD
                         AND A.PLANNING_YEAR = B.PLANNING_YEAR
                         AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY

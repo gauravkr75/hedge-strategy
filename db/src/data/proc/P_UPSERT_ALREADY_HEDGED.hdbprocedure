@@ -1,0 +1,11 @@
+PROCEDURE "P_UPSERT_ALREADY_HEDGED"( IN IT_HEDGED "T_ALREADY_HEDGED" )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic
+   *************************************/
+   UPSERT "T_ALREADY_HEDGED"
+   SELECT * FROM :IT_HEDGED;
+END

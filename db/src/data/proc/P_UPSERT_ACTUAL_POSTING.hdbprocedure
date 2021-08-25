@@ -1,0 +1,11 @@
+PROCEDURE "P_UPSERT_ACTUAL_POSTING"( IN IT_ACTUAL "T_ACTUAL_POSTING" )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic
+   *************************************/
+   UPSERT "T_ACTUAL_POSTING"
+   SELECT * FROM :IT_ACTUAL;
+END

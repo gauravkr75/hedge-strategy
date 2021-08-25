@@ -236,6 +236,32 @@ context T {
         YEAR           : Integer   @title : 'Starting Year';
         DEFAULT        : String(1) @title : 'Default';
     }
+
+    @cds.persistence.skip
+    entity FILE_UPLOAD {
+        key FILE_NAME       : String(50);
+            DATA            : LargeBinary;
+            MESSAGE         : String(100);
+            MESSAGE_DETAIL  : LargeString;
+            STATUS          : String(1);
+            UPLOAD_SCENARIO : String(2);
+    }
+
+    entity ACTUAL_POSTING {
+        key PERIOD            : String(02);
+        key PLANNING_YEAR     : Integer;
+        key EXPOSURE_CURRENCY : String(05);
+        key TARGET_CURRENCY   : String(05);
+            ACTUAL_AMOUNT     : Decimal(16, 5);
+    }
+
+    entity ALREADY_HEDGED {
+        key PERIOD            : String(02);
+        key PLANNING_YEAR     : Integer;
+        key EXPOSURE_CURRENCY : String(05);
+        key TARGET_CURRENCY   : String(05);
+            HEDGED_AMOUNT     : Decimal(16, 5);
+    }
 }
 
 /* Context CV to be used to define Calculation Views */
