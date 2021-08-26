@@ -27,7 +27,7 @@ sap.ui.define("hedgeprofile.ext.controller.ListReportExt",
                     var oModel = this.getView().getModel();
                     var fileData = theFile.target.result.replace("data:" + file.type + ";base64,", "")
                     oModel.create("/FileUpload", {
-                        FILE_NAME: file.name, DATA: fileData, UPLOAD_SCENARIO: 'AP'
+                        FILE_NAME: file.name, DATA: fileData, UPLOAD_SCENARIO: 'HC'
                     },
                         null,
                         function (data) {

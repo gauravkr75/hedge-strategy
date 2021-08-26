@@ -29,7 +29,12 @@ module.exports = {
                     let i = 0
 
                     tableMeta.forEach(property => {
-                        fileRow[property.COLUMN_NAME] = row[i]
+                        if(uploadScenario === 'HC' && i == 0){
+                            var dataDate = new Date(1899, 11, row[i])
+                            fileRow[property.COLUMN_NAME] = dataDate.toISOString().split('T')[0]
+                        }else{                            
+                            fileRow[property.COLUMN_NAME] = row[i]
+                        }
                         i++
                     });
 

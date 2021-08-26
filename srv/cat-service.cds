@@ -14,19 +14,20 @@ service CatalogService {
         Updatable  : false,
         Deletable  : true
     }
-    entity Layer        as projection on T.LAYER_YEAR_PNL;
+    entity Layer            as projection on T.LAYER_YEAR_PNL;
+
     @readonly
-    entity LayerSummary as projection on CV.LAYER_SUMMARY_OUT;
+    entity LayerSummary     as projection on CV.LAYER_SUMMARY_OUT;
 
     @Aggregation.ApplySupported.PropertyRestrictions : true
     @readonly
-    entity Backcasting  as projection on CV.LAYER_PNL_BACKCASTING;
+    entity Backcasting      as projection on CV.LAYER_PNL_BACKCASTING;
 
     @readonly
-    entity Forecasting  as projection on CV.LAYER_PNL_FORECASTING;
+    entity Forecasting      as projection on CV.LAYER_PNL_FORECASTING;
 
     @readonly
-    entity Existing     as projection on CV.LAYER_PNL_EXISTING;
+    entity Existing         as projection on CV.LAYER_PNL_EXISTING;
 
     action determinePNL(@title : 'Coverage' duration : Integer, @title : 'Layer' layer : Integer) returns String;
     action flushResults() returns String;
@@ -36,7 +37,7 @@ service CatalogService {
         Updatable  : true,
         Deletable  : true
     }
-    entity HedgeProfile as
+    entity HedgeProfile     as
         select from T.HEDGE_PROFILE {
                 @title :                                    'Profile ID'
             key ID,
@@ -82,9 +83,10 @@ service CatalogService {
         } actions {
             action setDefault() returns String;
         }
-    entity FileUpload as projection on T.FILE_UPLOAD;
-    entity ActualPosting as projection on T.ACTUAL_POSTING;
-    entity AlreadyHedged as projection on T.ALREADY_HEDGED;
+
+    entity FileUpload       as projection on T.FILE_UPLOAD;
+    entity ActualPosting    as projection on T.ACTUAL_POSTING;
+    entity AlreadyHedged    as projection on T.ALREADY_HEDGED;
     entity HistoricalCurves as projection on T.HISTORICAL_CURVES;
     entity ExposurePosition as projection on T.EXPOSURE_POSITION_FLOWS;
 }

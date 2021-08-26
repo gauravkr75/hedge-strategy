@@ -244,7 +244,7 @@ context T {
     entity FILE_UPLOAD {
         key FILE_NAME       : String(50);
             DATA            : LargeBinary;
-            MESSAGE         : String(100);
+            MESSAGE         : String(1000);
             MESSAGE_DETAIL  : LargeString;
             STATUS          : String(1);
             UPLOAD_SCENARIO : String(2);
