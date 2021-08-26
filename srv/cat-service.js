@@ -1,9 +1,11 @@
 const cds = require('@sap/cds');
+const fileData = require('./lib/prepFileUploadData')
+
 module.exports = async function () {
 
     const db = await cds.connect.to('db')
     const { CatalogService } = cds.services
-    const { Layer, HedgeProfile, FileUpload  } = CatalogService.entities
+    const { Layer, HedgeProfile, FileUpload } = CatalogService.entities
 
     this.on('determinePNL', async (req) => {
         try {
@@ -58,46 +60,71 @@ module.exports = async function () {
 
         const xlsx = require('xlsx')
         let output = {}
-        let sp = ''
+        let sp = '', invalidScenario = false
 
         try {
 
+            /* Get the file extension */
             const fileExtension = req.data.FILE_NAME.split('.').pop();
+
+            /* Get the scenario for which file is being uploaded */
             const uploadScenario = req.data.UPLOAD_SCENARIO
 
+            /* Only .xlsx files are supported */
             if (fileExtension === 'xlsx') {
 
                 var workbook = xlsx.read(req.data.DATA, {
                     type: "array"
                 });
+
                 var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
 
-                // header: 1 instructs xlsx to create an 'array of arrays'
+                /* header: 1 instructs xlsx to create an 'array of arrays' */
                 var result = xlsx.utils.sheet_to_json(firstSheet, { header: 1 });
                 result.splice(0, 1)
 
+                const uploadData = await fileData.prepData(cds, result, uploadScenario)
                 let input = {}
 
                 const dbClass = require("sap-hdbext-promisfied")
                 let dbConn = new dbClass(await dbClass.createConnection(db.options.credentials))
-                const hdbext = require("@sap/hdbext")
+                const hdbext = require('@sap/hdbext')
 
                 switch (uploadScenario) {
                     case 'AP':
-                        input.IT_ACTUAL = result
+                        input.IT_ACTUAL = uploadData
                         sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_UPSERT_ACTUAL_POSTING')
                         break
 
                     case 'AH':
-                        input.IT_HEDGED = result
+                        input.IT_HEDGED = uploadData
                         sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_UPSERT_ALREADY_HEDGED')
                         break
+                    
+                    case 'EP':
+                        input.IT_EXP_POSITION = uploadData
+                        sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_UPSERT_EXPOSURE_POSITION')
+                        break
+
+                    case 'HC':
+                        input.IT_HIST_CURVES = uploadData
+                        sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_UPSERT_HISTORICAL_CURVES')
+                        break
+
+                    default:
+                        invalidScenario = true
                 }
 
-                await dbConn.callProcedurePromisified(sp, input)
+                if (!invalidScenario) {
 
-                output.MESSAGE = 'Uploaded Successfully'
-                output.STATUS = 'S'
+                    await dbConn.callProcedurePromisified(sp, input)
+                    output.MESSAGE = 'Uploaded Successfully'
+                    output.STATUS = 'S'
+
+                } else {
+                    output.MESSAGE = 'Invalid File Upload Scenario'
+                    output.STATUS = 'E'
+                }
 
             } else {
                 output.MESSAGE = 'File Format not supported'

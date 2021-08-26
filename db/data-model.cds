@@ -43,27 +43,30 @@ context T {
     }
 
     entity HISTORICAL_CURVES {
-        key DATE       : Date           @title : 'Date';
-            SPOT       : Decimal(25, 20)@title : 'Spot Price';
-            OVERNIGHT  : Decimal(25, 20)@title : 'Overnight';
-            WEEK       : Decimal(25, 20)@title : 'Week';
-            ONE_M      : Decimal(25, 20)@title : 'One Month';
-            TWO_M      : Decimal(25, 20)@title : 'Two Month';
-            THREE_M    : Decimal(25, 20)@title : 'Three Month';
-            FOUR_M     : Decimal(25, 20)@title : 'Four Month';
-            FIVE_M     : Decimal(25, 20)@title : 'Five Month';
-            SIX_M      : Decimal(25, 20)@title : 'Six Month';
-            SEVEN_M    : Decimal(25, 20)@title : 'Seven Month';
-            EIGHT_M    : Decimal(25, 20)@title : 'Eight Month';
-            NINE_M     : Decimal(25, 20)@title : 'Nine Month';
-            TEN_M      : Decimal(25, 20)@title : 'Ten Month';
-            ELEVEN_M   : Decimal(25, 20)@title : 'Eleven Month';
-            ONE_Y      : Decimal(25, 20)@title : 'One Year';
-            EIGHTEEN_M : Decimal(25, 20)@title : 'Eighteen Month';
-            TWO_Y      : Decimal(25, 20)@title : 'Two Year';
-            THREE_Y    : Decimal(25, 20)@title : 'Three Year';
-            FOUR_Y     : Decimal(25, 20)@title : 'Four Year';
-            FIVE_Y     : Decimal(25, 20)@title : 'Five Year';
+        key ID                : String(36);
+            DATE              : Date           @title : 'Date';
+            EXPOSURE_CURRENCY : String(05)     @title : 'Exposure Currency';
+            TARGET_CURRENCY   : String(05)     @title : 'Target Currency';
+            SPOT              : Decimal(25, 20)@title : 'Spot Price';
+            OVERNIGHT         : Decimal(25, 20)@title : 'Overnight';
+            WEEK              : Decimal(25, 20)@title : 'Week';
+            ONE_M             : Decimal(25, 20)@title : 'One Month';
+            TWO_M             : Decimal(25, 20)@title : 'Two Month';
+            THREE_M           : Decimal(25, 20)@title : 'Three Month';
+            FOUR_M            : Decimal(25, 20)@title : 'Four Month';
+            FIVE_M            : Decimal(25, 20)@title : 'Five Month';
+            SIX_M             : Decimal(25, 20)@title : 'Six Month';
+            SEVEN_M           : Decimal(25, 20)@title : 'Seven Month';
+            EIGHT_M           : Decimal(25, 20)@title : 'Eight Month';
+            NINE_M            : Decimal(25, 20)@title : 'Nine Month';
+            TEN_M             : Decimal(25, 20)@title : 'Ten Month';
+            ELEVEN_M          : Decimal(25, 20)@title : 'Eleven Month';
+            ONE_Y             : Decimal(25, 20)@title : 'One Year';
+    // EIGHTEEN_M : Decimal(25, 20)@title : 'Eighteen Month';
+    // TWO_Y      : Decimal(25, 20)@title : 'Two Year';
+    // THREE_Y    : Decimal(25, 20)@title : 'Three Year';
+    // FOUR_Y     : Decimal(25, 20)@title : 'Four Year';
+    // FIVE_Y     : Decimal(25, 20)@title : 'Five Year';
     }
 
     entity HISTORICAL_CURVES_WEEK {
@@ -209,12 +212,12 @@ context T {
     }
 
     entity EXPOSURE_POSITION_FLOWS {
-        key PERIOD            : String(02);
-        key PLANNING_YEAR     : Integer;
-        key VALID_FROM        : Date;
-        key EXPOSURE_CURRENCY : String(05);
-        key TARGET_CURRENCY   : String(05);
-            EXPOSURE_AMOUNT   : Decimal(16, 5);
+        key ID                : String(36)    @title : 'ID';
+            PERIOD            : String(02)    @title : 'Period';
+            PLANNING_YEAR     : Integer       @title : 'Planning Year';
+            EXPOSURE_CURRENCY : String(05)    @title : 'Exposure Currency';
+            TARGET_CURRENCY   : String(05)    @title : 'Target Currency';
+            EXPOSURE_AMOUNT   : Decimal(16, 5)@title : 'Exposure Amount';
     }
 
     entity AUTO_EXP_SMOOTH_STATS {
@@ -248,19 +251,22 @@ context T {
     }
 
     entity ACTUAL_POSTING {
-        key PERIOD            : String(02);
-        key PLANNING_YEAR     : Integer;
-        key EXPOSURE_CURRENCY : String(05);
-        key TARGET_CURRENCY   : String(05);
-            ACTUAL_AMOUNT     : Decimal(16, 5);
+        key ID                : String(36)    @title : 'ID';
+            PERIOD            : String(02)    @title : 'Period';
+            PLANNING_YEAR     : Integer       @title : 'Planning Year';
+            EXPOSURE_CURRENCY : String(05)    @title : 'Exposure Currency';
+            TARGET_CURRENCY   : String(05)    @title : 'Target Currency';
+            ACTUAL_AMOUNT     : Decimal(16, 5)@title : 'Actual Amount';
     }
 
     entity ALREADY_HEDGED {
-        key PERIOD            : String(02);
-        key PLANNING_YEAR     : Integer;
-        key EXPOSURE_CURRENCY : String(05);
-        key TARGET_CURRENCY   : String(05);
-            HEDGED_AMOUNT     : Decimal(16, 5);
+        key ID                : String(36)    @title : 'ID';
+            TRANSACTION       : String(20)    @title : 'Transaction';
+            PERIOD            : String(02)    @title : 'Period';
+            PLANNING_YEAR     : Integer       @title : 'Planning Year';
+            EXPOSURE_CURRENCY : String(05)    @title : 'Exposure Currency';
+            TARGET_CURRENCY   : String(05)    @title : 'Target Currency';
+            HEDGED_AMOUNT     : Decimal(16, 5)@title : 'Hedged Amount';
     }
 }
 

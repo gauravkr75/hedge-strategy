@@ -15,8 +15,6 @@ service CatalogService {
         Deletable  : true
     }
     entity Layer        as projection on T.LAYER_YEAR_PNL;
-
-    //entity HistoricalCurves as projection on T.HISTORICAL_CURVES;
     @readonly
     entity LayerSummary as projection on CV.LAYER_SUMMARY_OUT;
 
@@ -85,4 +83,8 @@ service CatalogService {
             action setDefault() returns String;
         }
     entity FileUpload as projection on T.FILE_UPLOAD;
+    entity ActualPosting as projection on T.ACTUAL_POSTING;
+    entity AlreadyHedged as projection on T.ALREADY_HEDGED;
+    entity HistoricalCurves as projection on T.HISTORICAL_CURVES;
+    entity ExposurePosition as projection on T.EXPOSURE_POSITION_FLOWS;
 }

@@ -1,0 +1,20 @@
+TYPE "TT_HIST_CURVES" AS TABLE (
+    "DATE"               DATE,           
+    "EXPOSURE_CURRENCY"  NVARCHAR(05),    
+    "TARGET_CURRENCY"    NVARCHAR(05),     
+    "SPOT"               DECIMAL(25, 20),
+    "OVERNIGHT"          DECIMAL(25, 20),
+    "WEEK"               DECIMAL(25, 20),
+    "ONE_M"              DECIMAL(25, 20),
+    "TWO_M"              DECIMAL(25, 20),
+    "THREE_M"            DECIMAL(25, 20),
+    "FOUR_M"             DECIMAL(25, 20),
+    "FIVE_M"             DECIMAL(25, 20),
+    "SIX_M"              DECIMAL(25, 20),
+    "SEVEN_M"            DECIMAL(25, 20),
+    "EIGHT_M"            DECIMAL(25, 20),
+    "NINE_M"             DECIMAL(25, 20),
+    "TEN_M"              DECIMAL(25, 20),
+    "ELEVEN_M"           DECIMAL(25, 20),
+    "ONE_Y"              DECIMAL(25, 20)
+)
