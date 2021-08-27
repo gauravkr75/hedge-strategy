@@ -16,7 +16,7 @@ module.exports = async function () {
             let dbConn = new dbClass(await dbClass.createConnection(db.options.credentials))
             const hdbext = require("@sap/hdbext")
             const sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_DET_YEAR_PNL')
-            const output = await dbConn.callProcedurePromisified(sp, input)
+            await dbConn.callProcedurePromisified(sp, input)
             console.log("Duration: " + req.data.duration + ", Layers: " + req.data.layer)
             return 'Success'
         } catch (error) {
@@ -45,7 +45,7 @@ module.exports = async function () {
             let dbConn = new dbClass(await dbClass.createConnection(db.options.credentials))
             const hdbext = require("@sap/hdbext")
             const sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_SET_HEDGE_PROFILE_ACTIVE')
-            const output = await dbConn.callProcedurePromisified(sp, input)
+            await dbConn.callProcedurePromisified(sp, input)
 
             return 'Profile Activated'
 

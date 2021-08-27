@@ -29,12 +29,16 @@ module.exports = {
                     let i = 0
 
                     tableMeta.forEach(property => {
-                        if(uploadScenario === 'HC' && i == 0){
+
+                        if(uploadScenario === 'HC' && i === 0){
+                            /* The number for date being returned is the number of days since the last epoch (1904 or 1900).
+                               epoch date varies based on platform. For Windows it is 1900 and for Macintosh it is 1904 
+                               Currently the code works for Windows platform */
                             var dataDate = new Date(1899, 11, row[i])
                             fileRow[property.COLUMN_NAME] = dataDate.toISOString().split('T')[0]
                         }else{                            
                             fileRow[property.COLUMN_NAME] = row[i]
-                        }
+                        }                        
                         i++
                     });
 
@@ -48,6 +52,5 @@ module.exports = {
         })
 
         return fileData
-
     }
 }
