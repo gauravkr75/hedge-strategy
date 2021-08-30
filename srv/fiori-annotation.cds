@@ -305,12 +305,10 @@ annotate CatalogService.ForecastReport with @(UI : {LineItem : [
 ]});
 
 annotate CatalogService.HedgeProfile with @(UI : {
-    PresentationVariant : {
-        SortOrder      : [{
-            Property   : DEFAULT,
-            Descending : true
-        }]
-    },
+    PresentationVariant : {SortOrder : [{
+        Property   : DEFAULT,
+        Descending : true
+    }]},
     SelectionFields     : [PROFILE_NAME],
     LineItem            : [
         {
@@ -375,4 +373,79 @@ annotate CatalogService.HedgeProfile with @(UI : {
         {Value : START_MONTH},
         {Value : YEAR}
     ]}
+});
+
+
+annotate CatalogService.ActualPosting with @(UI : {
+    SelectionFields : [
+        PERIOD,
+        PLANNING_YEAR,
+        EXPOSURE_CURRENCY,
+        TARGET_CURRENCY
+    ],
+    LineItem        : [
+        {Value : PERIOD},
+        {Value : PLANNING_YEAR},
+        {Value : EXPOSURE_CURRENCY},
+        {Value : TARGET_CURRENCY},
+        {Value : ACTUAL_AMOUNT}
+    ]
+});
+
+annotate CatalogService.AlreadyHedged with @(UI : {
+    SelectionFields : [
+        PERIOD,
+        PLANNING_YEAR,
+        EXPOSURE_CURRENCY,
+        TARGET_CURRENCY
+    ],
+    LineItem        : [
+        {Value : PERIOD},
+        {Value : PLANNING_YEAR},
+        {Value : EXPOSURE_CURRENCY},
+        {Value : TARGET_CURRENCY},
+        {Value : HEDGED_AMOUNT}
+    ]
+});
+
+annotate CatalogService.HistoricalCurves with @(UI : {
+    SelectionFields : [
+        DATE,
+        EXPOSURE_CURRENCY,
+        TARGET_CURRENCY
+    ],
+    LineItem        : [
+        {Value : DATE},
+        {Value : EXPOSURE_CURRENCY},
+        {Value : TARGET_CURRENCY},
+        {Value : SPOT},
+        {Value : ONE_M},
+        {Value : TWO_M},
+        {Value : THREE_M},
+        {Value : FOUR_M},
+        {Value : FIVE_M},
+        {Value : SIX_M},
+        {Value : SEVEN_M},
+        {Value : EIGHT_M},
+        {Value : NINE_M},
+        {Value : TEN_M},
+        {Value : ELEVEN_M},
+        {Value : ONE_Y}
+    ]
+});
+
+annotate CatalogService.ExposurePosition with @(UI : {
+    SelectionFields : [
+        PERIOD,
+        PLANNING_YEAR,
+        EXPOSURE_CURRENCY,
+        TARGET_CURRENCY
+    ],
+    LineItem        : [
+        {Value : PERIOD},
+        {Value : PLANNING_YEAR},
+        {Value : EXPOSURE_CURRENCY},
+        {Value : TARGET_CURRENCY},
+        {Value : EXPOSURE_AMOUNT}
+    ]
 });
