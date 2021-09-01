@@ -14,10 +14,12 @@ modules:
     properties:
       srv-url: ${default-url}
   parameters:
-    memory: 1024M
     host: ${appname}
+    memory: 1024M
   build-parameters:
-    ignore: [".env", "./node_modules"]
+    ignore:
+    - .env
+    - ./node_modules
 - name: HedgeStrategy-db-deployer
   type: hdb
   path: db
@@ -69,9 +71,23 @@ modules:
       - hedgeprofile.zip
       name: hedgeprofile
       target-path: resources/
+    - artifacts:
+      - hedgefileupload.zip
+      name: hedgefileupload
+      target-path: resources/
 - name: hedgeprofile
   type: html5
   path: app/hedgeprofile
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: hedgefileupload
+  type: html5
+  path: app/hedge-file-upload
   build-parameters:
     build-result: dist
     builder: custom
@@ -93,20 +109,13 @@ resources:
     config:
       HTML5Runtime_enabled: true
       init_data:
-        subaccount:
+        instance:
           destinations:
           - Authentication: NoAuthentication
             Name: ui5
             ProxyType: Internet
             Type: HTTP
             URL: https://ui5.sap.com
-          - Name: hedge-app-api
-            Authentication: NoAuthentication
-            ProxyType: Internet
-            HTML5.ForwardAuthToken: true
-            HTML5.DynamicDestination: true
-            Type: HTTP
-            URL: https://${appname}.${default-domain}  
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
@@ -126,9 +135,9 @@ resources:
     service-name: HedgeStrategy-xsuaa-service
     service-plan: application
 parameters:
+  appname: hedging
   deploy_mode: html5-repo
   enable-parallel-deployments: true
-  appname: hedging
 build-parameters:
   before-all:
   - builder: custom

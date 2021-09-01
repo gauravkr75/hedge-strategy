@@ -1,0 +1,68 @@
+<mvc:View
+    controllerName="hedgefileupload.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:semantic="sap.f.semantic"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false"
+		showFooter="false">
+
+		<semantic:titleHeading>
+			<Title text="{i18n>worklistTitle}"/>
+		</semantic:titleHeading>
+
+		<semantic:headerContent>
+			<IconTabBar
+				id="iconTabBar"
+				select=".onQuickFilter"
+				expandable="false">
+				<items>
+					<IconTabFilter
+						key="all"
+						text="{i18n>actualPosting}">
+                            <smartFilterBar:SmartFilterBar id="smartFilterBarActualPosting" entitySet="ActualPosting" persistencyKey="SmartFilter_Explored">
+                            </smartFilterBar:SmartFilterBar>
+                            <smartTable:SmartTable entitySet="ActualPosting" smartFilterId="smartFilterBarActualPosting"
+                                tableType="ResponsiveTable" useExportToExcel="true" beforeExport="onBeforeExport"
+                                useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
+                                showRowCount="true" enableAutoBinding="true"
+                                demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" app:useSmartToggle="true"/>
+                    </IconTabFilter>
+					<IconTabFilter
+						key="inStock"
+						text="{i18n>alreadyHedged}">
+                        <smartFilterBar:SmartFilterBar id="smartFilterBarAlreadyHedged" entitySet="AlreadyHedged" persistencyKey="SmartFilter_Explored">
+                            </smartFilterBar:SmartFilterBar>
+                        <smartTable:SmartTable entitySet="AlreadyHedged" smartFilterId="smartFilterBarAlreadyHedged"
+                            tableType="ResponsiveTable" useExportToExcel="true" beforeExport="onBeforeExport"
+                            useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
+                            showRowCount="true" enableAutoBinding="true"
+                            demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" app:useSmartToggle="true"/>
+                    </IconTabFilter>
+					<IconTabFilter
+						key="shortage"
+						text="{i18n>exposurePosition}">
+                        <smartFilterBar:SmartFilterBar id="smartFilterBarExposurePosition" entitySet="ExposurePosition" persistencyKey="SmartFilter_Explored">
+                        </smartFilterBar:SmartFilterBar>
+                        <smartTable:SmartTable entitySet="ExposurePosition" smartFilterId="smartFilterBarExposurePosition"
+                            tableType="ResponsiveTable" useExportToExcel="true" beforeExport="onBeforeExport"
+                            useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
+                            showRowCount="true" enableAutoBinding="true"
+                            demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" app:useSmartToggle="true"/>
+                    </IconTabFilter>
+				</items>
+			</IconTabBar>
+		</semantic:headerContent>
+        <semantic:titleCustomIconActions>
+			<OverflowToolbarButton icon="sap-icon://cart" text="cart" />
+		</semantic:titleCustomIconActions>
+	</semantic:SemanticPage>
+</mvc:View>
