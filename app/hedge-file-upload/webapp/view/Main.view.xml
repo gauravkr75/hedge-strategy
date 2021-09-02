@@ -53,7 +53,7 @@
                         <smartFilterBar:SmartFilterBar id="smartFilterBarHistoricalCurves" entitySet="HistoricalCurves" persistencyKey="SmartFilter_Explored">
                         </smartFilterBar:SmartFilterBar>
                         <smartTable:SmartTable entitySet="HistoricalCurves" smartFilterId="smartFilterBarHistoricalCurves"
-                            tableType="ResponsiveTable" useExportToExcel="true" beforeExport="onBeforeExport"
+                            tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
                             useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                             showRowCount="true" enableAutoBinding="true"
                             demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"/>
@@ -73,7 +73,7 @@
 			</IconTabBar>
 		</semantic:headerContent>
         <semantic:titleCustomIconActions>
-			<OverflowToolbarButton icon="sap-icon://excel-attachment" tooltip="Upload file" text="Upload file" press=".onFileUploadPress" />
+			<OverflowToolbarButton icon="sap-icon://upload" tooltip="Upload file" text="Upload file" press=".onFileUploadPress" />
 		</semantic:titleCustomIconActions>
 	</semantic:SemanticPage>
 </mvc:View>

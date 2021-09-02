@@ -85,8 +85,28 @@ service CatalogService {
         }
 
     entity FileUpload       as projection on T.FILE_UPLOAD;
+    @Capabilities : {
+        Insertable : true,
+        Updatable  : false,
+        Deletable  : true
+    }
     entity ActualPosting    as projection on T.ACTUAL_POSTING;
+    @Capabilities : {
+        Insertable : true,
+        Updatable  : false,
+        Deletable  : true
+    }
     entity AlreadyHedged    as projection on T.ALREADY_HEDGED;
+    @Capabilities : {
+        Insertable : true,
+        Updatable  : false,
+        Deletable  : true
+    }
     entity HistoricalCurves as projection on T.HISTORICAL_CURVES;
+    @Capabilities : {
+        Insertable : true,
+        Updatable  : false,
+        Deletable  : true
+    }
     entity ExposurePosition as projection on T.EXPOSURE_POSITION_FLOWS;
 }
