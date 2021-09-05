@@ -109,4 +109,8 @@ service CatalogService {
         Deletable  : true
     }
     entity ExposurePosition as projection on T.EXPOSURE_POSITION_FLOWS;
+
+    entity ForecastExpReport as projection on CV.FORECASTED_EXPOSURE_REPORT_OUT;
+    entity BestLayer as projection on CV.TOP_PNL_OVERLAP_ROLLING;
+    entity LayerPNL as projection on CV.LAYER_PNL_OVERLAP_ROLLING;
 }

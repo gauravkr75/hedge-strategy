@@ -375,4 +375,58 @@ context CV {
            ![PROPOSED_PERCENT]     : Decimal(34, 10)@title : 'PROPOSED_PERCENT: PROPOSED_PERCENT';
            ![PROPOSED_VALUE]       : Decimal(34, 10)@title : 'PROPOSED_VALUE: PROPOSED_VALUE';
     }
+
+    @cds.persistence.exists
+    @cds.persistence.calcview
+    entity![LAYER_PNL_OVERLAP_ROLLING]{
+        key![LAYER]                : Integer        @title : 'Layer';
+        key![LAYER_KEY]            : String(40)     @title : 'Layer Key';
+        key![BLOCK_KEY]            : String(10)     @title : 'Block Key';
+        key![RECORD_KEY]           : String(10)     @title : 'Record Key';
+           ![START_MONTH]          : Integer        @title : 'Start Month';
+           ![END_MONTH]            : Integer        @title : 'End Month';
+           ![QUOTE_YEAR]           : Integer        @title : 'Quote Year';
+           ![QUOTE_PRICE]          : Decimal(25, 20)@title : 'Quote Price';
+           ![SPOT_YEAR]            : Integer        @title : 'Spot Year';
+           ![SPOT_PRICE]           : Decimal(25, 20)@title : 'Spot Price';
+           ![PNL]                  : Decimal(9, 5)  @title : 'PNL';
+           ![PARENT_LAYER]         : Integer        @title : 'PARENT_LAYER';
+           ![PARENT_LAYER_KEY]     : String(40)     @title : 'PARENT_LAYER_KEY';
+           ![START_MONTH_DESC]     : String(20)     @title : 'Start Month';
+           ![END_MONTH_DESC]       : String(20)     @title : 'End Month';
+           ![BLOCK_KEY_START_DESC] : String(13)     @title : 'BLOCK_KEY_START_DESC';
+           ![BLOCK_KEY_END_DESC]   : String(13)     @title : 'BLOCK_KEY_END_DESC';
+           ![BLOCK_KEY_DESC]       : String(50)     @title : 'Block Description';
+           ![EXPOSURE_CURRENCY]    : String(5)      @title : 'Exposure Currency';
+           ![TARGET_CURRENCY]      : String(5)      @title : 'Target Currency';
+    }
+
+    @cds.persistence.exists
+    @cds.persistence.calcview
+    entity![TOP_PNL_OVERLAP_ROLLING]{
+        key![LAYER]     : Integer      @title : 'Layer';
+        key![LAYER_KEY] : String(40)   @title : 'Layer Key';
+           ![PNL]       : Decimal(9, 5)@title : 'PNL';
+    }
+
+    @cds.persistence.exists
+    @cds.persistence.calcview
+    entity![FORECASTED_EXPOSURE_REPORT_OUT]{
+        key![HEDGE_YEAR]           : Integer        @title : 'Hedge Year';
+        key![HEDGE_MONTH]          : Integer        @title : 'Hedge Month';
+        key![FORWARD_SETTLE_YEAR]  : Integer        @title : 'Forward Settlement Year';
+        key![FORWARD_SETTLE_MONTH] : Integer        @title : 'Forward Settlement Month';
+        key![LAYER1_PERCENTAGE]    : String(7)      @title : 'Layer 1 %';
+        key![LAYER2_PERCENTAGE]    : String(7)      @title : 'Layer 2 %';
+        key![LAYER_SEQUENCE]       : String(2)      @title : 'Layer Sequence';
+        key![EXPOSURE_CURRENCY]    : String(5)      @title : 'Exposure Currency';
+           ![FORECAST]             : Decimal(34, 10)@title : 'Forecast';
+           ![MIN_VALUE]            : Decimal(34, 10)@title : 'Min Value';
+           ![MAX_VALUE]            : Decimal(34, 10)@title : 'Max Value';
+           ![BPL_PER]              : Decimal(34, 10)@title : 'Best Perf Layer %';
+           ![FORECAST_COMP_PER]    : Decimal(34, 10)@title : 'Forecast Comp %';
+           ![MKT_VAL_RATIO_PER]    : Decimal(34, 10)@title : 'Market Value Ratio %';
+           ![PROPOSED_PERCENT]     : Decimal(34, 10)@title : 'Proposed %';
+           ![PROPOSED_VALUE]       : Decimal(34, 10)@title : 'Proposed Value';
+    }
 }

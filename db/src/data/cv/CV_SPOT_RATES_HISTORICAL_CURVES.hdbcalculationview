@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_SPOT_RATES_HISTORICAL_CURVES" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CV_SPOT_RATES_HISTORICAL_CURVES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="T_HISTORICAL_CURVES">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor9$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor0$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor1$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor2$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor3$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor4$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor5$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor6$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor7$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor8$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor10$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_Tenor11$$$$T_HISTORICAL_CURVES$$">
+    <resourceUri>T_HISTORICAL_CURVES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor12">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="ONE_Y"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>12</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="T_HISTORICAL_CURVES"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor9">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="NINE_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>9</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor9$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor0">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="SPOT"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>0</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor0$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor1">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="ONE_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>1</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor1$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor2">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="TWO_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>2</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor2$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor3">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="THREE_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>3</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor3$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor4">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="FOUR_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>4</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor4$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor5">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="FIVE_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>5</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor5$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor6">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="SIX_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>6</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor6$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor7">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="SEVEN_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>7</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor7$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor8">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="EIGHT_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>8</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor8$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor10">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="TEN_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>10</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor10$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tenor11">
+    <viewAttributes>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="ELEVEN_M"/>
+    
+      <viewAttribute id="DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>YEAR(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="MONTH" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>MONTH(&quot;DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>11</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_Tenor11$$$$T_HISTORICAL_CURVES$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor0">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="SPOT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="ONE_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_3">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="TWO_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_4">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="THREE_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_5">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="FOUR_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_6">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="FIVE_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_7">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="SIX_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_8">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor7">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="SEVEN_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_9">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor8">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="EIGHT_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_10">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor9">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="NINE_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_11">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor10">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="TEN_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_12">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor11">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="ELEVEN_M"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_13">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE" aggregationType="avg"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Tenor12">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="ONE_Y"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_1" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Aggregation_2" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Aggregation_3" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Aggregation_4" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Aggregation_5" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Aggregation_6" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Aggregation_7" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Aggregation_8" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input></calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_2">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_9" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Aggregation_10" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Aggregation_11" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_3">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_12" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Aggregation_13" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_4">
+    <viewAttributes>
+      <viewAttribute id="YEAR"/>
+      <viewAttribute id="MONTH"/>
+      <viewAttribute id="TENOR"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="AVG_SPOT_RATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Union_1" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Union_2" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+    <input node="Union_3" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TENOR" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AVG_SPOT_RATE" source="AVG_SPOT_RATE"/>
+    </input>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Union_4">
+  <attributes>
+    <attribute id="YEAR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="YEAR"/>
+      <keyMapping columnObjectName="Union_4" columnName="YEAR"/>
+    </attribute>
+    <attribute id="MONTH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MONTH"/>
+      <keyMapping columnObjectName="Union_4" columnName="MONTH"/>
+    </attribute>
+    <attribute id="TENOR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENOR"/>
+      <keyMapping columnObjectName="Union_4" columnName="TENOR"/>
+    </attribute>
+    <attribute id="EXPOSURE_CURRENCY" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXPOSURE_CURRENCY"/>
+      <keyMapping columnObjectName="Union_4" columnName="EXPOSURE_CURRENCY"/>
+    </attribute>
+    <attribute id="TARGET_CURRENCY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARGET_CURRENCY"/>
+      <keyMapping columnObjectName="Union_4" columnName="TARGET_CURRENCY"/>
+    </attribute>
+    <attribute id="AVG_SPOT_RATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AVG_SPOT_RATE"/>
+      <keyMapping columnObjectName="Union_4" columnName="AVG_SPOT_RATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="1482" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_Tenor12" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="806"/>
+      <rectangleSize height="30" width="189"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor9" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2470" y="806"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor0" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1000" y="806"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1840" y="806"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1210" y="806"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2050" y="806"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1420" y="806"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1630" y="806"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="790" y="806"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="580" y="806"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor8" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2260" y="806"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor10" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2680" y="806"/>
+      <rectangleSize width="188"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_Tenor11" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="331" y="806"/>
+      <rectangleSize width="199"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1000" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1840" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1210" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2050" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1420" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1630" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="790" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_8" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="580" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_9" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2260" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_10" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2470" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_11" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2690" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_12" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="358" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_13" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="106" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1411" y="391"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="2300" y="448"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="331" y="451"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1482" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

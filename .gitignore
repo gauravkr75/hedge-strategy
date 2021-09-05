@@ -70,3 +70,7 @@ resources/hedgeprofile.zip
 resources/hedgefileupload.zip
 app/hedge-file-upload/dist
 resources/
+resources/hedgeprofile.zip
+app/forecast-exp-report/dist
+app/hedge-best-layer/dist
+app/layer-pnl/dist

@@ -34,7 +34,8 @@ module.exports = {
                             /* The number for date being returned is the number of days since the last epoch (1904 or 1900).
                                epoch date varies based on platform. For Windows it is 1900 and for Macintosh it is 1904 
                                Currently the code works for Windows platform */
-                            var dataDate = new Date(1899, 11, row[i])
+                            var dataDate = new Date(1899, 12, row[i])
+                            dataDate.setDate(dataDate.getDate() - 1)
                             fileRow[property.COLUMN_NAME] = dataDate.toISOString().split('T')[0]
                         }else{                            
                             fileRow[property.COLUMN_NAME] = row[i]

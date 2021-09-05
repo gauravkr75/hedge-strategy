@@ -20,16 +20,13 @@
     },
     "devDependencies": {
         "@sap/hdi-deploy": "^4",
-        "@sap/ux-specification": "^1.90.7"
+        "@sap/ux-specification": "^1.90.8"
     },
     "scripts": {
         "start": "npx cds run",
         "undeploy": "cf undeploy HedgeStrategy --delete-services --delete-service-keys"
     },
     "cds": {
-        "build": {
-            "target": "."
-        },
         "hana": {
             "deploy-format": "hdbtable"
         },

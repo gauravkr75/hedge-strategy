@@ -154,11 +154,11 @@ BEGIN
                             AND A.HEDGE_MATURITY_MONTH = B.PERIOD
                             LEFT OUTER JOIN :T_BEST_LAYER AS C
                             ON A.LAYER_KEY = C.LAYER_KEY
-                            LEFT OUTER JOIN T_SPOT_RATES_FORECAST AS D
+                            LEFT OUTER JOIN "TF_SPOT_RATES_FORECAST"() AS D
                             ON A.HEDGE_MATURITY_YEAR = D.YEAR
                             AND A.HEDGE_MATURITY_MONTH = D.MONTH
                             AND D.TENOR = 0
-                            LEFT OUTER JOIN T_SPOT_RATES AS E
+                            LEFT OUTER JOIN "CV_SPOT_RATES_HISTORICAL_CURVES" AS E
                             ON A.HEDGE_YEAR = E.YEAR
                             AND A.HEDGE_MONTH = E.MONTH
                             AND A.HEDGE_MATURITY_MONTH = D.TENOR;  
@@ -203,11 +203,11 @@ BEGIN
                             AND A.HEDGE_MATURITY_MONTH = B.PERIOD
                             LEFT OUTER JOIN :T_BEST_LAYER AS C
                             ON A.LAYER_KEY = C.LAYER_KEY
-                            LEFT OUTER JOIN T_SPOT_RATES_FORECAST AS D
+                            LEFT OUTER JOIN "TF_SPOT_RATES_FORECAST"() AS D
                             ON A.HEDGE_MATURITY_YEAR = D.YEAR
                             AND A.HEDGE_MATURITY_MONTH = D.MONTH
                             AND D.TENOR = 0
-                            LEFT OUTER JOIN T_SPOT_RATES AS E
+                            LEFT OUTER JOIN "CV_SPOT_RATES_HISTORICAL_CURVES" AS E
                             ON A.HEDGE_YEAR = E.YEAR
                             AND A.HEDGE_MONTH = E.MONTH
                             AND A.HEDGE_MATURITY_MONTH = D.TENOR;  

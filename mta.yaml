@@ -5,7 +5,7 @@ version: 1.0.0
 modules:
 - name: HedgeStrategy-srv
   type: nodejs
-  path: srv
+  path: gen/srv
   requires:
   - name: HedgeStrategy-db
   - name: uaa_HedgeStrategy
@@ -22,7 +22,7 @@ modules:
     - ./node_modules
 - name: HedgeStrategy-db-deployer
   type: hdb
-  path: db
+  path: gen/db
   requires:
   - name: HedgeStrategy-db
   parameters:
@@ -75,6 +75,18 @@ modules:
       - hedgefileupload.zip
       name: hedgefileupload
       target-path: resources/
+    - artifacts:
+      - forecastexpreport.zip
+      name: forecastexpreport
+      target-path: resources/
+    - artifacts:
+      - hedgebestlayer.zip
+      name: hedgebestlayer
+      target-path: resources/
+    - artifacts:
+      - layerpnl.zip
+      name: layerpnl
+      target-path: resources/
 - name: hedgeprofile
   type: html5
   path: app/hedgeprofile
@@ -88,6 +100,36 @@ modules:
 - name: hedgefileupload
   type: html5
   path: app/hedge-file-upload
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: forecastexpreport
+  type: html5
+  path: app/forecast-exp-report
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: hedgebestlayer
+  type: html5
+  path: app/hedge-best-layer
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: layerpnl
+  type: html5
+  path: app/layer-pnl
   build-parameters:
     build-result: dist
     builder: custom

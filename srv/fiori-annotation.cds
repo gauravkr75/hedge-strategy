@@ -449,3 +449,60 @@ annotate CatalogService.ExposurePosition with @(UI : {
         {Value : EXPOSURE_AMOUNT}
     ]
 });
+
+annotate CatalogService.ForecastExpReport with @(UI : {
+    SelectionFields : [
+        HEDGE_YEAR,
+        HEDGE_MONTH,
+        EXPOSURE_CURRENCY
+    ],
+    LineItem        : [
+        {Value : HEDGE_YEAR},
+        {Value : HEDGE_MONTH},
+        {Value : FORWARD_SETTLE_YEAR},
+        {Value : FORWARD_SETTLE_MONTH},
+        {Value : LAYER1_PERCENTAGE},
+        {Value : LAYER2_PERCENTAGE},
+        {Value : LAYER_SEQUENCE},
+        {Value : EXPOSURE_CURRENCY},
+        {Value : FORECAST},
+        {Value : MIN_VALUE},
+        {Value : MAX_VALUE},
+        {Value : BPL_PER},
+        {Value : FORECAST_COMP_PER},
+        {Value : MKT_VAL_RATIO_PER},
+        {Value : PROPOSED_PERCENT},
+        {Value : PROPOSED_VALUE}
+    ]
+});
+
+annotate CatalogService.BestLayer with @(UI : {
+    LineItem        : [
+        {Value : LAYER},
+        {Value : LAYER_KEY},
+        {Value : PNL}
+    ]
+});
+
+annotate CatalogService.LayerPNL with @(UI : {
+    SelectionFields : [
+        LAYER,
+        QUOTE_YEAR,
+        EXPOSURE_CURRENCY,
+        TARGET_CURRENCY
+    ],
+    LineItem        : [
+        {Value : LAYER},
+        {Value : LAYER_KEY},
+        {Value : BLOCK_KEY_DESC},
+        {Value : START_MONTH_DESC},
+        {Value : END_MONTH_DESC},
+        {Value : QUOTE_YEAR},
+        {Value : QUOTE_PRICE},
+        {Value : SPOT_YEAR},
+        {Value : SPOT_PRICE},
+        {Value : PNL},
+        {Value : EXPOSURE_CURRENCY},
+        {Value : TARGET_CURRENCY}
+    ]
+});

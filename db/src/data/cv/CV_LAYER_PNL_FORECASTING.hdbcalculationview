@@ -7,11 +7,11 @@
   <DataSource id="T_LAYER_MONTH_COMBO">
     <resourceUri>T_LAYER_MONTH_COMBO</resourceUri>
   </DataSource>
-  <DataSource id="T_SPOT_RATES_FORECAST">
-    <resourceUri>T_SPOT_RATES_FORECAST</resourceUri>
+  <DataSource id="TF_SPOT_RATES_FORECAST" type="TABLE_FUNCTION">
+    <resourceUri>TF_SPOT_RATES_FORECAST</resourceUri>
   </DataSource>
-  <DataSource id="Projection_3$$$$T_SPOT_RATES_FORECAST$$">
-    <resourceUri>T_SPOT_RATES_FORECAST</resourceUri>
+  <DataSource id="Projection_3$$$$TF_SPOT_RATES_FORECAST$$" type="TABLE_FUNCTION">
+    <resourceUri>TF_SPOT_RATES_FORECAST</resourceUri>
   </DataSource>
   <DataSource id="TF_MONTH_INFO" type="TABLE_FUNCTION">
     <resourceUri>TF_MONTH_INFO</resourceUri>
@@ -42,7 +42,7 @@
       <viewAttribute id="AVG_SPOT_RATE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="T_SPOT_RATES_FORECAST"/>
+    <input node="TF_SPOT_RATES_FORECAST"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="SQL">
     <viewAttributes>
@@ -52,7 +52,7 @@
       <viewAttribute id="AVG_SPOT_RATE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Projection_3$$$$T_SPOT_RATES_FORECAST$$"/>
+    <input node="Projection_3$$$$TF_SPOT_RATES_FORECAST$$"/>
     <filter>&quot;TENOR&quot; = 0</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="leftOuter">

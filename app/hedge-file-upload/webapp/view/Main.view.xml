@@ -34,7 +34,7 @@
                                 tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
                                 useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                                 showRowCount="true" enableAutoBinding="true"
-                                demandPopin="true" visibleRowCount='100' class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
+                                demandPopin="true" visibleRowCount="100" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
                                 showFullScreenButton="true" />
                     </IconTabFilter>
 					<IconTabFilter
