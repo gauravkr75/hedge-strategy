@@ -1,0 +1,143 @@
+FUNCTION "TF_SPOT_RATES_FORECAST"( )
+    RETURNS TABLE 
+    (
+        YEAR           INTEGER,
+        MONTH          INTEGER,
+        TENOR          INTEGER,
+        AVG_SPOT_RATE  DECIMAL(9, 5)
+    )
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER AS
+BEGIN
+    /*****************************
+        Write your function logic
+    ****************************/
+
+    DECLARE V_REC_COUNT INTEGER;
+	DECLARE V_DATE DATE;
+	DECLARE V_WEEKDAY INTEGER;
+	DECLARE V_WEEKEND_DAY INTEGER;
+	DECLARE V_END_DATE DATE;
+    DECLARE T_OUT "T_SPOT_AND_QUOTE";
+    DECLARE T_OUT_TENOR "T_SPOT_AND_QUOTE";
+	DECLARE T_TEMP "T_SPOT_AND_QUOTE";
+	DECLARE T_DATA_SUBSET "T_SPOT_AND_QUOTE";
+    DECLARE V_DEL_INDEX_END INTEGER;
+    DECLARE V_TENOR NVARCHAR(02);
+    DECLARE V_MIN_DATE DATE;
+    DECLARE T_FORECAST "TT_FORECAST";
+    DECLARE T_STATISTICS "TT_STATISTICS";
+    DECLARE T_SMOOTH_PARAMS "TT_TRI_EXP_SMOOTH_PARAMS";
+    DECLARE T_AUTO_SMOTH_PARAMS "TT_AUTO_EXP_SMOOTH_PARAMS";
+    DECLARE I INTEGER;
+    DECLARE V_MAX_DATE DATE;
+    DECLARE V_MIN_TIMESTAMP INTEGER;
+    DECLARE V_FROM_CURR NVARCHAR(5);
+    DECLARE V_TO_CURR NVARCHAR(5);
+    DECLARE T_RESULT "T_SPOT_QUOTE_WEEKLY";
+
+    T_SPOT_QUOTE = SELECT * FROM "T_SPOT_AND_QUOTE" ORDER BY QUOTE_DATE;
+    
+    FOR I IN 0..12 DO
+
+        IF I < 10 THEN
+            SELECT CONCAT('0', TO_NVARCHAR(:I)) INTO V_TENOR FROM SY_DUMMY;
+        ELSE
+            SELECT TO_NVARCHAR(:I) INTO V_TENOR FROM SY_DUMMY;
+        END IF;
+
+        T_DATA = SELECT * FROM :T_SPOT_QUOTE WHERE TENOR = :V_TENOR ORDER BY QUOTE_DATE ;
+        V_REC_COUNT = RECORD_COUNT(:T_DATA);
+
+        WHILE :V_REC_COUNT != 0 DO
+            
+            V_DATE = :T_DATA.QUOTE_DATE[1];
+            SELECT WEEKDAY (:V_DATE) + 1 INTO V_WEEKDAY FROM "SY_DUMMY";
+            V_WEEKEND_DAY = 7 - :V_WEEKDAY;
+            SELECT ADD_DAYS(:V_DATE, :V_WEEKEND_DAY) INTO V_END_DATE FROM "SY_DUMMY";
+            
+            T_DATA_SUBSET = SELECT * FROM :T_DATA WHERE QUOTE_DATE BETWEEN :V_DATE AND :V_END_DATE;
+            
+            T_TEMP = SELECT :V_DATE AS QUOTE_DATE,
+                        :V_TENOR AS "TENOR",
+                        "FROM_CURR",
+                        "TO_CURR",
+                        AVG("PRICE") AS PRICE
+                        FROM :T_DATA_SUBSET
+                        GROUP BY "FROM_CURR", "TO_CURR";
+                        
+            :T_OUT_TENOR.INSERT(:T_TEMP);
+            
+            V_DEL_INDEX_END = RECORD_COUNT(:T_DATA_SUBSET);
+            
+            :T_DATA.DELETE(1..:V_DEL_INDEX_END);
+            
+            V_REC_COUNT = RECORD_COUNT(:T_DATA);
+            
+        END WHILE;
+
+    END FOR;
+
+    T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
+                                    52 AS INT_VALUE, 
+                                    NULL AS DOUBLE_VALUE, 
+                                    NULL AS STRING_VALUE
+                            FROM "SY_DUMMY"
+                                UNION                  
+                            SELECT 'MODELSELECTION' AS PARAM_NAME,
+                                    1 AS INT_VALUE, 
+                                    NULL AS DOUBLE_VALUE, 
+                                    NULL AS STRING_VALUE
+                            FROM "SY_DUMMY"
+                                UNION
+                            SELECT 'CYCLE' AS PARAM_NAME,
+                                    52 AS INT_VALUE, 
+                                    NULL AS DOUBLE_VALUE, 
+                                    NULL AS STRING_VALUE
+                            FROM "SY_DUMMY";
+
+    FOR I IN 0..12 DO
+
+        IF I < 10 THEN
+            SELECT CONCAT('0', TO_NVARCHAR(:I)) INTO V_TENOR FROM SY_DUMMY;
+        ELSE
+            SELECT TO_NVARCHAR(:I) INTO V_TENOR FROM SY_DUMMY;
+        END IF;
+
+        T_DATA_IN = SELECT /* (DAYS_BETWEEN(:V_MIN_DATE, DATE) + 1) */TO_INTEGER("$rowid$") AS ID, PRICE
+                FROM :T_OUT_TENOR WHERE TENOR = :V_TENOR ORDER BY QUOTE_DATE;
+        
+        SELECT MAX(QUOTE_DATE) INTO V_MAX_DATE FROM :T_OUT_TENOR WHERE TENOR = :V_TENOR;
+        SELECT TOP 1 FROM_CURR INTO V_FROM_CURR FROM :T_OUT_TENOR WHERE TENOR = :V_TENOR;
+        SELECT TOP 1 TO_CURR INTO V_TO_CURR FROM :T_OUT_TENOR WHERE TENOR = :V_TENOR;
+
+        CALL "PAL_AUTO_EXPSMOOTH"(P1 => :T_DATA_IN, P2 => :T_AUTO_SMOTH_PARAMS, P3 => :T_FORECAST, P4 => :T_STATISTICS);
+        
+        T_TEMP_FORECAST = SELECT * FROM :T_FORECAST WHERE PI1_LOWER IS NOT NULL ORDER BY TIMESTAMP;
+
+        SELECT MIN(TIMESTAMP) INTO V_MIN_TIMESTAMP FROM :T_TEMP_FORECAST;
+
+        T_OUT = SELECT ADD_DAYS(:V_MAX_DATE, (( MOD (TIMESTAMP, :V_MIN_TIMESTAMP - 1) ) * 7)) AS QUOTE_DATE, 
+                        :V_TENOR AS TENOR, 
+                        :V_FROM_CURR AS FROM_CURR,
+                        :V_TO_CURR AS TO_CURR,
+                        TO_DECIMAL(VALUE, 9, 5) AS PRICE
+                    FROM :T_TEMP_FORECAST;
+
+        :T_RESULT.INSERT(:T_OUT);
+
+    END FOR;
+
+    RETURN
+    
+    SELECT YEAR, MONTH, TENOR, AVG(AVG_SPOT_RATE) AS AVG_SPOT_RATE
+                    FROM 
+                    ( SELECT
+                        YEAR("QUOTE_DATE") AS YEAR,
+                        MONTH("QUOTE_DATE") AS MONTH,
+                        "TENOR",
+                        "PRICE" AS AVG_SPOT_RATE
+                    FROM :T_RESULT )
+                    GROUP BY MONTH, YEAR, TENOR;
+
+END;

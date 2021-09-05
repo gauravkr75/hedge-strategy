@@ -31,10 +31,11 @@
                             <smartFilterBar:SmartFilterBar id="smartFilterBarActualPosting" entitySet="ActualPosting" persistencyKey="SmartFilter_Explored">
                             </smartFilterBar:SmartFilterBar>
                             <smartTable:SmartTable entitySet="ActualPosting" smartFilterId="smartFilterBarActualPosting"
-                                tableType="ResponsiveTable" useExportToExcel="true" beforeExport="onBeforeExport"
+                                tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
                                 useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                                 showRowCount="true" enableAutoBinding="true"
-                                demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"/>
+                                demandPopin="true" visibleRowCount='100' class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
+                                showFullScreenButton="true" />
                     </IconTabFilter>
 					<IconTabFilter
 						key="inStock"
@@ -42,10 +43,11 @@
                         <smartFilterBar:SmartFilterBar id="smartFilterBarAlreadyHedged" entitySet="AlreadyHedged" persistencyKey="SmartFilter_Explored">
                             </smartFilterBar:SmartFilterBar>
                         <smartTable:SmartTable entitySet="AlreadyHedged" smartFilterId="smartFilterBarAlreadyHedged"
-                            tableType="ResponsiveTable" useExportToExcel="true" beforeExport="onBeforeExport"
+                            tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
                             useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                             showRowCount="true" enableAutoBinding="true"
-                            demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"/>
+                            demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
+                            showFullScreenButton="true"/>
                     </IconTabFilter>
                     <IconTabFilter
 						key="shortage"
@@ -56,7 +58,8 @@
                             tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
                             useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                             showRowCount="true" enableAutoBinding="true"
-                            demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"/>
+                            demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
+                            showFullScreenButton="true"/>
                     </IconTabFilter>
 					<IconTabFilter
 						key="shortage"
@@ -64,10 +67,11 @@
                         <smartFilterBar:SmartFilterBar id="smartFilterBarExposurePosition" entitySet="ExposurePosition" persistencyKey="SmartFilter_Explored">
                         </smartFilterBar:SmartFilterBar>
                         <smartTable:SmartTable entitySet="ExposurePosition" smartFilterId="smartFilterBarExposurePosition"
-                            tableType="ResponsiveTable" useExportToExcel="true" beforeExport="onBeforeExport"
+                            tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
                             useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                             showRowCount="true" enableAutoBinding="true"
-                            demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"/>
+                            demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
+                            showFullScreenButton="true"/>
                     </IconTabFilter>
 				</items>
 			</IconTabBar>

@@ -29,6 +29,21 @@
                     "localUri": "annotations/annotation.xml"
                 }
             }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "hedge-file-upload-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "HedgeFileUpload",
+                    "action": "display",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "icon": "sap-icon://upload"
+                }
+            }
         }
     },
     "sap.ui": {
@@ -64,8 +79,7 @@
             }
         },
         "contentDensities": {
-            "compact": true,
-            "cozy": true
+            "compact": true
         },
         "models": {
             "i18n": {
@@ -115,5 +129,9 @@
                 }
             }
         }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "hedging_app"
     }
 }

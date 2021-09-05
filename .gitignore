@@ -67,3 +67,6 @@ gen/db/.env
 .vscode/settings.json
 .vscode/settings.json
 resources/hedgeprofile.zip
+resources/hedgefileupload.zip
+app/hedge-file-upload/dist
+resources/

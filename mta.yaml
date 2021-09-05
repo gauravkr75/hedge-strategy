@@ -109,13 +109,20 @@ resources:
     config:
       HTML5Runtime_enabled: true
       init_data:
-        instance:
+        subaccount:
           destinations:
           - Authentication: NoAuthentication
             Name: ui5
             ProxyType: Internet
             Type: HTTP
             URL: https://ui5.sap.com
+          - Name: hedge-app-api
+            Authentication: NoAuthentication
+            ProxyType: Internet
+            HTML5.ForwardAuthToken: true
+            HTML5.DynamicDestination: true
+            Type: HTTP
+            URL: https://${appname}.${default-domain}
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
