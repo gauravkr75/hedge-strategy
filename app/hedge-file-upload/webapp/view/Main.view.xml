@@ -3,6 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"
+    xmlns:table="sap.ui.table"
     xmlns:semantic="sap.f.semantic"
     xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
 	xmlns:smartTable="sap.ui.comp.smarttable"
@@ -35,7 +36,9 @@
                                 useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                                 showRowCount="true" enableAutoBinding="true"
                                 demandPopin="true" visibleRowCount="100" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
-                                showFullScreenButton="true" />
+                                showFullScreenButton="true">
+                                <table:Table visibleRowCount="10" />
+                            </smartTable:SmartTable>
                     </IconTabFilter>
 					<IconTabFilter
 						key="inStock"
@@ -47,7 +50,9 @@
                             useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                             showRowCount="true" enableAutoBinding="true"
                             demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
-                            showFullScreenButton="true"/>
+                            showFullScreenButton="true">
+                            <table:Table visibleRowCount="10" />
+                        </smartTable:SmartTable>
                     </IconTabFilter>
                     <IconTabFilter
 						key="shortage"
@@ -59,7 +64,9 @@
                             useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                             showRowCount="true" enableAutoBinding="true"
                             demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
-                            showFullScreenButton="true"/>
+                            showFullScreenButton="true">
+                            <table:Table visibleRowCount="10" />
+                        </smartTable:SmartTable>
                     </IconTabFilter>
 					<IconTabFilter
 						key="shortage"
@@ -71,7 +78,9 @@
                             useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                             showRowCount="true" enableAutoBinding="true"
                             demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
-                            showFullScreenButton="true"/>
+                            showFullScreenButton="true">
+                            <table:Table visibleRowCount="10" />
+                        </smartTable:SmartTable>
                     </IconTabFilter>
 				</items>
 			</IconTabBar>
