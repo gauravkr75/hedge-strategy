@@ -27,6 +27,9 @@
         "undeploy": "cf undeploy HedgeStrategy --delete-services --delete-service-keys"
     },
     "cds": {
+        "build": {
+            "target": "."
+        },
         "hana": {
             "deploy-format": "hdbtable"
         },

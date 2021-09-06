@@ -383,9 +383,9 @@ context CV {
         key![LAYER_KEY]            : String(40)     @title : 'Layer Key';
         key![BLOCK_KEY]            : String(10)     @title : 'Block Key';
         key![RECORD_KEY]           : String(10)     @title : 'Record Key';
+        key![QUOTE_YEAR]           : Integer        @title : 'Quote Year';
            ![START_MONTH]          : Integer        @title : 'Start Month';
            ![END_MONTH]            : Integer        @title : 'End Month';
-           ![QUOTE_YEAR]           : Integer        @title : 'Quote Year';
            ![QUOTE_PRICE]          : Decimal(25, 20)@title : 'Quote Price';
            ![SPOT_YEAR]            : Integer        @title : 'Spot Year';
            ![SPOT_PRICE]           : Decimal(25, 20)@title : 'Spot Price';

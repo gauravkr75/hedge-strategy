@@ -319,7 +319,8 @@ annotate CatalogService.HedgeProfile with @(UI : {
         {
             Value       : DefaultText,
             Criticality : DefaultCritical,
-            Title       : 'Status'
+            Title       : 'Status',
+            ![@HTML5.CssDefaults] : {width : '10rem'}
         },
         {Value : PROFILE_NAME},
         {Value : MODEL},

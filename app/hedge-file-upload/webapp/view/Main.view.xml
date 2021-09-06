@@ -37,7 +37,7 @@
                                 showRowCount="true" enableAutoBinding="true"
                                 demandPopin="true" visibleRowCount="100" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
                                 showFullScreenButton="true">
-                                <table:Table visibleRowCount="10" />
+                                <table:Table visibleRowCount="13" />
                             </smartTable:SmartTable>
                     </IconTabFilter>
 					<IconTabFilter
@@ -51,7 +51,7 @@
                             showRowCount="true" enableAutoBinding="true"
                             demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
                             showFullScreenButton="true">
-                            <table:Table visibleRowCount="10" />
+                            <table:Table visibleRowCount="13" />
                         </smartTable:SmartTable>
                     </IconTabFilter>
                     <IconTabFilter
@@ -65,7 +65,7 @@
                             showRowCount="true" enableAutoBinding="true"
                             demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
                             showFullScreenButton="true">
-                            <table:Table visibleRowCount="10" />
+                            <table:Table visibleRowCount="13" />
                         </smartTable:SmartTable>
                     </IconTabFilter>
 					<IconTabFilter
@@ -79,7 +79,7 @@
                             showRowCount="true" enableAutoBinding="true"
                             demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
                             showFullScreenButton="true">
-                            <table:Table visibleRowCount="10" />
+                            <table:Table visibleRowCount="13" />
                         </smartTable:SmartTable>
                     </IconTabFilter>
 				</items>
