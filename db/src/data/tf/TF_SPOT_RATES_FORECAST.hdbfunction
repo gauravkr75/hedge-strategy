@@ -86,6 +86,10 @@ BEGIN
             T_DATA_IN = SELECT TO_INTEGER(ROW_NUMBER() OVER (ORDER BY (SELECT 1 FROM "SY_DUMMY"))) AS ID, AVG_SPOT_RATE
                         FROM :T_PROCESS_DATA
                         ORDER BY YEAR, MONTH;
+            
+            IF IS_EMPTY(:T_DATA_IN) THEN
+                CONTINUE;
+            END IF;
 
             CALL "PAL_AUTO_EXPSMOOTH"(P1 => :T_DATA_IN, P2 => :T_AUTO_SMOTH_PARAMS, P3 => :T_FORECAST, P4 => :T_STATISTICS);
             

@@ -226,16 +226,19 @@ context T {
 
     @assert.unique : {Profile : [PROFILE_NAME]}
     entity HEDGE_PROFILE : cuid {
-        PROFILE_NAME   : String(30)@title : 'Profile Name';
-        MODEL          : String(10)@title : 'Forecast Model';
-        LAYER1_MIN_PER : Integer   @title : 'Layer 1 Min %';
-        LAYER1_MAX_PER : Integer   @title : 'Layer 1 Max %';
-        LAYER2_MIN_PER : Integer   @title : 'Layer 2 Min %';
-        LAYER2_MAX_PER : Integer   @title : 'Layer 2 Max %';
-        LAYER_KEY      : String(6) @title : 'Layer Key';
-        START_MONTH    : Integer   @title : 'Starting Month';
-        YEAR           : Integer   @title : 'Starting Year';
-        DEFAULT        : String(1) @title : 'Default';
+        PROFILE_NAME         : String(30)@title : 'Profile Name';
+        MODEL                : String(10)@title : 'Forecast Model';
+        LAYER1_MIN_PER       : Integer   @title : 'Layer 1 Min %';
+        LAYER1_MAX_PER       : Integer   @title : 'Layer 1 Max %';
+        LAYER2_MIN_PER       : Integer   @title : 'Layer 2 Min %';
+        LAYER2_MAX_PER       : Integer   @title : 'Layer 2 Max %';
+        LAYER_KEY            : String(6) @title : 'Layer Key';
+        START_MONTH          : Integer   @title : 'Starting Month';
+        YEAR                 : Integer   @title : 'Starting Year';
+        DEFAULT              : String(1) @title : 'Default';
+        WEIGHT_BPL           : Integer   @title : 'Weightage Best Performing Layer %';
+        WEIGHT_MKT_VAL_RATIO : Integer   @title : 'Weightage Market Value Ratio %';
+        WEIGHT_FORECAT_COMP  : Integer   @title : 'Weightage Forecast Comparison %';
     }
 
     @cds.persistence.skip

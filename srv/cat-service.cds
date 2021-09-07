@@ -78,7 +78,28 @@ service CatalogService {
                         'Active'
                     else
                         'Inactive'
-                end as DefaultText     : String(10)@title : 'Status'
+                end as DefaultText     : String(10)@title : 'Status',
+                WEIGHT_BPL                         @(
+                mandatory,
+                assert.range : [
+                    1,
+                    100
+                ]
+            ),
+                WEIGHT_MKT_VAL_RATIO @(
+                mandatory,
+                assert.range : [
+                    1,
+                    100
+                ]
+            ),
+                WEIGHT_FORECAT_COMP@(
+                mandatory,
+                assert.range : [
+                    1,
+                    100
+                ]
+            )
 
         } actions {
             action setDefault() returns String;

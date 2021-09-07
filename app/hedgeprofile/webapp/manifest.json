@@ -154,7 +154,10 @@
                             "dateSettings": {
                                 "useDateRange": true
                             }
-                        }
+                        },
+                        "tableSettings": {
+							"type": "GridTable"
+						}
                     }
                 },
                 "pages": {
