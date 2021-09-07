@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_FORECASTED_EXPOSURE_REPORT_OUT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_FORECASTED_EXPOSURE_REPORT_OUT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="CV_FORECASTED_EXPOSURE_REPORT_OUT"/>
 <localVariables/>
 <variableMappings/>
@@ -8,73 +8,133 @@
     <resourceUri>TF_FORECASTED_EXPOSURE_REPORT_OUT</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="HEDGE_YEAR"/>
+      <viewAttribute id="HEDGE_MONTH"/>
+      <viewAttribute id="FORWARD_SETTLE_YEAR"/>
+      <viewAttribute id="FORWARD_SETTLE_MONTH"/>
+      <viewAttribute id="LAYER1_PERCENTAGE"/>
+      <viewAttribute id="LAYER2_PERCENTAGE"/>
+      <viewAttribute id="LAYER_SEQUENCE"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="FORECAST"/>
+      <viewAttribute id="MIN_VALUE"/>
+      <viewAttribute id="MAX_VALUE"/>
+      <viewAttribute id="BPL_PER"/>
+      <viewAttribute id="FORECAST_COMP_PER"/>
+      <viewAttribute id="MKT_VAL_RATIO_PER"/>
+      <viewAttribute id="PROPOSED_PERCENT"/>
+      <viewAttribute id="PROPOSED_VALUE"/>
+    
+      <viewAttribute id="HEDGED_AMOUNT"/>
+      <viewAttribute id="DIFF_VALUE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ROUND_FORECAST" datatype="DECIMAL" length="34" scale="2" expressionLanguage="SQL">
+        <formula>ROUND(&quot;FORECAST&quot;, 2)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ROUND_MIN_VALUE" datatype="DECIMAL" length="34" scale="2" expressionLanguage="SQL">
+        <formula>ROUND(&quot;MIN_VALUE&quot;, 2)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ROUND_MAX_VALUE" datatype="DECIMAL" length="34" scale="2" expressionLanguage="SQL">
+        <formula>ROUND(&quot;MAX_VALUE&quot;, 2)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ROUND_BPL_PER" datatype="DECIMAL" length="34" scale="2" expressionLanguage="SQL">
+        <formula>ROUND(&quot;BPL_PER&quot;, 2)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ROUND_FORECAST_COMP_PER" datatype="DECIMAL" length="34" scale="2" expressionLanguage="SQL">
+        <formula>ROUND(&quot;BPL_PER&quot;, 2)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ROUND_MKT_VAL_RATIO_PER" datatype="DECIMAL" length="34" scale="2" expressionLanguage="SQL">
+        <formula>ROUND(&quot;MKT_VAL_RATIO_PER&quot;, 2)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ROUND_PROPOSED_PERCENT" datatype="DECIMAL" length="34" scale="2" expressionLanguage="SQL">
+        <formula>ROUND(&quot;PROPOSED_PERCENT&quot;, 2)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ROUND_PROPOSED_VALUE" datatype="DECIMAL" length="34" scale="2" expressionLanguage="SQL">
+        <formula>ROUND(&quot;PROPOSED_VALUE&quot;, 2)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="TF_FORECASTED_EXPOSURE_REPORT_OUT"/>
+  </calculationView>
+</calculationViews>
 
-<logicalModel id="TF_FORECASTED_EXPOSURE_REPORT_OUT">
+<logicalModel id="Projection_1">
   <attributes>
     <attribute id="HEDGE_YEAR" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="HEDGE_YEAR"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="HEDGE_YEAR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="HEDGE_YEAR"/>
     </attribute>
     <attribute id="HEDGE_MONTH" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="HEDGE_MONTH"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="HEDGE_MONTH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="HEDGE_MONTH"/>
     </attribute>
     <attribute id="FORWARD_SETTLE_YEAR" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FORWARD_SETTLE_YEAR"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="FORWARD_SETTLE_YEAR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FORWARD_SETTLE_YEAR"/>
     </attribute>
     <attribute id="FORWARD_SETTLE_MONTH" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FORWARD_SETTLE_MONTH"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="FORWARD_SETTLE_MONTH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FORWARD_SETTLE_MONTH"/>
     </attribute>
     <attribute id="LAYER1_PERCENTAGE" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAYER1_PERCENTAGE"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="LAYER1_PERCENTAGE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LAYER1_PERCENTAGE"/>
     </attribute>
     <attribute id="LAYER2_PERCENTAGE" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAYER2_PERCENTAGE"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="LAYER2_PERCENTAGE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LAYER2_PERCENTAGE"/>
     </attribute>
     <attribute id="LAYER_SEQUENCE" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAYER_SEQUENCE"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="LAYER_SEQUENCE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LAYER_SEQUENCE"/>
     </attribute>
     <attribute id="EXPOSURE_CURRENCY" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EXPOSURE_CURRENCY"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="EXPOSURE_CURRENCY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EXPOSURE_CURRENCY"/>
     </attribute>
     <attribute id="FORECAST" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FORECAST"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="FORECAST"/>
+      <descriptions defaultDescription="ROUND_FORECAST"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ROUND_FORECAST"/>
     </attribute>
     <attribute id="MIN_VALUE" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="MIN_VALUE"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="MIN_VALUE"/>
+      <descriptions defaultDescription="ROUND_MIN_VALUE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ROUND_MIN_VALUE"/>
     </attribute>
     <attribute id="MAX_VALUE" order="11" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="MAX_VALUE"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="MAX_VALUE"/>
+      <descriptions defaultDescription="ROUND_MAX_VALUE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ROUND_MAX_VALUE"/>
     </attribute>
     <attribute id="BPL_PER" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="BPL_PER"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="BPL_PER"/>
+      <descriptions defaultDescription="ROUND_BPL_PER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ROUND_BPL_PER"/>
     </attribute>
     <attribute id="FORECAST_COMP_PER" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FORECAST_COMP_PER"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="FORECAST_COMP_PER"/>
+      <descriptions defaultDescription="ROUND_FORECAST_COMP_PER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ROUND_FORECAST_COMP_PER"/>
     </attribute>
     <attribute id="MKT_VAL_RATIO_PER" order="14" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="MKT_VAL_RATIO_PER"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="MKT_VAL_RATIO_PER"/>
+      <descriptions defaultDescription="ROUND_MKT_VAL_RATIO_PER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ROUND_MKT_VAL_RATIO_PER"/>
     </attribute>
     <attribute id="PROPOSED_PERCENT" order="15" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PROPOSED_PERCENT"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="PROPOSED_PERCENT"/>
+      <descriptions defaultDescription="ROUND_PROPOSED_PERCENT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ROUND_PROPOSED_PERCENT"/>
     </attribute>
     <attribute id="PROPOSED_VALUE" order="16" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PROPOSED_VALUE"/>
-      <keyMapping columnObjectName="TF_FORECASTED_EXPOSURE_REPORT_OUT" columnName="PROPOSED_VALUE"/>
+      <descriptions defaultDescription="ROUND_PROPOSED_VALUE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ROUND_PROPOSED_VALUE"/>
+    </attribute>
+  
+    <attribute id="HEDGED_AMOUNT" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HEDGED_AMOUNT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="HEDGED_AMOUNT"/>
+    </attribute>
+    <attribute id="DIFF_VALUE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DIFF_VALUE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DIFF_VALUE"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -90,6 +150,11 @@
       <rectangleSize width="160"/>
     </shape>
     
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="79" y="256"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
   </shapes>
 </layout>
 </Calculation:scenario>

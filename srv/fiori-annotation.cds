@@ -481,9 +481,13 @@ annotate CatalogService.ForecastExpReport with @(UI : {
             Value                     : PROPOSED_VALUE,
             Criticality               : PropAmountCritical,
             CriticalityRepresentation : #WithoutIcon
-        }
+        },
+        {Value : HEDGED_AMOUNT},
+        {Value : DIFF_VALUE}
     ]
-});
+}) {
+    PropAmountCritical @(UI : {Hidden : true});
+};
 
 annotate CatalogService.BestLayer with @(UI : {
     HeaderInfo      : {

@@ -44,9 +44,9 @@ context T {
 
     entity HISTORICAL_CURVES {
         key ID                : String(36);
-            DATE              : Date           @title : 'Date';
-            EXPOSURE_CURRENCY : String(05)     @title : 'Exposure Currency';
-            TARGET_CURRENCY   : String(05)     @title : 'Target Currency';
+            DATE              : Date          @title : 'Date';
+            EXPOSURE_CURRENCY : String(05)    @title : 'Exposure Currency';
+            TARGET_CURRENCY   : String(05)    @title : 'Target Currency';
             SPOT              : Decimal(25, 5)@title : 'Spot Price';
             ONE_M             : Decimal(25, 5)@title : 'One Month';
             TWO_M             : Decimal(25, 5)@title : 'Two Month';
@@ -379,26 +379,26 @@ context CV {
     @cds.persistence.exists
     @cds.persistence.calcview
     entity![LAYER_PNL_OVERLAP_ROLLING]{
-        key![LAYER]                : Integer        @title : 'Layer';
-        key![LAYER_KEY]            : String(40)     @title : 'Layer Key';
-        key![BLOCK_KEY]            : String(10)     @title : 'Block Key';
-        key![RECORD_KEY]           : String(10)     @title : 'Record Key';
-        key![QUOTE_YEAR]           : Integer        @title : 'Quote Year';
-           ![START_MONTH]          : Integer        @title : 'Start Month';
-           ![END_MONTH]            : Integer        @title : 'End Month';
+        key![LAYER]                : Integer       @title : 'Layer';
+        key![LAYER_KEY]            : String(40)    @title : 'Layer Key';
+        key![BLOCK_KEY]            : String(10)    @title : 'Block Key';
+        key![RECORD_KEY]           : String(10)    @title : 'Record Key';
+        key![QUOTE_YEAR]           : Integer       @title : 'Quote Year';
+           ![START_MONTH]          : Integer       @title : 'Start Month';
+           ![END_MONTH]            : Integer       @title : 'End Month';
            ![QUOTE_PRICE]          : Decimal(25, 5)@title : 'Quote Price';
-           ![SPOT_YEAR]            : Integer        @title : 'Spot Year';
+           ![SPOT_YEAR]            : Integer       @title : 'Spot Year';
            ![SPOT_PRICE]           : Decimal(25, 5)@title : 'Spot Price';
-           ![PNL]                  : Decimal(9, 5)  @title : 'PNL';
-           ![PARENT_LAYER]         : Integer        @title : 'PARENT_LAYER';
-           ![PARENT_LAYER_KEY]     : String(40)     @title : 'PARENT_LAYER_KEY';
-           ![START_MONTH_DESC]     : String(20)     @title : 'Start Month';
-           ![END_MONTH_DESC]       : String(20)     @title : 'End Month';
-           ![BLOCK_KEY_START_DESC] : String(13)     @title : 'BLOCK_KEY_START_DESC';
-           ![BLOCK_KEY_END_DESC]   : String(13)     @title : 'BLOCK_KEY_END_DESC';
-           ![BLOCK_KEY_DESC]       : String(50)     @title : 'Block Description';
-           ![EXPOSURE_CURRENCY]    : String(5)      @title : 'Exposure Currency';
-           ![TARGET_CURRENCY]      : String(5)      @title : 'Target Currency';
+           ![PNL]                  : Decimal(9, 5) @title : 'PNL';
+           ![PARENT_LAYER]         : Integer       @title : 'PARENT_LAYER';
+           ![PARENT_LAYER_KEY]     : String(40)    @title : 'PARENT_LAYER_KEY';
+           ![START_MONTH_DESC]     : String(20)    @title : 'Start Month';
+           ![END_MONTH_DESC]       : String(20)    @title : 'End Month';
+           ![BLOCK_KEY_START_DESC] : String(13)    @title : 'BLOCK_KEY_START_DESC';
+           ![BLOCK_KEY_END_DESC]   : String(13)    @title : 'BLOCK_KEY_END_DESC';
+           ![BLOCK_KEY_DESC]       : String(50)    @title : 'Block Description';
+           ![EXPOSURE_CURRENCY]    : String(5)     @title : 'Exposure Currency';
+           ![TARGET_CURRENCY]      : String(5)     @title : 'Target Currency';
     }
 
     @cds.persistence.exists
@@ -414,14 +414,14 @@ context CV {
     @cds.persistence.exists
     @cds.persistence.calcview
     entity![FORECASTED_EXPOSURE_REPORT_OUT]{
-        key![HEDGE_YEAR]           : Integer        @title : 'Hedge Year';
-        key![HEDGE_MONTH]          : Integer        @title : 'Hedge Month';
-        key![FORWARD_SETTLE_YEAR]  : Integer        @title : 'Forward Settlement Year';
-        key![FORWARD_SETTLE_MONTH] : Integer        @title : 'Forward Settlement Month';
-        key![LAYER1_PERCENTAGE]    : String(7)      @title : 'Layer 1 %';
-        key![LAYER2_PERCENTAGE]    : String(7)      @title : 'Layer 2 %';
-        key![LAYER_SEQUENCE]       : String(2)      @title : 'Layer Sequence';
-        key![EXPOSURE_CURRENCY]    : String(5)      @title : 'Exposure Currency';
+        key![HEDGE_YEAR]           : Integer       @title : 'Hedge Year';
+        key![HEDGE_MONTH]          : Integer       @title : 'Hedge Month';
+        key![FORWARD_SETTLE_YEAR]  : Integer       @title : 'Forward Settlement Year';
+        key![FORWARD_SETTLE_MONTH] : Integer       @title : 'Forward Settlement Month';
+        key![LAYER1_PERCENTAGE]    : String(7)     @title : 'Layer 1 %';
+        key![LAYER2_PERCENTAGE]    : String(7)     @title : 'Layer 2 %';
+        key![LAYER_SEQUENCE]       : String(2)     @title : 'Layer Sequence';
+        key![EXPOSURE_CURRENCY]    : String(5)     @title : 'Exposure Currency';
            ![FORECAST]             : Decimal(34, 2)@title : 'Forecast';
            ![MIN_VALUE]            : Decimal(34, 2)@title : 'Min Value';
            ![MAX_VALUE]            : Decimal(34, 2)@title : 'Max Value';
@@ -430,5 +430,7 @@ context CV {
            ![MKT_VAL_RATIO_PER]    : Decimal(34, 2)@title : 'Market Value Ratio %';
            ![PROPOSED_PERCENT]     : Decimal(34, 2)@title : 'Proposed %';
            ![PROPOSED_VALUE]       : Decimal(34, 2)@title : 'Proposed Value';
+           ![HEDGED_AMOUNT]        : Decimal(34, 2)@title : 'Hedged Amount';
+           ![DIFF_VALUE]           : Decimal(34, 2)@title : 'Difference';
     }
 }
