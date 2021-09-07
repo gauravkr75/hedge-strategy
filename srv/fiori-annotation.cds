@@ -478,8 +478,9 @@ annotate CatalogService.ForecastExpReport with @(UI : {
         //{Value : MKT_VAL_RATIO_PER},
         {Value : PROPOSED_PERCENT},
         {
-            Value       : PROPOSED_VALUE,
-            Criticality : PropAmountCritical
+            Value                     : PROPOSED_VALUE,
+            Criticality               : PropAmountCritical,
+            CriticalityRepresentation : #WithoutIcon
         }
     ]
 });

@@ -5,7 +5,7 @@ version: 1.0.0
 modules:
 - name: HedgeStrategy-srv
   type: nodejs
-  path: gen/srv
+  path: srv
   requires:
   - name: HedgeStrategy-db
   - name: uaa_HedgeStrategy
@@ -22,7 +22,7 @@ modules:
     - ./node_modules
 - name: HedgeStrategy-db-deployer
   type: hdb
-  path: gen/db
+  path: db
   requires:
   - name: HedgeStrategy-db
   parameters:
