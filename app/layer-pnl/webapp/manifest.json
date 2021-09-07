@@ -90,11 +90,6 @@
                     "pattern": ":?query:",
                     "name": "LayerPNLList",
                     "target": "LayerPNLList"
-                },
-                {
-                    "pattern": "LayerPNL({key}):?query:",
-                    "name": "LayerPNLObjectPage",
-                    "target": "LayerPNLObjectPage"
                 }
             ],
             "targets": {
@@ -112,18 +107,14 @@
                                         "route": "LayerPNLObjectPage"
                                     }
                                 }
+                            },
+                             "controlConfiguration" : {
+                                "@com.sap.vocabularies.UI.v1.LineItem" : {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                }
                             }
-                        }
-                    }
-                },
-                "LayerPNLObjectPage": {
-                    "type": "Component",
-                    "id": "LayerPNLObjectPage",
-                    "name": "sap.fe.templates.ObjectPage",
-                    "options": {
-                        "settings": {
-                            "editableHeaderContent": false,
-                            "entitySet": "LayerPNL"
                         }
                     }
                 }

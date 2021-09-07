@@ -44,9 +44,9 @@ BEGIN
                         B.PLANNING_YEAR,
                         B.EXPOSURE_CURRENCY,
                         B.TARGET_CURRENCY,
-                        A.ACTUAL,
+                        A.ACTUAL * -1 AS ACTUAL,
                         B.EXPOSURE_AMOUNT AS FORECASTED,
-                        ROUND ((A.ACTUAL / B.EXPOSURE_AMOUNT), 3) AS RATIO
+                        ROUND ((A.ACTUAL * -1 / B.EXPOSURE_AMOUNT), 3) AS RATIO
                         FROM(
                             SELECT PERIOD, 
                                 PLANNING_YEAR, 

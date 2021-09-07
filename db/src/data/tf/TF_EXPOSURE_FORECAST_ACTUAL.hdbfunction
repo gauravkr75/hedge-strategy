@@ -42,7 +42,7 @@ BEGIN
                         B.PLANNING_YEAR,
                         B.EXPOSURE_CURRENCY,
                         B.TARGET_CURRENCY,
-                        A.ACTUAL,
+                        A.ACTUAL * -1 AS ACTUAL,
                         B.EXPOSURE_AMOUNT AS FORECASTED
                         FROM ( 
                                 SELECT PERIOD, 

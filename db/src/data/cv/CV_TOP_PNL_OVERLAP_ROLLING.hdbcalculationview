@@ -14,6 +14,9 @@
       <viewAttribute id="LAYER"/>
       <viewAttribute id="LAYER_KEY"/>
       <viewAttribute id="PNL" aggregationType="avg"/>
+    
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -24,11 +27,16 @@
       <viewAttribute id="LAYER"/>
       <viewAttribute id="LAYER_KEY"/>
       <viewAttribute id="PNL"/>
+    
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Aggregation_1"/>
     <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
       <partitionViewAttributeName id="LAYER"/>
+      <partitionViewAttributeName id="EXPOSURE_CURRENCY"/>
+      <partitionViewAttributeName id="TARGET_CURRENCY"/>
       <order byViewAttributeName="PNL" direction="DESC"/>
       <rankThreshold>
         <value>1</value>
@@ -50,6 +58,15 @@
     <attribute id="PNL" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PNL"/>
       <keyMapping columnObjectName="Rank_1" columnName="PNL"/>
+    </attribute>
+  
+    <attribute id="EXPOSURE_CURRENCY" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXPOSURE_CURRENCY"/>
+      <keyMapping columnObjectName="Rank_1" columnName="EXPOSURE_CURRENCY"/>
+    </attribute>
+    <attribute id="TARGET_CURRENCY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARGET_CURRENCY"/>
+      <keyMapping columnObjectName="Rank_1" columnName="TARGET_CURRENCY"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

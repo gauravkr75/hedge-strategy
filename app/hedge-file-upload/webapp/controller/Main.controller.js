@@ -28,13 +28,13 @@ sap.ui.define([
                             value: 'Actual Posting'
                         }, {
                             key: 'AH',
-                            value: 'Already Hedged'
+                            value: 'Hedged Position'
                         }, {
                             key: 'HC',
                             value: 'Historical Curves'
                         }, {
                             key: 'EP',
-                            value: 'Exposure Position'
+                            value: 'Cash Flow Forecast'
                         }
                     ]
                 });

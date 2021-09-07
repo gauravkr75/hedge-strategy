@@ -48,7 +48,7 @@
                     "action": "display",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
-                    "icon": "sap-icon://documents"
+                    "icon": "sap-icon://personnel-view"
                 }
             }
         }

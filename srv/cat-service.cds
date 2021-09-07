@@ -14,20 +14,20 @@ service CatalogService {
         Updatable  : false,
         Deletable  : true
     }
-    entity Layer            as projection on T.LAYER_YEAR_PNL;
+    entity Layer             as projection on T.LAYER_YEAR_PNL;
 
     @readonly
-    entity LayerSummary     as projection on CV.LAYER_SUMMARY_OUT;
+    entity LayerSummary      as projection on CV.LAYER_SUMMARY_OUT;
 
     @Aggregation.ApplySupported.PropertyRestrictions : true
     @readonly
-    entity Backcasting      as projection on CV.LAYER_PNL_BACKCASTING;
+    entity Backcasting       as projection on CV.LAYER_PNL_BACKCASTING;
 
     @readonly
-    entity Forecasting      as projection on CV.LAYER_PNL_FORECASTING;
+    entity Forecasting       as projection on CV.LAYER_PNL_FORECASTING;
 
     @readonly
-    entity Existing         as projection on CV.LAYER_PNL_EXISTING;
+    entity Existing          as projection on CV.LAYER_PNL_EXISTING;
 
     action determinePNL(@title : 'Coverage' duration : Integer, @title : 'Layer' layer : Integer) returns String;
     action flushResults() returns String;
@@ -37,7 +37,7 @@ service CatalogService {
         Updatable  : true,
         Deletable  : true
     }
-    entity HedgeProfile     as
+    entity HedgeProfile      as
         select from T.HEDGE_PROFILE {
                 @title :                                    'Profile ID'
             key ID,
@@ -84,33 +84,46 @@ service CatalogService {
             action setDefault() returns String;
         }
 
-    entity FileUpload       as projection on T.FILE_UPLOAD;
-    @Capabilities : {
-        Insertable : true,
-        Updatable  : false,
-        Deletable  : true
-    }
-    entity ActualPosting    as projection on T.ACTUAL_POSTING;
-    @Capabilities : {
-        Insertable : true,
-        Updatable  : false,
-        Deletable  : true
-    }
-    entity AlreadyHedged    as projection on T.ALREADY_HEDGED;
-    @Capabilities : {
-        Insertable : true,
-        Updatable  : false,
-        Deletable  : true
-    }
-    entity HistoricalCurves as projection on T.HISTORICAL_CURVES;
-    @Capabilities : {
-        Insertable : true,
-        Updatable  : false,
-        Deletable  : true
-    }
-    entity ExposurePosition as projection on T.EXPOSURE_POSITION_FLOWS;
+    entity FileUpload        as projection on T.FILE_UPLOAD;
 
-    entity ForecastExpReport as projection on CV.FORECASTED_EXPOSURE_REPORT_OUT;
-    entity BestLayer as projection on CV.TOP_PNL_OVERLAP_ROLLING;
-    entity LayerPNL as projection on CV.LAYER_PNL_OVERLAP_ROLLING;
+    @Capabilities : {
+        Insertable : true,
+        Updatable  : false,
+        Deletable  : true
+    }
+    entity ActualPosting     as projection on T.ACTUAL_POSTING;
+
+    @Capabilities : {
+        Insertable : true,
+        Updatable  : false,
+        Deletable  : true
+    }
+    entity AlreadyHedged     as projection on T.ALREADY_HEDGED;
+
+    @Capabilities : {
+        Insertable : true,
+        Updatable  : false,
+        Deletable  : true
+    }
+    entity HistoricalCurves  as projection on T.HISTORICAL_CURVES;
+
+    @Capabilities : {
+        Insertable : true,
+        Updatable  : false,
+        Deletable  : true
+    }
+    entity ExposurePosition  as projection on T.EXPOSURE_POSITION_FLOWS;
+
+    @readonly
+    entity ForecastExpReport as
+        select from CV.FORECASTED_EXPOSURE_REPORT_OUT {
+            *,
+            3 as PropAmountCritical : Integer
+        };
+
+    @readonly
+    entity BestLayer         as projection on CV.TOP_PNL_OVERLAP_ROLLING;
+
+    @readonly
+    entity LayerPNL          as projection on CV.LAYER_PNL_OVERLAP_ROLLING;
 }

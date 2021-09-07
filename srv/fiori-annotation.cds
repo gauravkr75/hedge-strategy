@@ -317,9 +317,9 @@ annotate CatalogService.HedgeProfile with @(UI : {
             Label  : 'Set as Active'
         },
         {
-            Value       : DefaultText,
-            Criticality : DefaultCritical,
-            Title       : 'Status',
+            Value                 : DefaultText,
+            Criticality           : DefaultCritical,
+            Title                 : 'Status',
             ![@HTML5.CssDefaults] : {width : '10rem'}
         },
         {Value : PROFILE_NAME},
@@ -452,6 +452,10 @@ annotate CatalogService.ExposurePosition with @(UI : {
 });
 
 annotate CatalogService.ForecastExpReport with @(UI : {
+    HeaderInfo      : {
+        TypeName       : 'Forecast Exposure',
+        TypeNamePlural : 'Forecast Exposure(s)'
+    },
     SelectionFields : [
         HEDGE_YEAR,
         HEDGE_MONTH,
@@ -469,23 +473,37 @@ annotate CatalogService.ForecastExpReport with @(UI : {
         {Value : FORECAST},
         {Value : MIN_VALUE},
         {Value : MAX_VALUE},
-        {Value : BPL_PER},
-        {Value : FORECAST_COMP_PER},
-        {Value : MKT_VAL_RATIO_PER},
+        //{Value : BPL_PER},
+        //{Value : FORECAST_COMP_PER},
+        //{Value : MKT_VAL_RATIO_PER},
         {Value : PROPOSED_PERCENT},
-        {Value : PROPOSED_VALUE}
+        {
+            Value       : PROPOSED_VALUE,
+            Criticality : PropAmountCritical
+        }
     ]
 });
 
 annotate CatalogService.BestLayer with @(UI : {
+    HeaderInfo      : {
+        TypeName       : 'Best Performing Layer',
+        TypeNamePlural : 'Best Performing Layer(s)'
+    },
+    SelectionFields : [EXPOSURE_CURRENCY],
     LineItem        : [
         {Value : LAYER},
         {Value : LAYER_KEY},
+        {Value : EXPOSURE_CURRENCY},
+        {Value : TARGET_CURRENCY},
         {Value : PNL}
     ]
 });
 
 annotate CatalogService.LayerPNL with @(UI : {
+    HeaderInfo      : {
+        TypeName       : 'Layer PnL',
+        TypeNamePlural : 'Layer PnL(s)'
+    },
     SelectionFields : [
         LAYER,
         QUOTE_YEAR,

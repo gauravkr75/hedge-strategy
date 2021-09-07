@@ -75,6 +75,10 @@ BEGIN
                                 WHERE TENOR = :V_TENOR 
                                 AND EXPOSURE_CURRENCY = :V_EXP_CURR;
             
+            IF IS_EMPTY(:T_DATA) THEN
+                CONTINUE;
+            END IF;
+            
             T_PROCESS_DATA = SELECT *
                                 FROM :T_DATA
                                 WHERE DATE < :V_DATE;                                

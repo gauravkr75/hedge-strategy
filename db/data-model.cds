@@ -404,9 +404,11 @@ context CV {
     @cds.persistence.exists
     @cds.persistence.calcview
     entity![TOP_PNL_OVERLAP_ROLLING]{
-        key![LAYER]     : Integer      @title : 'Layer';
-        key![LAYER_KEY] : String(40)   @title : 'Layer Key';
-           ![PNL]       : Decimal(9, 5)@title : 'PNL';
+        key![LAYER]             : Integer      @title : 'Layer';
+        key![LAYER_KEY]         : String(40)   @title : 'Layer Key';
+           ![PNL]               : Decimal(9, 5)@title : 'PNL';
+           ![EXPOSURE_CURRENCY] : String(5)    @title : 'Exposure Currency';
+           ![TARGET_CURRENCY]   : String(5)    @title : 'Target Currency';
     }
 
     @cds.persistence.exists
