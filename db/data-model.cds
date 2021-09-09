@@ -232,7 +232,7 @@ context T {
         LAYER1_MAX_PER       : Integer   @title : 'Layer 1 Max %';
         LAYER2_MIN_PER       : Integer   @title : 'Layer 2 Min %';
         LAYER2_MAX_PER       : Integer   @title : 'Layer 2 Max %';
-        LAYER_KEY            : String(6) @title : 'Layer Key';
+        LAYER_KEY            : String(20) @title : 'Layer Key';
         START_MONTH          : Integer   @title : 'Starting Month';
         YEAR                 : Integer   @title : 'Starting Year';
         DEFAULT              : String(1) @title : 'Default';
@@ -430,7 +430,7 @@ context CV {
 
     @cds.persistence.exists
     @cds.persistence.calcview
-    entity![FORECASTED_EXPOSURE_REPORT_OUT]{
+    entity![FORECAST_EXPOSURE_OUT]{
         key![HEDGE_YEAR]           : Integer       @title : 'Hedge Year';
         key![HEDGE_MONTH]          : Integer       @title : 'Hedge Month';
         key![FORWARD_SETTLE_YEAR]  : Integer       @title : 'Forward Settlement Year';

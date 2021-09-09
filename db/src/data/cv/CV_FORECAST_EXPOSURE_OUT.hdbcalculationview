@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_FORECASTED_EXPOSURE_REPORT_OUT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
-<descriptions defaultDescription="CV_FORECASTED_EXPOSURE_REPORT_OUT"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_FORECAST_EXPOSURE_OUT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CV_FORECAST_EXPOSURE_OUT"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="TF_FORECASTED_EXPOSURE_REPORT_OUT" type="TABLE_FUNCTION">
-    <resourceUri>TF_FORECASTED_EXPOSURE_REPORT_OUT</resourceUri>
+  <DataSource id="TF_FORECAST_EXPOSURE_OUT" type="TABLE_FUNCTION">
+    <resourceUri>TF_FORECAST_EXPOSURE_OUT</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -57,7 +57,7 @@
         <formula>ROUND(&quot;PROPOSED_VALUE&quot;, 2)</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <input node="TF_FORECASTED_EXPOSURE_REPORT_OUT"/>
+    <input node="TF_FORECAST_EXPOSURE_OUT"/>
   </calculationView>
 </calculationViews>
 

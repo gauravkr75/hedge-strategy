@@ -140,7 +140,7 @@ service CatalogService {
 
     @readonly
     entity ForecastExpReport as
-        select from CV.FORECASTED_EXPOSURE_REPORT_OUT {
+        select from CV.FORECAST_EXPOSURE_OUT {
             *,
             3 as PropAmountCritical : Integer
         };

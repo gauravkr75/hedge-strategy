@@ -38,8 +38,18 @@ BEGIN
     DECLARE V_DAMPED NVARCHAR(100);
     DECLARE V_COUNT INTEGER;
     DECLARE V_RETURN BOOLEAN;
+    DECLARE V_FWD_HORIZON INTEGER;
 
     --DECLARE T_DATA "TT_AUTO_EXP_DATA";
+    IF :V_COUNT !=0 THEN
+        SELECT FORWARD_HORIZON
+            INTO V_FWD_HORIZON
+            FROM T_HEDGE_PROFILE
+            WHERE DEFAULT = 'X' 
+            AND "EXPOSURE_CURRENCY" = :IP_EXP_CURRENCY;
+    ELSE
+        V_FWD_HORIZON = 12;
+    END IF;
 
     T_EXP_AMOUNT =  SELECT TO_INTEGER(B.PERIOD) AS PERIOD,
                         B.PLANNING_YEAR,
@@ -82,7 +92,7 @@ BEGIN
     END IF;
 
     T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
-                                    12 AS INT_VALUE, 
+                                    :V_FWD_HORIZON AS INT_VALUE, 
                                     null AS DOUBLE_VALUE, 
                                     null AS STRING_VALUE
                             FROM "SY_DUMMY"

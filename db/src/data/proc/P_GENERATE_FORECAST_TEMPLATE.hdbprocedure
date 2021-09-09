@@ -112,7 +112,7 @@ BEGIN
         WHILE :I <= :IV_FORWARD_HORIZON DO
 
             IF :I = 1 AND :J =1 THEN
-                T_HEDGE_FWD_HOR = SELECT :V_CURRENT_DATE AS HEDGE_DATE, 
+                T_HEDGE_FWD_HOR = SELECT ADD_MONTHS(:V_CURRENT_DATE, :I) AS HEDGE_DATE, 
                                     CONCAT('L', TO_NVARCHAR(:J)) AS LAYER_SEQUENCE, TO_INTEGER(:J) AS LAYER_INDEX
                                     FROM "SY_DUMMY";
             ELSE
