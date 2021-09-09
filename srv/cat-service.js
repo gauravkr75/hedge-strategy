@@ -56,12 +56,91 @@ module.exports = async function () {
         }
     })
 
-    this.after('CREATE', HedgeProfile, async (data, req)=> {
-        console.log('Test');
+    this.after('CREATE', HedgeProfile, async (data, req) => {
+        try {
+            let input = {}, layerDurationChar = [], layerDuration = []
+            input.IV_PROFILE_ID = data.ID
+            input.IV_LAYER = data.LAYER_KEY.split('_').length
+            input.IV_EXP_CURRENCY = data.EXPOSURE_CURRENCY
+            input.IV_BACKWARD_HORIZON = data.BACKWARD_HORIZON
+            input.IV_FORWARD_HORIZON = data.FORWARD_HORIZON
+            input.IV_CHANGE_MODE = 'I'
+
+            layerDurationChar = data.LAYER_KEY.split('_')
+            layerDurationChar.forEach(element => {
+                layerDuration.push({ LAYER: parseInt(element) })
+            });
+
+            input.IT_LAYER_DURATION = layerDuration
+
+            const dbClass = require("sap-hdbext-promisfied")
+            let dbConn = new dbClass(await dbClass.createConnection(db.options.credentials))
+            const hdbext = require("@sap/hdbext")
+            const sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_GENERATE_FORECAST_TEMPLATE')
+            await dbConn.callProcedurePromisified(sp, input)
+
+        } catch (error) {
+            console.error(error)
+        }
     })
 
-    this.after('UPDATE', HedgeProfile, async (data, req)=> {
-        console.log('Test');
+    this.after('UPDATE', HedgeProfile, async (data, req) => {
+        let adjustTemplate = false
+
+        try {
+            Object.keys(data).forEach(element => {
+                if (element === 'LAYER_KEY' || element === 'EXPOSURE_CURRENCY' ||
+                    element === 'BACKWARD_HORIZON' || element === 'FORWARD_HORIZON') {
+                    adjustTemplate = true
+                }
+            });
+
+            if (adjustTemplate) {
+                const readProfileSql = `SELECT * FROM T_HEDGE_PROFILE WHERE ID = '` + data.ID + `'`
+
+                await cds.run(readProfileSql).then(async (profile) => {                    
+                    let input = {}, layerDurationChar = [], layerDuration = []
+
+                    input.IV_PROFILE_ID = data.ID
+                    input.IV_LAYER = profile[0].LAYER_KEY.split('_').length
+                    input.IV_EXP_CURRENCY = profile[0].EXPOSURE_CURRENCY
+                    input.IV_BACKWARD_HORIZON = profile[0].BACKWARD_HORIZON
+                    input.IV_FORWARD_HORIZON = profile[0].FORWARD_HORIZON
+                    input.IV_CHANGE_MODE = 'U'
+
+                    layerDurationChar = profile[0].LAYER_KEY.split('_')
+                    layerDurationChar.forEach(element => {
+                        layerDuration.push({ LAYER: parseInt(element) })
+                    });
+
+                    input.IT_LAYER_DURATION = layerDuration
+
+                    const dbClass = require("sap-hdbext-promisfied")
+                    let dbConn = new dbClass(await dbClass.createConnection(db.options.credentials))
+                    const hdbext = require("@sap/hdbext")
+                    const sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_GENERATE_FORECAST_TEMPLATE')
+                    await dbConn.callProcedurePromisified(sp, input)
+
+                }).catch(error => {
+                    console.error(error)
+                })
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    })
+
+    this.after('DELETE', HedgeProfile, async (data, req) => {
+        try {
+            const delForecastTempSql = `DELETE FROM T_FORECAST_REPORT_PROFILE WHERE PROFILE_ID = '` + req.data.ID + `'`
+            await cds.run(delForecastTempSql).then(data => {
+                console.log(`Forecast Template Deleted! Num of Records Affected: ${data}`)
+            }).catch(error => {
+                console.error(error)
+            })
+        } catch (error) {
+            console.error(error)
+        }
     })
 
     this.on('CREATE', FileUpload, async (req) => {
@@ -108,7 +187,7 @@ module.exports = async function () {
                         input.IT_HEDGED = uploadData
                         sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_UPSERT_ALREADY_HEDGED')
                         break
-                    
+
                     case 'EP':
                         input.IT_EXP_POSITION = uploadData
                         sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_UPSERT_EXPOSURE_POSITION')

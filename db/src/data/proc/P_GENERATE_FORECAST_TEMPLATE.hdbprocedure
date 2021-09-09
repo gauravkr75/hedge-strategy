@@ -107,10 +107,11 @@ BEGIN
 /*****************************************************************************************/        
 
     FOR J IN 1..:IV_LAYER DO 
-        I = 0;
-        WHILE :I != :IV_FORWARD_HORIZON DO
+        I = 1; --Here I is set to 1 because the record for current date has already been generated
+               --as part of backward horizon 
+        WHILE :I <= :IV_FORWARD_HORIZON DO
 
-            IF :I = 0 AND :J =1 THEN
+            IF :I = 1 AND :J =1 THEN
                 T_HEDGE_FWD_HOR = SELECT :V_CURRENT_DATE AS HEDGE_DATE, 
                                     CONCAT('L', TO_NVARCHAR(:J)) AS LAYER_SEQUENCE, TO_INTEGER(:J) AS LAYER_INDEX
                                     FROM "SY_DUMMY";
@@ -128,7 +129,7 @@ BEGIN
     END FOR;
 
     /* Forward settlement date determination 
-       Add the layer duration received in the input table converted to an array */
+       Add the layer duration received in the input table which was converted to an array */
     T_HEDGE_FWD_DATE = SELECT YEAR(HEDGE_DATE) AS HEDGE_YEAR, MONTH(HEDGE_DATE) AS HEDGE_MONTH, LAYER_SEQUENCE,
                         CASE 
                             WHEN LAYER_INDEX = 1 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[1] - 1)

@@ -6,8 +6,15 @@ BEGIN
    /*************************************
        Write your procedure logic
    *************************************/
+    DECLARE V_EXP_CURR NVARCHAR(5);
 
-    UPDATE T_HEDGE_PROFILE SET DEFAULT = '' WHERE DEFAULT = 'X';
+    SELECT EXPOSURE_CURRENCY INTO V_EXP_CURR
+        FROM T_HEDGE_PROFILE
+        WHERE ID = :IV_PROFILE_ID;
+
+    UPDATE T_HEDGE_PROFILE SET DEFAULT = '' 
+        WHERE DEFAULT = 'X' AND EXPOSURE_CURRENCY = :V_EXP_CURR;
+        
     UPDATE T_HEDGE_PROFILE SET DEFAULT = 'X' WHERE ID = :IV_PROFILE_ID;
 
 END

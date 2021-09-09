@@ -239,6 +239,9 @@ context T {
         WEIGHT_BPL           : Integer   @title : 'Weightage Best Performing Layer %';
         WEIGHT_MKT_VAL_RATIO : Integer   @title : 'Weightage Market Value Ratio %';
         WEIGHT_FORECAT_COMP  : Integer   @title : 'Weightage Forecast Comparison %';
+        EXPOSURE_CURRENCY    : String(5) @title : 'Exposure Currency';
+        BACKWARD_HORIZON     : Integer   @title : 'Backward Horizon';
+        FORWARD_HORIZON      : Integer   @title : 'Forward Horizon';
     }
 
     @cds.persistence.skip

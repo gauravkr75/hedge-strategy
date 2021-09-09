@@ -327,6 +327,10 @@ annotate CatalogService.HedgeProfile with @(UI : {
             ![@HTML5.CssDefaults] : {width : '15rem'}
         },
         {
+            Value                 : EXPOSURE_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '5rem'}
+        },
+        {
             Value                 : MODEL,
             ![@HTML5.CssDefaults] : {width : '10rem'}
         },
@@ -351,11 +355,11 @@ annotate CatalogService.HedgeProfile with @(UI : {
             ![@HTML5.CssDefaults] : {width : '8rem'}
         },
         {
-            Value                 : START_MONTH,
+            Value                 : BACKWARD_HORIZON,
             ![@HTML5.CssDefaults] : {width : '8rem'}
         },
         {
-            Value                 : YEAR,
+            Value                 : FORWARD_HORIZON,
             ![@HTML5.CssDefaults] : {width : '8rem'}
         }
     ],
@@ -392,19 +396,27 @@ annotate CatalogService.HedgeProfile with @(UI : {
 
     FieldGroup #Profile : {Data : [
         {Value : PROFILE_NAME},
+        {Value : EXPOSURE_CURRENCY},        
         {Value : MODEL},
         {Value : LAYER1_MIN_PER},
         {Value : LAYER1_MAX_PER},
         {Value : LAYER2_MIN_PER},
         {Value : LAYER2_MAX_PER},
         {Value : LAYER_KEY},
-        {Value : START_MONTH},
-        {Value : YEAR},
+        {Value : FORWARD_HORIZON},
+        {Value : BACKWARD_HORIZON},
+        //{Value : START_MONTH},
+        //{Value : YEAR},
         {Value : WEIGHT_BPL},
         {Value : WEIGHT_MKT_VAL_RATIO},
         {Value : WEIGHT_FORECAT_COMP}
+
+        
     ]}
-});
+}){
+    DEFAULT @(UI : {Hidden : true});
+    DefaultCritical @(UI : {Hidden : true});
+};
 
 
 annotate CatalogService.ActualPosting with @(UI : {

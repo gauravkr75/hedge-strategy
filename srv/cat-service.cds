@@ -48,20 +48,20 @@ service CatalogService {
                 LAYER2_MIN_PER                     @mandatory,
                 LAYER2_MAX_PER                     @mandatory,
                 LAYER_KEY                          @mandatory,
-                START_MONTH                        @(
-                mandatory,
-                assert.range : [
-                    1,
-                    12
-                ]
-            ),
-                YEAR                               @(
-                mandatory,
-                assert.range : [
-                    0001,
-                    9999
-                ]
-            ),
+            //     START_MONTH                        @(
+            //     mandatory,
+            //     assert.range : [
+            //         1,
+            //         12
+            //     ]
+            // ),
+            //     YEAR                               @(
+            //     mandatory,
+            //     assert.range : [
+            //         0001,
+            //         9999
+            //     ]
+            // ),
                 DEFAULT,
                 case
                     when
@@ -99,7 +99,10 @@ service CatalogService {
                     1,
                     100
                 ]
-            )
+            ),
+            EXPOSURE_CURRENCY @mandatory,
+            BACKWARD_HORIZON @mandatory,
+            FORWARD_HORIZON @mandatory
 
         } actions {
             action setDefault() returns String;
