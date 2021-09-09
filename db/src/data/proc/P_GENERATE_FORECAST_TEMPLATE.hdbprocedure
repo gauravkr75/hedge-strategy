@@ -1,0 +1,158 @@
+PROCEDURE "P_GENERATE_FORECAST_TEMPLATE"
+(
+    IN IV_PROFILE_ID NVARCHAR(36),
+    IN IV_LAYER INTEGER,
+    IN IV_EXP_CURRENCY NVARCHAR(05),
+    IN IV_BACKWARD_HORIZON INTEGER,
+    IN IV_FORWARD_HORIZON INTEGER,
+    IN IT_LAYER_DURATION "TT_LAYER_DURATION",
+    IN IV_CHANGE_MODE NVARCHAR(1)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic
+   *************************************/
+
+    DECLARE V_CURRENT_DATE DATE;
+    DECLARE I INTEGER;
+    DECLARE J INTEGER;
+    DECLARE V_LAYER_DUR1 INTEGER;
+    DECLARE V_LAYER_DUR2 INTEGER;
+    DECLARE V_LAYER_DUR3 INTEGER;
+    DECLARE V_LAYER_DUR4 INTEGER;
+    DECLARE V_LAYER_DUR5 INTEGER;
+    DECLARE V_LAYER_DUR6 INTEGER;
+
+    /* Declare Array containing the values of all layer durations for faster access */    
+    DECLARE ARRAY_LAYER INTEGER ARRAY;
+
+    /* Set the array with layer durations based on input layer number */
+    IF IV_LAYER = 1 THEN
+        ARRAY_LAYER = ARRAY(:IT_LAYER_DURATION.LAYER[1]);
+    ELSEIF IV_LAYER = 2 THEN
+        ARRAY_LAYER = ARRAY(:IT_LAYER_DURATION.LAYER[1], :IT_LAYER_DURATION.LAYER[2]);
+    ELSEIF IV_LAYER = 3 THEN
+        ARRAY_LAYER = ARRAY(:IT_LAYER_DURATION.LAYER[1], :IT_LAYER_DURATION.LAYER[2],
+                            :IT_LAYER_DURATION.LAYER[3]);
+    ELSEIF IV_LAYER = 4 THEN
+        ARRAY_LAYER = ARRAY(:IT_LAYER_DURATION.LAYER[1], :IT_LAYER_DURATION.LAYER[2],
+                            :IT_LAYER_DURATION.LAYER[3], :IT_LAYER_DURATION.LAYER[4]);
+    ELSEIF IV_LAYER = 5 THEN
+        ARRAY_LAYER = ARRAY(:IT_LAYER_DURATION.LAYER[1], :IT_LAYER_DURATION.LAYER[2],
+                            :IT_LAYER_DURATION.LAYER[3], :IT_LAYER_DURATION.LAYER[4],
+                            :IT_LAYER_DURATION.LAYER[5]);
+    ELSEIF IV_LAYER = 6 THEN
+        ARRAY_LAYER = ARRAY(:IT_LAYER_DURATION.LAYER[1], :IT_LAYER_DURATION.LAYER[2],
+                            :IT_LAYER_DURATION.LAYER[3], :IT_LAYER_DURATION.LAYER[4],
+                            :IT_LAYER_DURATION.LAYER[5], :IT_LAYER_DURATION.LAYER[6]);            
+    END IF;
+
+    IF :IV_CHANGE_MODE = 'U' THEN
+        DELETE FROM T_FORECAST_REPORT_PROFILE WHERE PROFILE_ID = :IV_PROFILE_ID;
+    END IF;
+
+    /* Get the current UTC Date, Based on current date the whole table will be generated */
+    SELECT CURRENT_UTCDATE INTO V_CURRENT_DATE FROM "SY_DUMMY";
+
+/*****************************************************************************************/
+/*                              Backward Horizon Calculation                             */
+/*****************************************************************************************/
+    FOR J IN 1..:IV_LAYER DO 
+        I = 0;
+        WHILE :I != :IV_BACKWARD_HORIZON DO
+
+            /* This IF statement is just to set the type of the table variable T_HEDGE_BACK for Union */
+            IF :I = 0 AND :J =1 THEN
+                /* In case of backward horizon subtract the month from current date for each iteration */
+                T_HEDGE_BACK = SELECT :V_CURRENT_DATE AS HEDGE_DATE, 
+                                    CONCAT('L', TO_NVARCHAR(:J)) AS LAYER_SEQUENCE, TO_INTEGER(:J) AS LAYER_INDEX
+                                    FROM "SY_DUMMY";
+            ELSE
+                T_HEDGE_BACK = SELECT * FROM :T_HEDGE_BACK
+                                    UNION
+                                SELECT ADD_MONTHS(:V_CURRENT_DATE, :I * -1 ) AS HEDGE_DATE, 
+                                    CONCAT('L', TO_NVARCHAR(:J)) AS LAYER_SEQUENCE, :J AS LAYER_INDEX
+                                    FROM "SY_DUMMY";
+            END IF;
+
+            I = :I + 1;
+        END WHILE;
+
+    END FOR;
+
+    /* Forward settlement date determination 
+       Add the layer duration received in the input table converted to an array */
+    T_HEDGE_FWD = SELECT YEAR(HEDGE_DATE) AS HEDGE_YEAR, MONTH(HEDGE_DATE) AS HEDGE_MONTH, LAYER_SEQUENCE,
+                        CASE 
+                            WHEN LAYER_INDEX = 1 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[1] - 1)
+                            WHEN LAYER_INDEX = 2 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[2] - 1) 
+                            WHEN LAYER_INDEX = 3 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[3] - 1) 
+                            WHEN LAYER_INDEX = 4 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[4] - 1) 
+                            WHEN LAYER_INDEX = 5 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[5] - 1) 
+                            WHEN LAYER_INDEX = 6 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[6] - 1)  
+                        END AS FWD_SETTLE_DATE
+        FROM :T_HEDGE_BACK;
+    
+    /* Forward settlement year and month determination from forward settlement date
+       This completes the backward horizon data generation */
+    T_TEMPLATE_BACK = SELECT HEDGE_YEAR, HEDGE_MONTH, LAYER_SEQUENCE,
+                         YEAR(FWD_SETTLE_DATE) AS FORWARD_SETTLE_YEAR, MONTH(FWD_SETTLE_DATE) AS FORWARD_SETTLE_MONTH
+        FROM :T_HEDGE_FWD;
+
+/*****************************************************************************************/
+/*                              Forward Horizon Calculation                             */
+/*****************************************************************************************/        
+
+    FOR J IN 1..:IV_LAYER DO 
+        I = 0;
+        WHILE :I != :IV_FORWARD_HORIZON DO
+
+            IF :I = 0 AND :J =1 THEN
+                T_HEDGE_FWD_HOR = SELECT :V_CURRENT_DATE AS HEDGE_DATE, 
+                                    CONCAT('L', TO_NVARCHAR(:J)) AS LAYER_SEQUENCE, TO_INTEGER(:J) AS LAYER_INDEX
+                                    FROM "SY_DUMMY";
+            ELSE
+                T_HEDGE_FWD_HOR = SELECT * FROM :T_HEDGE_FWD_HOR
+                                    UNION
+                                SELECT ADD_MONTHS(:V_CURRENT_DATE, :I) AS HEDGE_DATE, 
+                                    CONCAT('L', TO_NVARCHAR(:J)) AS LAYER_SEQUENCE, :J AS LAYER_INDEX
+                                    FROM "SY_DUMMY";
+            END IF;
+
+            I = :I + 1;
+        END WHILE;
+
+    END FOR;
+
+    /* Forward settlement date determination 
+       Add the layer duration received in the input table converted to an array */
+    T_HEDGE_FWD_DATE = SELECT YEAR(HEDGE_DATE) AS HEDGE_YEAR, MONTH(HEDGE_DATE) AS HEDGE_MONTH, LAYER_SEQUENCE,
+                        CASE 
+                            WHEN LAYER_INDEX = 1 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[1] - 1)
+                            WHEN LAYER_INDEX = 2 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[2] - 1) 
+                            WHEN LAYER_INDEX = 3 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[3] - 1) 
+                            WHEN LAYER_INDEX = 4 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[4] - 1) 
+                            WHEN LAYER_INDEX = 5 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[5] - 1) 
+                            WHEN LAYER_INDEX = 6 THEN ADD_MONTHS(HEDGE_DATE, :ARRAY_LAYER[6] - 1)  
+                        END AS FWD_SETTLE_DATE
+        FROM :T_HEDGE_FWD_HOR;
+    
+    /* Forward settlement year and month determination from forward settlement date
+       This completes the forward horizon data generation */
+    T_TEMPLATE_FWD = SELECT HEDGE_YEAR, HEDGE_MONTH, LAYER_SEQUENCE,
+                         YEAR(FWD_SETTLE_DATE) AS FORWARD_SETTLE_YEAR, MONTH(FWD_SETTLE_DATE) AS FORWARD_SETTLE_MONTH
+        FROM :T_HEDGE_FWD_DATE;
+
+    INSERT INTO "T_FORECAST_REPORT_PROFILE"
+    SELECT SYSUUID AS ID, :IV_PROFILE_ID AS PROFILE_ID, :IV_EXP_CURRENCY AS EXPOSURE_CURRENCY,
+            HEDGE_YEAR, HEDGE_MONTH, LAYER_SEQUENCE, FORWARD_SETTLE_YEAR, FORWARD_SETTLE_MONTH
+            FROM :T_TEMPLATE_BACK
+        UNION
+    SELECT SYSUUID AS ID, :IV_PROFILE_ID AS PROFILE_ID, :IV_EXP_CURRENCY AS EXPOSURE_CURRENCY,
+            HEDGE_YEAR, HEDGE_MONTH, LAYER_SEQUENCE, FORWARD_SETTLE_YEAR, FORWARD_SETTLE_MONTH
+            FROM :T_TEMPLATE_FWD;
+
+END

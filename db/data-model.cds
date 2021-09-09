@@ -269,6 +269,17 @@ context T {
             TARGET_CURRENCY   : String(05)    @title : 'Target Currency';
             HEDGED_AMOUNT     : Decimal(16, 5)@title : 'Hedged Amount';
     }
+
+    entity FORECAST_REPORT_PROFILE {
+        key ID                   : String(36)@title : 'ID';
+            PROFILE_ID           : String(36)@title : 'Hedge Profile ID';
+            EXPOSURE_CURRENCY    : String(05)@title : 'Exposure Currency';
+            HEDGE_YEAR           : Integer   @title : 'Hedge Year';
+            HEDGE_MONTH          : Integer   @title : 'Hedge Month';
+            LAYER_SEQUENCE       : String(2) @title : 'Layer Sequence';
+            FORWARD_SETTLE_YEAR  : Integer   @title : 'Forward Settlement Year';
+            FORWARD_SETTLE_MONTH : Integer   @title : 'Forward Settlement Month';
+    }
 }
 
 /* Context CV to be used to define Calculation Views */

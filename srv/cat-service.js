@@ -56,6 +56,14 @@ module.exports = async function () {
         }
     })
 
+    this.after('CREATE', HedgeProfile, async (data, req)=> {
+        console.log('Test');
+    })
+
+    this.after('UPDATE', HedgeProfile, async (data, req)=> {
+        console.log('Test');
+    })
+
     this.on('CREATE', FileUpload, async (req) => {
 
         const xlsx = require('xlsx')
