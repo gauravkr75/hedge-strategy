@@ -105,7 +105,7 @@ service CatalogService {
             FORWARD_HORIZON @mandatory
 
         } actions {
-            action setDefault() returns String;
+            action setDefault() returns many HedgeProfile;
         }
 
     entity FileUpload        as projection on T.FILE_UPLOAD;

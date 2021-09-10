@@ -155,9 +155,12 @@
                                 "useDateRange": true
                             }
                         },
+                        "dataLoadSettings": {
+                            "loadDataOnAppLaunch": "always"
+                        },
                         "tableSettings": {
-							"type": "GridTable"
-						}
+                            "type": "GridTable"
+                        }
                     }
                 },
                 "pages": {

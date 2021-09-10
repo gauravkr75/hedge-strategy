@@ -305,14 +305,24 @@ annotate CatalogService.ForecastReport with @(UI : {LineItem : [
 ]});
 
 annotate CatalogService.HedgeProfile with @(UI : {
+    //Adding action on Object Page
+    Identification      : [{
+        $Type             : 'UI.DataFieldForAction',
+        Label             : 'Set as Active',
+        Action            : 'CatalogService.EntityContainer/HedgeProfile_setDefault',
+        ![@UI.Importance] : #High
+    }],
     PresentationVariant : {SortOrder : [{
         Property   : DEFAULT,
         Descending : true
     }]},
-    SelectionFields     : [PROFILE_NAME],
+    SelectionFields     : [
+        PROFILE_NAME,
+        EXPOSURE_CURRENCY
+    ],
     LineItem            : [
         {
-            $Type  : 'UI.DataFieldForAction',
+            $Type  : 'UI.DataFieldForAction', //Adding action on List Page
             Action : 'CatalogService.EntityContainer/HedgeProfile_setDefault',
             Label  : 'Set as Active'
         },
@@ -396,7 +406,7 @@ annotate CatalogService.HedgeProfile with @(UI : {
 
     FieldGroup #Profile : {Data : [
         {Value : PROFILE_NAME},
-        {Value : EXPOSURE_CURRENCY},        
+        {Value : EXPOSURE_CURRENCY},
         {Value : MODEL},
         {Value : LAYER1_MIN_PER},
         {Value : LAYER1_MAX_PER},
@@ -411,10 +421,10 @@ annotate CatalogService.HedgeProfile with @(UI : {
         {Value : WEIGHT_MKT_VAL_RATIO},
         {Value : WEIGHT_FORECAT_COMP}
 
-        
+
     ]}
-}){
-    DEFAULT @(UI : {Hidden : true});
+}) {
+    DEFAULT         @(UI : {Hidden : true});
     DefaultCritical @(UI : {Hidden : true});
 };
 

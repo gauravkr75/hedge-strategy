@@ -38,7 +38,7 @@ module.exports = async function () {
     this.on('setDefault', HedgeProfile, async (req) => {
         try {
 
-            let input = {}
+            let input = {}, output = {}
             input.IV_PROFILE_ID = req.params[0]
 
             const dbClass = require("sap-hdbext-promisfied")
@@ -46,8 +46,10 @@ module.exports = async function () {
             const hdbext = require("@sap/hdbext")
             const sp = await dbConn.loadProcedurePromisified(hdbext, null, 'P_SET_HEDGE_PROFILE_ACTIVE')
             await dbConn.callProcedurePromisified(sp, input)
-
-            return 'Profile Activated'
+            const profileQ = SELECT.from(HedgeProfile)//.where({ ID: req.params[0] })
+            const profileData = await profileQ
+            output = profileData
+            return output
 
         } catch (error) {
             console.error(error)
@@ -98,7 +100,7 @@ module.exports = async function () {
             if (adjustTemplate) {
                 const readProfileSql = `SELECT * FROM T_HEDGE_PROFILE WHERE ID = '` + data.ID + `'`
 
-                await cds.run(readProfileSql).then(async (profile) => {                    
+                await cds.run(readProfileSql).then(async (profile) => {
                     let input = {}, layerDurationChar = [], layerDuration = []
 
                     input.IV_PROFILE_ID = data.ID
