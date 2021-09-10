@@ -239,9 +239,9 @@
       <viewAttribute id="PARENT_LAYER"/>
       <viewAttribute id="PARENT_LAYER_KEY"/>
       <viewAttribute id="END_MONTH_DESC"/>
-      <viewAttribute id="START_MONTH_DESC"/>
       <viewAttribute id="EXPOSURE_CURRENCY"/>
       <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="START_MONTH_DESC"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="BLOCK_KEY_START_DESC" datatype="NVARCHAR" length="13" expressionLanguage="SQL">
@@ -379,7 +379,9 @@
   
     <attribute id="EXPOSURE_CURRENCY" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EXPOSURE_CURRENCY"/>
+  
       <keyMapping columnObjectName="Join_3_2" columnName="EXPOSURE_CURRENCY"/>
+  
     </attribute>
     <attribute id="TARGET_CURRENCY" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TARGET_CURRENCY"/>
@@ -391,7 +393,7 @@
       <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="50">
         <formula>CONCAT(CONCAT(&quot;BLOCK_KEY_START_DESC&quot;, '-'), &quot;BLOCK_KEY_END_DESC&quot;)</formula>
       </keyCalculation>
-      </calculatedAttribute>
+    </calculatedAttribute>
   </calculatedAttributes>
   <baseMeasures/>
   <calculatedMeasures/>

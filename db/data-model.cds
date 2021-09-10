@@ -448,6 +448,6 @@ context CV {
            ![PROPOSED_PERCENT]     : Decimal(34, 2)@title : 'Proposed %';
            ![PROPOSED_VALUE]       : Decimal(34, 2)@title : 'Proposed Value';
            ![HEDGED_AMOUNT]        : Decimal(34, 2)@title : 'Hedged Amount';
-           ![DIFF_VALUE]           : Decimal(34, 2)@title : 'Difference';
+           ![DIFF_VALUE]           : Decimal(34, 2)@title : 'Deficit';
     }
 }
