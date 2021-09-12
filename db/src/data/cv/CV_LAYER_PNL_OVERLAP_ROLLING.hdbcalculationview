@@ -35,8 +35,8 @@
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="END_MONTH_TENOR" datatype="INTEGER" expressionLanguage="SQL">
-        <formula>CASE WHEN &quot;START_MONTH&quot; = &quot;END_MONTH&quot; then &quot;END_MONTH&quot; + 1
-	 ELSE &quot;END_MONTH&quot; 
+        <formula>CASE WHEN &quot;START_MONTH&quot; = &quot;END_MONTH&quot; then 1
+	 ELSE &quot;DURATION&quot; 
  END</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
@@ -101,6 +101,7 @@
       <viewAttribute id="EXPOSURE_CURRENCY"/>
       <viewAttribute id="TARGET_CURRENCY"/>
       <viewAttribute id="LAYER_SEQUENCE"/>
+      <viewAttribute hidden="true" id="JOIN$END_MONTH_TENOR$TENOR"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="SPOT_YEAR" datatype="INTEGER" expressionLanguage="SQL">
@@ -125,6 +126,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="START_MONTH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="END_MONTH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LAYER_SEQUENCE" source="LAYER_SEQUENCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$END_MONTH_TENOR$TENOR" source="END_MONTH_TENOR"/>
     </input>
     <input node="Projection_2">
       <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
@@ -132,10 +134,10 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="MONTH"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="TENOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$END_MONTH_TENOR$TENOR" source="TENOR"/>
     </input>
     <joinAttribute name="START_MONTH"/>
-    <joinAttribute name="END_MONTH"/>
+    <joinAttribute name="JOIN$END_MONTH_TENOR$TENOR"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_N" joinType="leftOuter">
     <viewAttributes>
