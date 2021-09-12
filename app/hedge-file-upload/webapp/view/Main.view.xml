@@ -27,11 +27,11 @@
 				expandable="false">
 				<items>
 					<IconTabFilter
-						key="all"
+						key="ActualPosting"
 						text="{i18n>actualPosting}">
                             <smartFilterBar:SmartFilterBar id="smartFilterBarActualPosting" entitySet="ActualPosting" persistencyKey="SmartFilter_Explored">
                             </smartFilterBar:SmartFilterBar>
-                            <smartTable:SmartTable entitySet="ActualPosting" smartFilterId="smartFilterBarActualPosting"
+                            <smartTable:SmartTable id="smartTableActualPosting" entitySet="ActualPosting" smartFilterId="smartFilterBarActualPosting"
                                 tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
                                 useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                                 showRowCount="true" enableAutoBinding="true"
@@ -41,11 +41,11 @@
                             </smartTable:SmartTable>
                     </IconTabFilter>
 					<IconTabFilter
-						key="inStock"
+						key="AlreadyHedged"
 						text="{i18n>alreadyHedged}">
                         <smartFilterBar:SmartFilterBar id="smartFilterBarAlreadyHedged" entitySet="AlreadyHedged" persistencyKey="SmartFilter_Explored">
                             </smartFilterBar:SmartFilterBar>
-                        <smartTable:SmartTable entitySet="AlreadyHedged" smartFilterId="smartFilterBarAlreadyHedged"
+                        <smartTable:SmartTable id="smartTableAlreadyHedged" entitySet="AlreadyHedged" smartFilterId="smartFilterBarAlreadyHedged"
                             tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
                             useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                             showRowCount="true" enableAutoBinding="true"
@@ -55,11 +55,11 @@
                         </smartTable:SmartTable>
                     </IconTabFilter>
                     <IconTabFilter
-						key="shortage"
+						key="HistoricalCurves"
 						text="{i18n>historicalCurves}">
                         <smartFilterBar:SmartFilterBar id="smartFilterBarHistoricalCurves" entitySet="HistoricalCurves" persistencyKey="SmartFilter_Explored">
                         </smartFilterBar:SmartFilterBar>
-                        <smartTable:SmartTable entitySet="HistoricalCurves" smartFilterId="smartFilterBarHistoricalCurves"
+                        <smartTable:SmartTable id="smartTableHistoricalCurves" entitySet="HistoricalCurves" smartFilterId="smartFilterBarHistoricalCurves"
                             tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
                             useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                             showRowCount="true" enableAutoBinding="true"
@@ -69,11 +69,11 @@
                         </smartTable:SmartTable>
                     </IconTabFilter>
 					<IconTabFilter
-						key="shortage"
+						key="ExposurePosition"
 						text="{i18n>exposurePosition}">
                         <smartFilterBar:SmartFilterBar id="smartFilterBarExposurePosition" entitySet="ExposurePosition" persistencyKey="SmartFilter_Explored">
                         </smartFilterBar:SmartFilterBar>
-                        <smartTable:SmartTable entitySet="ExposurePosition" smartFilterId="smartFilterBarExposurePosition"
+                        <smartTable:SmartTable id="smartTableExposurePosition" entitySet="ExposurePosition" smartFilterId="smartFilterBarExposurePosition"
                             tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
                             useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
                             showRowCount="true" enableAutoBinding="true"

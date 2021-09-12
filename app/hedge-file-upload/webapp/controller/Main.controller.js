@@ -40,6 +40,14 @@ sap.ui.define([
                 });
                 this.getView().setModel(oViewModel, "viewModel");
             },
+
+            onQuickFilter: function(oEvent) {
+                var oIconTab = oEvent.getSource(),
+                    sSelectedKey = oIconTab.getSelectedKey(),
+                    oSmartTable = this.getView().byId('smartTable' + sSelectedKey);
+                oSmartTable.rebindTable();
+            },
+
             onFileUploadPress: function (oEvent) {
                 if (!this.oSubmitDialog) {
                     this.oSubmitDialog = new Dialog({
