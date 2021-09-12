@@ -38,6 +38,12 @@
                                 demandPopin="true" visibleRowCount="100" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
                                 showFullScreenButton="true">
                                 <table:Table visibleRowCount="13" />
+                                <smartTable:customToolbar>
+                                <OverflowToolbar design="Transparent">
+                                    <ToolbarSpacer/>
+                                    <Button text="Delete" type="Transparent" press=".onDeleteHedge" />
+                                </OverflowToolbar>
+                            </smartTable:customToolbar>
                             </smartTable:SmartTable>
                     </IconTabFilter>
 					<IconTabFilter
@@ -52,6 +58,12 @@
                             demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
                             showFullScreenButton="true">
                             <table:Table visibleRowCount="13" />
+                            <smartTable:customToolbar>
+                                <OverflowToolbar design="Transparent">
+                                    <ToolbarSpacer/>
+                                    <Button text="Delete" type="Transparent" press=".onDeleteHedge" />
+                                </OverflowToolbar>
+                            </smartTable:customToolbar>
                         </smartTable:SmartTable>
                     </IconTabFilter>
                     <IconTabFilter
@@ -66,6 +78,12 @@
                             demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
                             showFullScreenButton="true">
                             <table:Table visibleRowCount="13" />
+                            <smartTable:customToolbar>
+                                <OverflowToolbar design="Transparent">
+                                    <ToolbarSpacer/>
+                                    <Button text="Delete" type="Transparent" press=".onDeleteHedge" />
+                                </OverflowToolbar>
+                            </smartTable:customToolbar>
                         </smartTable:SmartTable>
                     </IconTabFilter>
 					<IconTabFilter
@@ -80,6 +98,13 @@
                             demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
                             showFullScreenButton="true">
                             <table:Table visibleRowCount="13" />
+                            <smartTable:customToolbar>
+                                <OverflowToolbar design="Transparent">
+                                    <ToolbarSpacer/>
+                                    <!-- <OverflowToolbarButton icon="sap-icon://delete" tooltip="Delete" text="Delete" press=".onDeleteHedge"/> -->
+                                    <Button text="Delete" type="Transparent" press=".onDeleteHedge" />
+                                </OverflowToolbar>
+                            </smartTable:customToolbar>
                         </smartTable:SmartTable>
                     </IconTabFilter>
 				</items>

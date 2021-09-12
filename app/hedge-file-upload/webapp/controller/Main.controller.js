@@ -41,11 +41,11 @@ sap.ui.define([
                 this.getView().setModel(oViewModel, "viewModel");
             },
 
-            onQuickFilter: function(oEvent) {
+            onQuickFilter: function (oEvent) {
                 var oIconTab = oEvent.getSource(),
-                    sSelectedKey = oIconTab.getSelectedKey(),
-                    oSmartTable = this.getView().byId('smartTable' + sSelectedKey);
-                oSmartTable.rebindTable();
+                    sSelectedKey = oIconTab.getSelectedKey();
+                this.oSmartTable = this.getView().byId('smartTable' + sSelectedKey);
+                this.oSmartTable.rebindTable();
             },
 
             onFileUploadPress: function (oEvent) {
@@ -102,7 +102,7 @@ sap.ui.define([
                 this.oSubmitDialog.open();
             },
 
-            clearModelData: function() {
+            clearModelData: function () {
                 var oViewModel = this.getView().getModel('viewModel');
                 oViewModel.setProperty('/uploadScenerio', 'AP');
                 oViewModel.setProperty('/fileData', { data: '', file: '', fileName: '' });
@@ -137,6 +137,7 @@ sap.ui.define([
                     success: function (data) {
                         console.log(data);
                         MessageToast.show(data.MESSAGE);
+                        this.oSmartTable.rebindTable();
                     }.bind(this),
                     error: function (error) {
                         console.error(error)
@@ -145,6 +146,38 @@ sap.ui.define([
                 }
                 );
                 this.oSubmitDialog.close();
+            },
+
+            onDeleteHedge: function (oEvent) {
+                var oGridTable = oEvent.getSource().getParent().getParent().getTable(),
+                    aSelectedIndices = oGridTable.getSelectedIndices(),
+                    oModel = this.getView().getModel(),
+                    oBindingContext = "",
+                    sPath = "";
+                if (aSelectedIndices.length) {
+                    oModel.setDeferredGroups(["deleteGroup"]);
+                    for(var i=0; i < aSelectedIndices.length; i++){
+                    // aSelectedIndices.forEach(indice => {
+                        oBindingContext = oGridTable.getContextByIndex(aSelectedIndices[i]);
+                        if(oBindingContext) {
+                            sPath = oBindingContext.getPath();
+                            oModel.remove(sPath, {
+                                groupId: "deleteGroup",
+                                success: odata => {
+                                    MessageToast.show('Data uploaded sucessfully');
+                                },
+                                error: error => {
+
+                                }
+                            });
+                        } else {
+                            break;
+                        }
+                    };
+                    oModel.submitChanges({
+                        groupId: "deleteGroup"
+                    });
+                }
             }
         });
     });
