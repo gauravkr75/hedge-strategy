@@ -4,9 +4,6 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="T_LAYER_OVERLAP_ROLLING_COMBO">
-    <resourceUri>T_LAYER_OVERLAP_ROLLING_COMBO</resourceUri>
-  </DataSource>
   <DataSource id="CV_SPOT_RATES_HISTORICAL_CURVES">
     <resourceUri>CV_SPOT_RATES_HISTORICAL_CURVES</resourceUri>
   </DataSource>
@@ -19,6 +16,9 @@
   <DataSource id="Projection_5$$$$TF_MONTH_INFO$$" type="TABLE_FUNCTION">
     <resourceUri>TF_MONTH_INFO</resourceUri>
   </DataSource>
+  <DataSource id="T_LAYER_OVERLAP_ROLLING_COMBO">
+    <resourceUri>T_LAYER_OVERLAP_ROLLING_COMBO</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
@@ -30,9 +30,35 @@
       <viewAttribute id="START_MONTH"/>
       <viewAttribute id="END_MONTH"/>
       <viewAttribute id="DURATION"/>
+    
+      <viewAttribute id="LAYER_SEQUENCE"/>
     </viewAttributes>
-    <calculatedViewAttributes/>
-    <input node="T_LAYER_OVERLAP_ROLLING_COMBO"/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="END_MONTH_TENOR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;START_MONTH&quot; = &quot;END_MONTH&quot; then &quot;END_MONTH&quot; + 1
+	 ELSE &quot;END_MONTH&quot; 
+ END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Projection_7"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY"/>
+      <viewAttribute id="BLOCK_KEY"/>
+      <viewAttribute id="RECORD_KEY"/>
+      <viewAttribute id="START_MONTH"/>
+      <viewAttribute id="END_MONTH"/>
+      <viewAttribute id="DURATION"/>
+      <viewAttribute id="SEQUENCE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="LAYER_SEQUENCE" datatype="NVARCHAR" length="3" expressionLanguage="SQL">
+        <formula>CONCAT('L', &quot;SEQUENCE&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Rank_1"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
     <viewAttributes>
@@ -74,11 +100,19 @@
     
       <viewAttribute id="EXPOSURE_CURRENCY"/>
       <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="LAYER_SEQUENCE"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="SPOT_YEAR" datatype="INTEGER" expressionLanguage="SQL">
         <formula>CASE 
-	 WHEN &quot;START_MONTH&quot; &gt; &quot;END_MONTH&quot; then &quot;YEAR&quot; + 1 
+	 WHEN BLOCK_KEY != '01_12' then &quot;YEAR&quot; + 1 
+	 ELSE &quot;YEAR&quot; 
+ END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="QUOTE_YEAR" datatype="INTEGER" length="" expressionLanguage="SQL">
+        <formula>CASE 
+	 WHEN &quot;BLOCK_KEY&quot; != '01_12' AND &quot;LAYER_SEQUENCE&quot; != 'L1' AND &quot;START_MONTH&quot; &lt;= &quot;END_MONTH&quot; then &quot;YEAR&quot; + 1 
 	 ELSE &quot;YEAR&quot; 
  END</formula>
       </calculatedViewAttribute>
@@ -90,6 +124,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_KEY" source="RECORD_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="START_MONTH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="END_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER_SEQUENCE" source="LAYER_SEQUENCE"/>
     </input>
     <input node="Projection_2">
       <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
@@ -117,6 +152,8 @@
     
       <viewAttribute id="EXPOSURE_CURRENCY"/>
       <viewAttribute id="TARGET_CURRENCY"/>
+    
+      <viewAttribute id="LAYER_SEQUENCE"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="PNL" datatype="DECIMAL" length="9" scale="5" expressionLanguage="SQL">
@@ -139,12 +176,14 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_KEY" source="RECORD_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH" source="START_MONTH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH" source="END_MONTH"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QUOTE_YEAR" source="YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUOTE_YEAR" source="QUOTE_YEAR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QUOTE_PRICE" source="QUOTE_PRICE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SPOT_YEAR" source="SPOT_YEAR"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER_SEQUENCE" source="LAYER_SEQUENCE"/>
     </input>
     <input node="Projection_3">
       <mapping xsi:type="Calculation:AttributeMapping" target="SPOT_PRICE" source="AVG_SPOT_RATE"/>
@@ -180,6 +219,42 @@
     <calculatedViewAttributes/>
     <input node="Projection_5$$$$TF_MONTH_INFO$$"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY"/>
+      <viewAttribute id="BLOCK_KEY"/>
+      <viewAttribute id="RECORD_KEY"/>
+      <viewAttribute id="START_MONTH"/>
+      <viewAttribute id="END_MONTH"/>
+      <viewAttribute id="DURATION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="T_LAYER_OVERLAP_ROLLING_COMBO"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1">
+    <viewAttributes>
+      <viewAttribute id="LAYER"/>
+      <viewAttribute id="LAYER_KEY"/>
+      <viewAttribute id="BLOCK_KEY"/>
+      <viewAttribute id="RECORD_KEY"/>
+      <viewAttribute id="START_MONTH"/>
+      <viewAttribute id="END_MONTH"/>
+      <viewAttribute id="DURATION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_6"/>
+    <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
+      <partitionViewAttributeName id="LAYER"/>
+      <partitionViewAttributeName id="LAYER_KEY"/>
+      <partitionViewAttributeName id="BLOCK_KEY"/>
+      <order byViewAttributeName="DURATION" direction="DESC"/>
+      <rankThreshold>
+        <value>6</value>
+      </rankThreshold>
+      <rankViewAttributeName>SEQUENCE</rankViewAttributeName>
+    </rankingFilter>
+  </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_3_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_3" multiJoinCentralTable="Join_2" multiJoinOrder="Outside In">
     <viewAttributes>
       <viewAttribute id="LAYER"/>
@@ -198,6 +273,7 @@
       <viewAttribute id="END_MONTH_DESC"/>
       <viewAttribute id="EXPOSURE_CURRENCY"/>
       <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="LAYER_SEQUENCE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Join_2">
@@ -216,6 +292,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_LAYER_KEY" source="PARENT_LAYER_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER_SEQUENCE" source="LAYER_SEQUENCE"/>
     </input>
     <input node="Projection_5">
       <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH_DESC" source="MONTH_DESC"/>
@@ -242,6 +319,7 @@
       <viewAttribute id="EXPOSURE_CURRENCY"/>
       <viewAttribute id="TARGET_CURRENCY"/>
       <viewAttribute id="START_MONTH_DESC"/>
+      <viewAttribute id="LAYER_SEQUENCE"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="BLOCK_KEY_START_DESC" datatype="NVARCHAR" length="13" expressionLanguage="SQL">
@@ -294,6 +372,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="END_MONTH_DESC" source="END_MONTH_DESC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="EXPOSURE_CURRENCY" source="EXPOSURE_CURRENCY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAYER_SEQUENCE" source="LAYER_SEQUENCE"/>
     </input>
     <input node="Projection_4">
       <mapping xsi:type="Calculation:AttributeMapping" target="START_MONTH_DESC" source="MONTH_DESC"/>
@@ -387,13 +466,18 @@
       <descriptions defaultDescription="TARGET_CURRENCY"/>
       <keyMapping columnObjectName="Join_3_2" columnName="TARGET_CURRENCY"/>
     </attribute>
+  
+    <attribute id="LAYER_SEQUENCE" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAYER_SEQUENCE"/>
+      <keyMapping columnObjectName="Join_3_2" columnName="LAYER_SEQUENCE"/>
+    </attribute>
   </attributes>
   <calculatedAttributes>
     <calculatedAttribute id="BLOCK_KEY_DESC" order="16" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="50">
         <formula>CONCAT(CONCAT(&quot;BLOCK_KEY_START_DESC&quot;, '-'), &quot;BLOCK_KEY_END_DESC&quot;)</formula>
       </keyCalculation>
-    </calculatedAttribute>
+      </calculatedAttribute>
   </calculatedAttributes>
   <baseMeasures/>
   <calculatedMeasures/>
@@ -401,27 +485,32 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="520" y="112"/>
+      <upperLeftCorner x="346.1824300054133" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="711"/>
+      <upperLeftCorner x="130.33902747210396" y="691.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="291.3043201192321" y="816.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
+  
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="711"/>
+      <upperLeftCorner x="340.3390274721039" y="691.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="376" y="551"/>
+      <upperLeftCorner x="429.2955164290777" y="531.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118" y="551"/>
+      <upperLeftCorner x="157.00569413877065" y="531.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -433,7 +522,7 @@
       <rectangleSize width="179"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="145" y="391"/>
+      <upperLeftCorner x="346.1824300054133" y="371.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -445,17 +534,25 @@
       <rectangleSize width="179"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="470" y="391"/>
+      <upperLeftCorner x="561.3573512260377" y="371.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="680" y="391"/>
+      <upperLeftCorner x="91.99999999999994" y="371.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="291.30432011923216" y="1026.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="291.30432011923216" y="921.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
   
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="520" y="217"/>
+      <upperLeftCorner x="346.1824300054133" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_3">

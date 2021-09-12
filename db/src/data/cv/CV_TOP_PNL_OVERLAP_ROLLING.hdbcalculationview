@@ -62,7 +62,9 @@
   
     <attribute id="EXPOSURE_CURRENCY" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EXPOSURE_CURRENCY"/>
+  
       <keyMapping columnObjectName="Rank_1" columnName="EXPOSURE_CURRENCY"/>
+  
     </attribute>
     <attribute id="TARGET_CURRENCY" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TARGET_CURRENCY"/>

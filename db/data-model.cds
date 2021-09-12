@@ -232,7 +232,7 @@ context T {
         LAYER1_MAX_PER       : Integer   @title : 'Layer 1 Max %';
         LAYER2_MIN_PER       : Integer   @title : 'Layer 2 Min %';
         LAYER2_MAX_PER       : Integer   @title : 'Layer 2 Max %';
-        LAYER_KEY            : String(20) @title : 'Layer Key';
+        LAYER_KEY            : String(20)@title : 'Layer Key';
         START_MONTH          : Integer   @title : 'Starting Month';
         YEAR                 : Integer   @title : 'Starting Year';
         DEFAULT              : String(1) @title : 'Default';
@@ -398,7 +398,7 @@ context CV {
     entity![LAYER_PNL_OVERLAP_ROLLING]{
         key![LAYER]                : Integer       @title : 'Layer';
         key![LAYER_KEY]            : String(40)    @title : 'Layer Key';
-        key![BLOCK_KEY]            : String(10)    @title : 'Block Key';
+        key![BLOCK_KEY]            : String(10)    @title : 'Period Key';
         key![RECORD_KEY]           : String(10)    @title : 'Record Key';
         key![QUOTE_YEAR]           : Integer       @title : 'Quote Year';
            ![START_MONTH]          : Integer       @title : 'Start Month';
@@ -413,9 +413,10 @@ context CV {
            ![END_MONTH_DESC]       : String(20)    @title : 'End Month';
            ![BLOCK_KEY_START_DESC] : String(13)    @title : 'BLOCK_KEY_START_DESC';
            ![BLOCK_KEY_END_DESC]   : String(13)    @title : 'BLOCK_KEY_END_DESC';
-           ![BLOCK_KEY_DESC]       : String(50)    @title : 'Block Description';
+           ![BLOCK_KEY_DESC]       : String(50)    @title : 'Period Description';
            ![EXPOSURE_CURRENCY]    : String(5)     @title : 'Exposure Currency';
            ![TARGET_CURRENCY]      : String(5)     @title : 'Target Currency';
+           ![LAYER_SEQUENCE]       : String(3)     @title : 'Layer Sequence';
     }
 
     @cds.persistence.exists
