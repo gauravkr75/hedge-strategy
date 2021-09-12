@@ -563,7 +563,10 @@ annotate CatalogService.LayerPNL with @(UI : {
     },
     SelectionFields : [
         LAYER,
+        LAYER_KEY,
+        BLOCK_KEY_DESC,
         QUOTE_YEAR,
+        SPOT_YEAR,
         EXPOSURE_CURRENCY,
         TARGET_CURRENCY
     ],
@@ -571,6 +574,7 @@ annotate CatalogService.LayerPNL with @(UI : {
         {Value : LAYER},
         {Value : LAYER_KEY},
         {Value : BLOCK_KEY_DESC},
+        {Value : LAYER_SEQUENCE},
         {Value : START_MONTH_DESC},
         {Value : END_MONTH_DESC},
         {Value : QUOTE_YEAR},
