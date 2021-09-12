@@ -143,12 +143,12 @@ BEGIN
 
     SELECT COUNT(*) INTO V_COUNT
         FROM :T_EXP_AMOUNT 
-            WHERE ACTUAL IS NULL AND PLANNING_YEAR NOT IN (2018, 2019); --HardCoding - To be removed        
+            WHERE ACTUAL IS NULL; --AND PLANNING_YEAR NOT IN (2018, 2019); --HardCoding - To be removed        
     
     IF :V_COUNT !=0 THEN 
         SELECT TOP 1 PERIOD, PLANNING_YEAR INTO V_PERIOD, V_YEAR
             FROM :T_EXP_AMOUNT 
-            WHERE ACTUAL IS NULL AND PLANNING_YEAR NOT IN (2018, 2019) --HardCoding - To be removed
+            WHERE ACTUAL IS NULL /*AND PLANNING_YEAR NOT IN (2018, 2019)*/ --HardCoding - To be removed
             ORDER BY PLANNING_YEAR , PERIOD ;
     ELSE
         V_RETURN = TRUE;            

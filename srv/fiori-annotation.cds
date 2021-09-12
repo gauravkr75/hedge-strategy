@@ -437,11 +437,26 @@ annotate CatalogService.ActualPosting with @(UI : {
         TARGET_CURRENCY
     ],
     LineItem        : [
-        {Value : PERIOD},
-        {Value : PLANNING_YEAR},
-        {Value : EXPOSURE_CURRENCY},
-        {Value : TARGET_CURRENCY},
-        {Value : ACTUAL_AMOUNT}
+        {
+            Value                 : PERIOD,
+            ![@HTML5.CssDefaults] : {width : '5rem'}
+        },
+        {
+            Value                 : PLANNING_YEAR,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : EXPOSURE_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : TARGET_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : ACTUAL_AMOUNT,
+            ![@HTML5.CssDefaults] : {width : '15rem'}
+        }
     ]
 });
 
@@ -453,11 +468,30 @@ annotate CatalogService.AlreadyHedged with @(UI : {
         TARGET_CURRENCY
     ],
     LineItem        : [
-        {Value : PERIOD},
-        {Value : PLANNING_YEAR},
-        {Value : EXPOSURE_CURRENCY},
-        {Value : TARGET_CURRENCY},
-        {Value : HEDGED_AMOUNT}
+        {
+            Value                 : TRANSACTION,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : PERIOD,
+            ![@HTML5.CssDefaults] : {width : '5rem'}
+        },
+        {
+            Value                 : PLANNING_YEAR,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : EXPOSURE_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : TARGET_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : HEDGED_AMOUNT,
+            ![@HTML5.CssDefaults] : {width : '15rem'}
+        }
     ]
 });
 
@@ -469,21 +503,66 @@ annotate CatalogService.HistoricalCurves with @(UI : {
     ],
     LineItem        : [
         {Value : DATE},
-        {Value : EXPOSURE_CURRENCY},
-        {Value : TARGET_CURRENCY},
-        {Value : SPOT},
-        {Value : ONE_M},
-        {Value : TWO_M},
-        {Value : THREE_M},
-        {Value : FOUR_M},
-        {Value : FIVE_M},
-        {Value : SIX_M},
-        {Value : SEVEN_M},
-        {Value : EIGHT_M},
-        {Value : NINE_M},
-        {Value : TEN_M},
-        {Value : ELEVEN_M},
-        {Value : ONE_Y}
+        {
+            Value                 : EXPOSURE_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : TARGET_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : SPOT,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : ONE_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : TWO_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : THREE_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : FOUR_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : FIVE_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : SIX_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : SEVEN_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : EIGHT_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : NINE_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : TEN_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : ELEVEN_M,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : ONE_Y,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        }
     ]
 });
 
@@ -495,11 +574,26 @@ annotate CatalogService.ExposurePosition with @(UI : {
         TARGET_CURRENCY
     ],
     LineItem        : [
-        {Value : PERIOD},
-        {Value : PLANNING_YEAR},
-        {Value : EXPOSURE_CURRENCY},
-        {Value : TARGET_CURRENCY},
-        {Value : EXPOSURE_AMOUNT}
+        {
+            Value                 : PERIOD,
+            ![@HTML5.CssDefaults] : {width : '5rem'}
+        },
+        {
+            Value                 : PLANNING_YEAR,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : EXPOSURE_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : TARGET_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : EXPOSURE_AMOUNT,
+            ![@HTML5.CssDefaults] : {width : '15rem'}
+        }
     ]
 });
 
