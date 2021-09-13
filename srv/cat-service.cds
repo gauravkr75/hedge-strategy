@@ -150,4 +150,10 @@ service CatalogService {
 
     @readonly
     entity LayerPNL          as projection on CV.LAYER_PNL_OVERLAP_ROLLING;
+
+    @readonly
+    entity ActualForecast  as projection on CV.ACTUAL_FORECASTING;
+
+    @readonly
+    entity ActualForecastRatio  as projection on CV.ACTUAL_FORECASTING_WITH_RATIO;
 }

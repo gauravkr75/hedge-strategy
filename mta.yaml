@@ -87,6 +87,10 @@ modules:
       - layerpnl.zip
       name: layerpnl
       target-path: resources/
+    - artifacts:
+      - actualforecastreport.zip
+      name: actualforecastreport
+      target-path: resources/
 - name: hedgeprofile
   type: html5
   path: app/hedgeprofile
@@ -137,6 +141,16 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+- name: actualforecastreport
+  type: html5
+  path: app/actual-forecast-report
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 resources:
 - name: HedgeStrategy-db
   type: com.sap.xs.hdi-container
@@ -151,7 +165,7 @@ resources:
     config:
       HTML5Runtime_enabled: true
       init_data:
-        subaccount:
+        instance:
           destinations:
           - Authentication: NoAuthentication
             Name: ui5

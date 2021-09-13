@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_ACTUAL_FORECASTING_WITH_RATIO" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CV_ACTUAL_FORECASTING_WITH_RATIO"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="TF_EXPOSURE_FORECAST_RATIO_BASED" type="TABLE_FUNCTION">
+    <resourceUri>TF_EXPOSURE_FORECAST_RATIO_BASED</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MSE"/>
+      <viewAttribute id="DAMPED"/>
+      <viewAttribute id="MODELNAME"/>
+      <viewAttribute id="PERIOD"/>
+      <viewAttribute id="TARGET_CURRENCY"/>
+      <viewAttribute id="EXPOSURE_CURRENCY"/>
+      <viewAttribute id="FORECASTED"/>
+      <viewAttribute id="PREDICTED"/>
+      <viewAttribute id="PLANNING_YEAR"/>
+      <viewAttribute id="ACTUAL"/>
+      <viewAttribute id="RATIO"/>
+      <viewAttribute id="PHI"/>
+      <viewAttribute id="BETA"/>
+      <viewAttribute id="ALPHA"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ROUND_RATIO" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>ROUND(&quot;RATIO&quot;, 5)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="TF_EXPOSURE_FORECAST_RATIO_BASED"/>
+    <filter>&quot;PERIOD&quot; IS NOT NULL</filter>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="MSE" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MSE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MSE"/>
+    </attribute>
+    <attribute id="DAMPED" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DAMPED"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DAMPED"/>
+    </attribute>
+    <attribute id="MODELNAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MODELNAME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MODELNAME"/>
+    </attribute>
+    <attribute id="PERIOD" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PERIOD"/>
+    </attribute>
+    <attribute id="TARGET_CURRENCY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARGET_CURRENCY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TARGET_CURRENCY"/>
+    </attribute>
+    <attribute id="EXPOSURE_CURRENCY" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXPOSURE_CURRENCY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EXPOSURE_CURRENCY"/>
+    </attribute>
+    <attribute id="FORECASTED" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORECASTED"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FORECASTED"/>
+    </attribute>
+    <attribute id="PREDICTED" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PREDICTED"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PREDICTED"/>
+    </attribute>
+    <attribute id="PLANNING_YEAR" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLANNING_YEAR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PLANNING_YEAR"/>
+    </attribute>
+    <attribute id="ACTUAL" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTUAL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ACTUAL"/>
+    </attribute>
+    <attribute id="PHI" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PHI"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PHI"/>
+    </attribute>
+    <attribute id="BETA" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BETA"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BETA"/>
+    </attribute>
+    <attribute id="ALPHA" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALPHA"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ALPHA"/>
+    </attribute>
+    <attribute id="RATIO" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROUND_RATIO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ROUND_RATIO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="105" y="231"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

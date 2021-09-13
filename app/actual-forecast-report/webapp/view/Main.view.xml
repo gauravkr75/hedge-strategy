@@ -1,0 +1,61 @@
+<mvc:View
+    controllerName="actualforecastreport.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:semantic="sap.f.semantic"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false"
+		showFooter="false">
+
+		<semantic:titleHeading>
+			<Title text="{i18n>worklistTitle}"/>
+		</semantic:titleHeading>
+
+		<semantic:headerContent>
+			<IconTabBar
+				id="iconTabBar"
+				select=".onQuickFilter"
+				expandable="false">
+				<items>
+					<IconTabFilter
+						key="ActualForecast"
+						text="{i18n>actualForecast}">
+                            <smartFilterBar:SmartFilterBar id="smartFilterBarActualForecast" entitySet="ActualForecast" persistencyKey="SmartFilter_Explored">
+                            </smartFilterBar:SmartFilterBar>
+                            <smartTable:SmartTable id="smartTableActualForecast" entitySet="ActualForecast" smartFilterId="smartFilterBarActualForecast"
+                                tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
+                                useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
+                                showRowCount="true" enableAutoBinding="true"
+                                demandPopin="true" visibleRowCount="100" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
+                                showFullScreenButton="true">
+                                <table:Table visibleRowCount="13" />
+                            </smartTable:SmartTable>
+                    </IconTabFilter>
+					<IconTabFilter
+						key="ActualForecastRatio"
+						text="{i18n>actualForecastRatio}">
+                        <smartFilterBar:SmartFilterBar id="smartFilterBarActualForecastRatio" entitySet="ActualForecastRatio" persistencyKey="SmartFilter_Explored">
+                            </smartFilterBar:SmartFilterBar>
+                        <smartTable:SmartTable id="smartTableActualForecastRatio" entitySet="ActualForecastRatio" smartFilterId="smartFilterBarActualForecastRatio"
+                            tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
+                            useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
+                            showRowCount="true" enableAutoBinding="true"
+                            demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
+                            showFullScreenButton="true">
+                            <table:Table visibleRowCount="13" />
+                        </smartTable:SmartTable>
+                    </IconTabFilter>
+				</items>
+			</IconTabBar>
+		</semantic:headerContent>
+	</semantic:SemanticPage>
+</mvc:View>

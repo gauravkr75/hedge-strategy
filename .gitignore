@@ -74,4 +74,5 @@ resources/hedgeprofile.zip
 app/forecast-exp-report/dist
 app/hedge-best-layer/dist
 app/layer-pnl/dist
-srv/cat-service.js
+app/actual-forecast-report/dist
+resources/hedgeprofile.zip

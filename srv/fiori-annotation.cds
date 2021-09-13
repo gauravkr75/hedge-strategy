@@ -680,3 +680,77 @@ annotate CatalogService.LayerPNL with @(UI : {
         {Value : TARGET_CURRENCY}
     ]
 });
+
+annotate CatalogService.ActualForecast with @(UI : {
+    SelectionFields : [
+        PERIOD,
+        PLANNING_YEAR,
+        EXPOSURE_CURRENCY,
+        TARGET_CURRENCY
+    ],
+    LineItem        : [
+        {
+            Value                 : PERIOD,
+            ![@HTML5.CssDefaults] : {width : '5rem'}
+        },
+        {
+            Value                 : PLANNING_YEAR,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : EXPOSURE_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : TARGET_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : ACTUAL,
+            ![@HTML5.CssDefaults] : {width : '15rem'}
+        },
+        {
+            Value                 : PREDICTED,
+            ![@HTML5.CssDefaults] : {width : '5rem'}
+        }
+    ]
+});
+
+annotate CatalogService.ActualForecastRatio with @(UI : {
+    SelectionFields : [
+        PERIOD,
+        PLANNING_YEAR,
+        EXPOSURE_CURRENCY,
+        TARGET_CURRENCY
+    ],
+    LineItem        : [
+        {
+            Value                 : PERIOD,
+            ![@HTML5.CssDefaults] : {width : '5rem'}
+        },
+        {
+            Value                 : PLANNING_YEAR,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : EXPOSURE_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : TARGET_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : ACTUAL,
+            ![@HTML5.CssDefaults] : {width : '15rem'}
+        },
+        {
+            Value                 : RATIO,
+            ![@HTML5.CssDefaults] : {width : '8rem'}
+        },
+        {
+            Value                 : PREDICTED,
+            ![@HTML5.CssDefaults] : {width : '5rem'}
+        }
+    ]
+});

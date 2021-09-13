@@ -451,4 +451,41 @@ context CV {
            ![HEDGED_AMOUNT]        : Decimal(34, 2)@title : 'Hedged Amount';
            ![DIFF_VALUE]           : Decimal(34, 2)@title : 'Deficit';
     }
+
+    @cds.persistence.exists
+    @cds.persistence.calcview
+    entity![ACTUAL_FORECASTING]{
+        key![PERIOD]            : Integer       @title : 'Period';
+        key![PLANNING_YEAR]     : Integer       @title : 'Planning Year';
+        key![TARGET_CURRENCY]   : String(5)     @title : 'Target Currency';
+        key![EXPOSURE_CURRENCY] : String(5)     @title : 'Exposure Currency';
+           ![MSE]               : String(100)   @title : 'MSE';
+           ![DAMPED]            : String(100)   @title : 'Damped';
+           ![MODELNAME]         : String(100)   @title : 'Model Name';
+           ![FORECASTED]        : Decimal(16, 5)@title : 'Forecasted';
+           ![PREDICTED]         : Boolean       @title : 'Predicted';
+           ![ACTUAL]            : Decimal(16, 5)@title : 'Actual';
+           ![PHI]               : String(100)   @title : 'PHI';
+           ![BETA]              : String(100)   @title : 'BETA';
+           ![ALPHA]             : String(100)   @title : 'ALPHA';
+    }
+
+    @cds.persistence.exists
+    @cds.persistence.calcview
+    entity![ACTUAL_FORECASTING_WITH_RATIO]{
+        key![PERIOD]            : Integer       @title : 'Period';
+        key![PLANNING_YEAR]     : Integer       @title : 'Planning Year';
+        key![TARGET_CURRENCY]   : String(5)     @title : 'Target Currency';
+        key![EXPOSURE_CURRENCY] : String(5)     @title : 'Exposure Currency';
+           ![RATIO]             : Decimal(34, 5)@title : 'Ratio';
+           ![MSE]               : String(100)   @title : 'MSE';
+           ![DAMPED]            : String(100)   @title : 'Damped';
+           ![MODELNAME]         : String(100)   @title : 'Model Name';
+           ![FORECASTED]        : Decimal(16, 5)@title : 'Forecasted';
+           ![PREDICTED]         : Boolean       @title : 'Predicted';
+           ![ACTUAL]            : Decimal(16, 5)@title : 'Actual Amount';
+           ![PHI]               : String(100)   @title : 'PHI';
+           ![BETA]              : String(100)   @title : 'BETA';
+           ![ALPHA]             : String(100)   @title : 'ALPHA';
+    }
 }
