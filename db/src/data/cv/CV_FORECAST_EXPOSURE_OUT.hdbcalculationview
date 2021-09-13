@@ -45,7 +45,7 @@
         <formula>ROUND(&quot;BPL_PER&quot;, 2)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="ROUND_FORECAST_COMP_PER" datatype="DECIMAL" length="34" scale="2" expressionLanguage="SQL">
-        <formula>ROUND(&quot;BPL_PER&quot;, 2)</formula>
+        <formula>ROUND(&quot;FORECAST_COMP_PER&quot;, 2)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="ROUND_MKT_VAL_RATIO_PER" datatype="DECIMAL" length="34" scale="2" expressionLanguage="SQL">
         <formula>ROUND(&quot;MKT_VAL_RATIO_PER&quot;, 2)</formula>

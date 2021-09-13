@@ -32,36 +32,45 @@ BEGIN
     DECLARE V_TO_CURR NVARCHAR(5);
     DECLARE V_EXP_CURR NVARCHAR(5);
     DECLARE V_DATE DATE;
+    DECLARE V_FWD_HORIZON INTEGER;
+    DECLARE V_COUNT INTEGER;
 
-    -- SELECT TO_DATE(CONCAT(CONCAT(CONCAT(CONCAT(YEAR, '-'), START_MONTH), '-'), '1'))
-    --     INTO V_DATE
-    --     FROM T_HEDGE_PROFILE
-    --     WHERE DEFAULT = 'X'; 
     SELECT CURRENT_UTCDATE INTO V_DATE FROM "SY_DUMMY";
-
-    T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
-                                    12 AS INT_VALUE, 
-                                    NULL AS DOUBLE_VALUE, 
-                                    NULL AS STRING_VALUE
-                            FROM "SY_DUMMY"
-                                UNION                  
-                            SELECT 'MODELSELECTION' AS PARAM_NAME,
-                                    1 AS INT_VALUE, 
-                                    NULL AS DOUBLE_VALUE, 
-                                    NULL AS STRING_VALUE
-                            FROM "SY_DUMMY"
-                                UNION
-                            SELECT 'CYCLE' AS PARAM_NAME,
-                                    12 AS INT_VALUE, 
-                                    NULL AS DOUBLE_VALUE, 
-                                    NULL AS STRING_VALUE
-                            FROM "SY_DUMMY";
 
     T_UNQ_EXP_CURR = SELECT DISTINCT EXPOSURE_CURRENCY FROM T_EXPOSURE_POSITION_FLOWS;
 
     FOR J IN 1..RECORD_COUNT(:T_UNQ_EXP_CURR) DO
 
         V_EXP_CURR = :T_UNQ_EXP_CURR.EXPOSURE_CURRENCY[:J];
+
+            
+        IF :V_COUNT !=0 THEN
+            SELECT FORWARD_HORIZON
+                INTO V_FWD_HORIZON
+                FROM T_HEDGE_PROFILE
+                WHERE DEFAULT = 'X' 
+                AND "EXPOSURE_CURRENCY" = :V_EXP_CURR;
+        ELSE
+            V_FWD_HORIZON = 12;
+        END IF;
+
+        T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
+                                :V_FWD_HORIZON AS INT_VALUE, 
+                                NULL AS DOUBLE_VALUE, 
+                                NULL AS STRING_VALUE
+                        FROM "SY_DUMMY"
+                            UNION                  
+                        SELECT 'MODELSELECTION' AS PARAM_NAME,
+                                1 AS INT_VALUE, 
+                                NULL AS DOUBLE_VALUE, 
+                                NULL AS STRING_VALUE
+                        FROM "SY_DUMMY"
+                            UNION
+                        SELECT 'CYCLE' AS PARAM_NAME,
+                                12 AS INT_VALUE, 
+                                NULL AS DOUBLE_VALUE, 
+                                NULL AS STRING_VALUE
+                        FROM "SY_DUMMY";
 
         FOR I IN 0..12 DO
 

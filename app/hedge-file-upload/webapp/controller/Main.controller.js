@@ -164,10 +164,10 @@ sap.ui.define([
                             oModel.remove(sPath, {
                                 groupId: "deleteGroup",
                                 success: odata => {
-                                    MessageToast.show('Data uploaded sucessfully');
+                                    MessageToast.show('Records Deleted Sucessfully');
                                 },
                                 error: error => {
-
+                                    MessageToast.show('Error in Deleting Records');
                                 }
                             });
                         } else {

@@ -25,11 +25,8 @@ BEGIN
     DECLARE T_RATIO_FORECAST "TT_FORECAST";
     DECLARE V_NUM_FORECAST INTEGER;
     DECLARE T_STATISTICS_AUTO_EXP "TT_STATISTICS_AUTO_EXP";
-    DECLARE V_PERIOD INTEGER;
-    DECLARE V_YEAR INTEGER;
     DECLARE V_EXP_CURR NVARCHAR(03);
     DECLARE V_TAR_CURR NVARCHAR(03);
-    DECLARE I INTEGER;
     DECLARE V_RATIO DECIMAL;
     DECLARE V_MODELNAME NVARCHAR(100);
     DECLARE V_MSE NVARCHAR(100);
@@ -40,8 +37,13 @@ BEGIN
     DECLARE V_COUNT INTEGER;
     DECLARE V_RETURN BOOLEAN;
     DECLARE V_FWD_HORIZON INTEGER;
+    DECLARE V_MAX_DATE DATE;
+    DECLARE V_DATE DATE;
+    DECLARE V_MAX_YEAR INTEGER;
+    DECLARE V_MAX_PERIOD INTEGER;
 
-    --DECLARE T_DATA "TT_AUTO_EXP_DATA";
+    SELECT CURRENT_UTCDATE INTO V_DATE FROM "SY_DUMMY";
+
     IF :V_COUNT !=0 THEN
         SELECT FORWARD_HORIZON
             INTO V_FWD_HORIZON
@@ -93,8 +95,45 @@ BEGIN
                 FROM "SY_DUMMY";
     END IF;
 
+    
+    SELECT TOP 1 PLANNING_YEAR INTO V_MAX_YEAR
+        FROM T_ACTUAL_POSTING
+        ORDER BY PLANNING_YEAR DESC;
+
+    SELECT TOP 1 PLANNING_YEAR, MAX(PERIOD) 
+        INTO V_MAX_YEAR, V_MAX_PERIOD
+        FROM T_ACTUAL_POSTING
+        WHERE PLANNING_YEAR = :V_MAX_YEAR
+        GROUP BY EXPOSURE_CURRENCY, TARGET_CURRENCY, PLANNING_YEAR;
+
+    T_DATA_DATE = SELECT *, TO_DATE(CONCAT(CONCAT(CONCAT(CONCAT(PLANNING_YEAR, '-'), PERIOD), '-'), '1') ) AS DATE 
+                    FROM :T_EXP_AMOUNT;
+
+    T_DATA = SELECT TO_INTEGER("$rowid$") AS ID, TO_DOUBLE(RATIO) AS RATIO 
+                FROM :T_DATA_DATE
+                WHERE ACTUAL IS NOT NULL AND DATE < :V_DATE
+                ORDER BY DATE;
+
+    IF NOT IS_EMPTY(:T_DATA_DATE) THEN
+        SELECT TOP 1 EXPOSURE_CURRENCY, TARGET_CURRENCY INTO V_EXP_CURR, V_TAR_CURR 
+            FROM :T_DATA_DATE;
+    ELSE
+        V_RETURN = TRUE;
+    END IF;  
+
+    IF :V_RETURN = TRUE THEN
+        RETURN SELECT NULL AS PERIOD, NULL AS PLANNING_YEAR, NULL AS EXPOSURE_CURRENCY, 
+            NULL AS TARGET_CURRENCY, NULL AS ACTUAL, NULL AS FORECASTED, NULL AS RATIO, 
+            FALSE AS PREDICTED, NULL AS MODELNAME, NULL AS MSE,
+            NULL AS ALPHA, NULL AS BETA, NULL AS PHI, NULL AS DAMPED
+            FROM "SY_DUMMY";
+    END IF;
+    
+    SELECT TO_DATE(CONCAT(CONCAT(CONCAT(CONCAT(:V_MAX_YEAR, '-'), :V_MAX_PERIOD), '-'), '1')) INTO V_MAX_DATE
+        FROM "SY_DUMMY";
+
     T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
-                                    :V_FWD_HORIZON AS INT_VALUE, 
+                                    (MONTHS_BETWEEN(:V_MAX_DATE, :V_DATE) + :V_FWD_HORIZON) AS INT_VALUE, 
                                     null AS DOUBLE_VALUE, 
                                     null AS STRING_VALUE
                             FROM "SY_DUMMY"
@@ -109,89 +148,22 @@ BEGIN
                                     12 AS INT_VALUE, 
                                     0.0 AS DOUBLE_VALUE, 
                                     null AS STRING_VALUE
-                            FROM "SY_DUMMY"
-                            
-                                /*UNION
-                            SELECT 'ALPHA' AS PARAM_NAME,
-                                    null AS INT_VALUE, 
-                                    0.366 AS DOUBLE_VALUE, 
-                                    null AS STRING_VALUE
-                            FROM "SY_DUMMY"
-                                UNION
-                            SELECT 'BETA' AS PARAM_NAME,
-                                    null AS INT_VALUE, 
-                                    0.673 AS DOUBLE_VALUE, 
-                                    null AS STRING_VALUE
-                            FROM "SY_DUMMY"
-                                UNION
-                            SELECT 'PHI' AS PARAM_NAME,
-                                    null AS INT_VALUE, 
-                                    0.271 AS DOUBLE_VALUE, 
-                                    null AS STRING_VALUE 
-                            FROM "SY_DUMMY" */;
-
-    T_DATA = SELECT TO_INTEGER("$rowid$") AS ID, TO_DOUBLE(RATIO) AS RATIO FROM :T_EXP_AMOUNT
-                WHERE ACTUAL IS NOT NULL AND PLANNING_YEAR <= YEAR(CURRENT_UTCDATE)
-                ORDER BY PLANNING_YEAR, PERIOD;
-
-    IF NOT IS_EMPTY(:T_EXP_AMOUNT) THEN
-        SELECT TOP 1 EXPOSURE_CURRENCY, TARGET_CURRENCY INTO V_EXP_CURR, V_TAR_CURR 
-            FROM :T_EXP_AMOUNT;
-    ELSE
-        V_RETURN = TRUE;
-    END IF;
-
-    SELECT COUNT(*) INTO V_COUNT
-        FROM :T_EXP_AMOUNT 
-            WHERE ACTUAL IS NULL; --AND PLANNING_YEAR NOT IN (2018, 2019); --HardCoding - To be removed        
-    
-    IF :V_COUNT !=0 THEN 
-        SELECT TOP 1 PERIOD, PLANNING_YEAR INTO V_PERIOD, V_YEAR
-            FROM :T_EXP_AMOUNT 
-            WHERE ACTUAL IS NULL /*AND PLANNING_YEAR NOT IN (2018, 2019)*/ --HardCoding - To be removed
-            ORDER BY PLANNING_YEAR , PERIOD ;
-    ELSE
-        V_RETURN = TRUE;            
-    END IF;
-
-    IF :V_RETURN = TRUE THEN
-        RETURN SELECT NULL AS PERIOD, NULL AS PLANNING_YEAR, NULL AS EXPOSURE_CURRENCY, 
-            NULL AS TARGET_CURRENCY, NULL AS ACTUAL, NULL AS FORECASTED, NULL AS RATIO, 
-            FALSE AS PREDICTED, NULL AS MODELNAME, NULL AS MSE,
-            NULL AS ALPHA, NULL AS BETA, NULL AS PHI, NULL AS DAMPED
-            FROM "SY_DUMMY";
-    END IF;
+                            FROM "SY_DUMMY";
 
     CALL "PAL_AUTO_EXPSMOOTH"(P1 => :T_DATA, P2 => :T_AUTO_SMOTH_PARAMS, P3 => :T_RATIO_FORECAST, P4 => :T_STATISTICS_AUTO_EXP);
-    
-    T_TEMP_OUT = SELECT TIMESTAMP AS ID, 
-                    ROUND(VALUE, 3) AS RATIO
+
+    T_PREDICTION_OUT = SELECT TO_INTEGER(ROW_NUMBER() OVER (ORDER BY (SELECT 1 FROM "SY_DUMMY"))) AS ID,
+                        ROUND(VALUE, 3) AS RATIO
                     FROM :T_RATIO_FORECAST 
                     WHERE "PI1_LOWER" IS NOT NULL
                     ORDER BY TIMESTAMP;
+    
+    T_PREDICTION_OUT_DATE = SELECT ADD_MONTHS(:V_MAX_DATE, ID - 1) AS DATE, *
+                                FROM :T_PREDICTION_OUT;               
 
-    FOR I IN 1..RECORD_COUNT(:T_TEMP_OUT) DO
-
-        V_RATIO = :T_TEMP_OUT.RATIO[:I];
-
-        IF :I = 1 THEN
-            T_EXP_TEMP = SELECT :V_PERIOD AS PERIOD, V_YEAR AS PLANNING_YEAR, :V_EXP_CURR AS EXPOSURE_CURRENCY,
-                            :V_TAR_CURR AS TARGET_CURRENCY, :V_RATIO AS RATIO FROM "SY_DUMMY";
-        ELSE
-            T_EXP_TEMP = SELECT * FROM :T_EXP_TEMP
-                            UNION
-                         SELECT :V_PERIOD AS PERIOD, V_YEAR AS PLANNING_YEAR, :V_EXP_CURR AS EXPOSURE_CURRENCY,
-                            :V_TAR_CURR AS TARGET_CURRENCY, :V_RATIO AS RATIO FROM "SY_DUMMY";
-        END IF;
-
-        IF :V_PERIOD = 12 THEN
-            V_PERIOD = 1;
-            V_YEAR = :V_YEAR + 1;
-        ELSE
-            V_PERIOD = :V_PERIOD + 1;
-        END IF;
-
-    END FOR;
+    T_EXP_TEMP = SELECT MONTH(DATE) AS PERIOD, YEAR(DATE) AS "PLANNING_YEAR", :V_EXP_CURR AS EXPOSURE_CURRENCY,
+                        :V_TAR_CURR AS TARGET_CURRENCY, RATIO
+                        FROM :T_PREDICTION_OUT_DATE;
 
     T_EXP_ALL_RATIO =  SELECT A.PERIOD, A.PLANNING_YEAR, A.EXPOSURE_CURRENCY, A.TARGET_CURRENCY, A.ACTUAL, A.FORECASTED,
                         IFNULL(A.RATIO, B.RATIO) AS RATIO,
@@ -204,8 +176,6 @@ BEGIN
                         AND A.PLANNING_YEAR = B.PLANNING_YEAR
                         AND A.EXPOSURE_CURRENCY = B.EXPOSURE_CURRENCY
                         AND A.TARGET_CURRENCY = B.TARGET_CURRENCY;
-
-    --CALL "P_INSERT_AUTO_EXP_STATS"(:T_STATISTICS_AUTO_EXP);
 
     T_STAT1 = SELECT "STAT_VALUE"
                     FROM :T_STATISTICS_AUTO_EXP
