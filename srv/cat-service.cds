@@ -156,4 +156,7 @@ service CatalogService {
 
     @readonly
     entity ActualForecastRatio  as projection on CV.ACTUAL_FORECASTING_WITH_RATIO;
+
+    @readonly
+    entity SpotRateForecast  as projection on CV.SPOT_RATES_FORECAST;
 }

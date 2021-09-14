@@ -488,4 +488,15 @@ context CV {
            ![BETA]              : String(100)   @title : 'BETA';
            ![ALPHA]             : String(100)   @title : 'ALPHA';
     }
+
+    @cds.persistence.exists
+    @cds.persistence.calcview
+    entity![SPOT_RATES_FORECAST]{
+        key![MONTH]             : Integer      @title : 'Month';
+        key![TENOR]             : Integer      @title : 'Tenor';
+        key![YEAR]              : Integer      @title : 'Year';
+        key![TARGET_CURRENCY]   : String(5)    @title : 'Target Currency';
+        key![EXPOSURE_CURRENCY] : String(5)    @title : 'Exposure Currency';
+           ![AVG_SPOT_RATE]     : Decimal(9, 5)@title : 'Spot Rate';
+    }
 }

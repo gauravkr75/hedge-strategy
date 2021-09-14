@@ -754,3 +754,39 @@ annotate CatalogService.ActualForecastRatio with @(UI : {
         }
     ]
 });
+
+annotate CatalogService.SpotRateForecast with @(UI : {
+    SelectionFields : [
+        MONTH,
+        TENOR,
+        YEAR,
+        EXPOSURE_CURRENCY,
+        TARGET_CURRENCY
+    ],
+    LineItem        : [
+        {
+            Value                 : MONTH,
+            ![@HTML5.CssDefaults] : {width : '5rem'}
+        },
+        {
+            Value                 : YEAR,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : TENOR,
+            ![@HTML5.CssDefaults] : {width : '5rem'}
+        },
+        {
+            Value                 : EXPOSURE_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : TARGET_CURRENCY,
+            ![@HTML5.CssDefaults] : {width : '10rem'}
+        },
+        {
+            Value                 : AVG_SPOT_RATE,
+            ![@HTML5.CssDefaults] : {width : '15rem'}
+        }
+    ]
+});

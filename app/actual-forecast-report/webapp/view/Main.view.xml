@@ -54,6 +54,20 @@
                             <table:Table visibleRowCount="13" />
                         </smartTable:SmartTable>
                     </IconTabFilter>
+                    <IconTabFilter
+						key="SpotRateForecast"
+						text="{i18n>spotRateForecast}">
+                        <smartFilterBar:SmartFilterBar id="smartFilterBarSpotRateForecast" entitySet="SpotRateForecast" persistencyKey="SmartFilter_Explored">
+                            </smartFilterBar:SmartFilterBar>
+                        <smartTable:SmartTable id="smartTableSpotRateForecast" entitySet="SpotRateForecast" smartFilterId="smartFilterBarSpotRateForecast"
+                            tableType="Table" useExportToExcel="true" beforeExport="onBeforeExport"
+                            useVariantManagement="true" useTablePersonalisation="true" header="Line Items"
+                            showRowCount="true" enableAutoBinding="true"
+                            demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="false" app:useSmartToggle="true"
+                            showFullScreenButton="true">
+                            <table:Table visibleRowCount="13" />
+                        </smartTable:SmartTable>
+                    </IconTabFilter>
 				</items>
 			</IconTabBar>
 		</semantic:headerContent>
