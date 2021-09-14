@@ -28,7 +28,7 @@
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="ROUND_RATIO" datatype="INTEGER" expressionLanguage="SQL">
-        <formula>ROUND(&quot;RATIO&quot;, 5)</formula>
+        <formula>TO_DECIMAL(&quot;RATIO&quot;, 34, 5)</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="TF_EXPOSURE_FORECAST_RATIO_BASED"/>

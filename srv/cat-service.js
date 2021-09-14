@@ -87,13 +87,29 @@ module.exports = async function () {
     })
 
     this.after('UPDATE', HedgeProfile, async (data, req) => {
-        let adjustTemplate = false
+        let input = {}, adjustTemplate = false, layerKey = ''
 
         try {
             Object.keys(data).forEach(element => {
                 if (element === 'LAYER_KEY' || element === 'EXPOSURE_CURRENCY' ||
                     element === 'BACKWARD_HORIZON' || element === 'FORWARD_HORIZON') {
                     adjustTemplate = true
+
+                    switch (element) {
+                        case 'LAYER_KEY':
+                            input.IV_LAYER = data["LAYER_KEY"].split('_').length
+                            layerKey = data["LAYER_KEY"]
+                            break
+                        case 'EXPOSURE_CURRENCY':
+                            input.IV_EXP_CURRENCY = data["EXPOSURE_CURRENCY"]
+                            break
+                        case 'BACKWARD_HORIZON':
+                            input.IV_BACKWARD_HORIZON = data["BACKWARD_HORIZON"]
+                            break
+                        case 'FORWARD_HORIZON':
+                            input.IV_FORWARD_HORIZON = data["FORWARD_HORIZON"]
+                            break
+                    }
                 }
             });
 
@@ -101,16 +117,28 @@ module.exports = async function () {
                 const readProfileSql = `SELECT * FROM T_HEDGE_PROFILE WHERE ID = '` + data.ID + `'`
 
                 await cds.run(readProfileSql).then(async (profile) => {
-                    let input = {}, layerDurationChar = [], layerDuration = []
+                    let layerDurationChar = [], layerDuration = []
 
                     input.IV_PROFILE_ID = data.ID
-                    input.IV_LAYER = profile[0].LAYER_KEY.split('_').length
-                    input.IV_EXP_CURRENCY = profile[0].EXPOSURE_CURRENCY
-                    input.IV_BACKWARD_HORIZON = profile[0].BACKWARD_HORIZON
-                    input.IV_FORWARD_HORIZON = profile[0].FORWARD_HORIZON
+                    if (!input.IV_LAYER) {
+                        input.IV_LAYER = profile[0].LAYER_KEY.split('_').length
+                    }
+                    if (!input.IV_EXP_CURRENCY) {
+                        input.IV_EXP_CURRENCY = profile[0].EXPOSURE_CURRENCY
+                    }
+                    if (!input.IV_BACKWARD_HORIZON) {
+                        input.IV_BACKWARD_HORIZON = profile[0].BACKWARD_HORIZON
+                    }
+                    if (!input.IV_FORWARD_HORIZON) {
+                        input.IV_FORWARD_HORIZON = profile[0].FORWARD_HORIZON
+                    }
                     input.IV_CHANGE_MODE = 'U'
 
-                    layerDurationChar = profile[0].LAYER_KEY.split('_')
+                    if(layerKey === ''){
+                        layerKey = profile[0].LAYER_KEY
+                    }
+
+                    layerDurationChar = layerKey.split('_')
                     layerDurationChar.forEach(element => {
                         layerDuration.push({ LAYER: parseInt(element) })
                     });
