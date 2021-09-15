@@ -16,7 +16,7 @@ BEGIN
     ****************************/
 
     DECLARE V_DEL_INDEX_END INTEGER;
-    DECLARE V_TENOR NVARCHAR(02);
+    DECLARE V_TENOR INTEGER;
     DECLARE V_MIN_DATE DATE;
     DECLARE T_FORECAST "TT_FORECAST";
     DECLARE T_STATISTICS "TT_STATISTICS";
@@ -54,35 +54,17 @@ BEGIN
             V_FWD_HORIZON = 12;
         END IF;
 
-        T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
-                                :V_FWD_HORIZON AS INT_VALUE, 
-                                NULL AS DOUBLE_VALUE, 
-                                NULL AS STRING_VALUE
-                        FROM "SY_DUMMY"
-                            UNION                  
-                        SELECT 'MODELSELECTION' AS PARAM_NAME,
-                                1 AS INT_VALUE, 
-                                NULL AS DOUBLE_VALUE, 
-                                NULL AS STRING_VALUE
-                        FROM "SY_DUMMY"
-                            UNION
-                        SELECT 'CYCLE' AS PARAM_NAME,
-                                12 AS INT_VALUE, 
-                                NULL AS DOUBLE_VALUE, 
-                                NULL AS STRING_VALUE
-                        FROM "SY_DUMMY";
-
         FOR I IN 0..12 DO
 
-            IF I < 10 THEN
-                SELECT CONCAT('0', TO_NVARCHAR(:I)) INTO V_TENOR FROM SY_DUMMY;
-            ELSE
-                SELECT TO_NVARCHAR(:I) INTO V_TENOR FROM SY_DUMMY;
-            END IF;
+            -- IF I < 10 THEN
+            --     SELECT CONCAT('0', TO_NVARCHAR(:I)) INTO V_TENOR FROM SY_DUMMY;
+            -- ELSE
+            --     SELECT TO_NVARCHAR(:I) INTO V_TENOR FROM SY_DUMMY;
+            -- END IF;
 
             T_DATA = SELECT *, TO_DATE(CONCAT(CONCAT(CONCAT(CONCAT(YEAR, '-'), MONTH), '-'), '1') ) AS DATE
                                 FROM "CV_SPOT_RATES_HISTORICAL_CURVES"
-                                WHERE TENOR = :V_TENOR 
+                                WHERE TENOR = :I 
                                 AND EXPOSURE_CURRENCY = :V_EXP_CURR;
             
             IF IS_EMPTY(:T_DATA) THEN
@@ -101,41 +83,65 @@ BEGIN
                 CONTINUE;
             END IF;
 
+            SELECT TOP 1 MAX(DATE) INTO V_MAX_DATE
+                FROM :T_PROCESS_DATA;
+            
+            T_AUTO_SMOTH_PARAMS =   SELECT 'FORECAST_NUM' AS PARAM_NAME,
+                                (MONTHS_BETWEEN(:V_MAX_DATE, :V_DATE) + :V_FWD_HORIZON) AS INT_VALUE, 
+                                NULL AS DOUBLE_VALUE, 
+                                NULL AS STRING_VALUE
+                        FROM "SY_DUMMY"
+                            UNION                  
+                        SELECT 'MODELSELECTION' AS PARAM_NAME,
+                                1 AS INT_VALUE, 
+                                NULL AS DOUBLE_VALUE, 
+                                NULL AS STRING_VALUE
+                        FROM "SY_DUMMY"
+                            UNION
+                        SELECT 'CYCLE' AS PARAM_NAME,
+                                12 AS INT_VALUE, 
+                                NULL AS DOUBLE_VALUE, 
+                                NULL AS STRING_VALUE
+                        FROM "SY_DUMMY";
+
             CALL "PAL_AUTO_EXPSMOOTH"(P1 => :T_DATA_IN, P2 => :T_AUTO_SMOTH_PARAMS, P3 => :T_FORECAST, P4 => :T_STATISTICS);
             
-            T_TEMP_FORECAST = SELECT * FROM :T_FORECAST WHERE PI1_LOWER IS NOT NULL ORDER BY TIMESTAMP;
+            T_FORECAST_OUT = SELECT TO_INTEGER(ROW_NUMBER() OVER (ORDER BY (SELECT 1 FROM "SY_DUMMY"))) AS ID,
+                                ROUND(VALUE, 3) AS SPOT_RATE 
+                                FROM :T_FORECAST WHERE PI1_LOWER IS NOT NULL 
+                                ORDER BY TIMESTAMP;
 
-            SELECT MIN(TIMESTAMP) INTO V_MIN_TIMESTAMP FROM :T_TEMP_FORECAST;
+            T_FORECAST_OUT_DATE = SELECT ADD_MONTHS(:V_MAX_DATE, ID) AS DATE, *
+                                    FROM :T_FORECAST_OUT; 
 
-            SELECT MAX(YEAR) INTO V_MAX_YEAR 
-                FROM :T_PROCESS_DATA;
-                
-            SELECT MAX(MONTH) INTO V_MAX_PERIOD 
-                FROM :T_PROCESS_DATA;
-
-            T_ROW_ID_OUT = SELECT  TO_INTEGER(ROW_NUMBER() OVER (ORDER BY (SELECT 1 FROM "SY_DUMMY"))) AS ROW_NUM,
-                            :V_TENOR AS TENOR, 
+            T_ROW_ID_OUT = SELECT YEAR(DATE) AS "YEAR", MONTH(DATE) AS MONTH, :I AS TENOR,
                             :V_EXP_CURR AS EXPOSURE_CURRENCY,
-                            'EUR' AS TARGET_CURRENCY,
-                            TO_DECIMAL(VALUE, 9, 5) AS AVG_SPOT_RATE
-                        FROM :T_TEMP_FORECAST;
+                            'EUR' AS TARGET_CURRENCY, SPOT_RATE AS AVG_SPOT_RATE
+                        FROM :T_FORECAST_OUT_DATE;                                    
 
-            T_OUT = SELECT  CASE WHEN ROW_NUM + :V_MAX_PERIOD > 12 THEN :V_MAX_YEAR + 1
-                                 ELSE :V_MAX_YEAR
-                            END AS YEAR,
-                            CASE WHEN MOD((ROW_NUM + :V_MAX_PERIOD), 12) = 0 THEN 12
-                                 ELSE MOD((ROW_NUM + :V_MAX_PERIOD), 12)
-                            END AS MONTH,
-                            TENOR,
-                            EXPOSURE_CURRENCY,
-                            TARGET_CURRENCY,
-                            AVG_SPOT_RATE
-                        FROM :T_ROW_ID_OUT;
+            -- T_ROW_ID_OUT = SELECT  TO_INTEGER(ROW_NUMBER() OVER (ORDER BY (SELECT 1 FROM "SY_DUMMY"))) AS ROW_NUM,
+            --                 :V_TENOR AS TENOR, 
+            --                 :V_EXP_CURR AS EXPOSURE_CURRENCY,
+            --                 'EUR' AS TARGET_CURRENCY,
+            --                 TO_DECIMAL(VALUE, 9, 5) AS AVG_SPOT_RATE
+            --             FROM :T_TEMP_FORECAST;
 
-            IF :I = 1 THEN
-                T_RESULT = SELECT * FROM :T_OUT;
+            -- T_OUT = SELECT  CASE WHEN ROW_NUM + :V_MAX_PERIOD > 12 THEN :V_MAX_YEAR + 1
+            --                      ELSE :V_MAX_YEAR
+            --                 END AS YEAR,
+            --                 CASE WHEN MOD((ROW_NUM + :V_MAX_PERIOD), 12) = 0 THEN 12
+            --                      ELSE MOD((ROW_NUM + :V_MAX_PERIOD), 12)
+            --                 END AS MONTH,
+            --                 TENOR,
+            --                 EXPOSURE_CURRENCY,
+            --                 TARGET_CURRENCY,
+            --                 AVG_SPOT_RATE
+            --             FROM :T_ROW_ID_OUT;
+
+            IF :I = 0 THEN
+                T_RESULT = SELECT * FROM :T_ROW_ID_OUT;
             ELSE
-                :T_RESULT.INSERT(:T_OUT);
+                :T_RESULT.INSERT(:T_ROW_ID_OUT);
             END IF;
             
 
