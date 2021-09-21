@@ -10,15 +10,8 @@ Content-Type: application/json
 
 GET http://localhost:4004/v2/catalog/Layer?$top=2 HTTP/1.1
 
-
-###
-
-GET https://workspaces-ws-x9gw9-app2.us10.applicationstudio.cloud.sap/v2/catalog/Layer?$top=2 HTTP/1.1
-
-
 ###
 
 POST http://localhost:4004/v2/catalog/flushResults HTTP/1.1
 Content-Type:  application/json
-
 {}
